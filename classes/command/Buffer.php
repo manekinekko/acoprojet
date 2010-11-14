@@ -26,10 +26,18 @@
 
 class Buffer
 {
-
+	
+	/**
+	 * The content of the current text
+	 * @var _text
+	 * @access private
+	 * @type String
+	 */
+	private $_text;
+	
 	/**
 	 * The begining of a selection.
-	 * @var selectionStart
+	 * @var _selectionStart
 	 * @access private
 	 * @type Integer
 	 */
@@ -37,11 +45,19 @@ class Buffer
 	
 	/**
 	 * The end of a selection
-	 * @var selectionEnd
+	 * @var _selectionEnd
 	 * @access private
 	 * @type Integer
 	 */
-	private $selectionEnd;
+	private $_selectionEnd;
+	
+	/**
+	 * The clipboard object
+	 * @var _clipboard
+	 * @access private
+	 * @type Clipboard
+	 */
+	private $_clipboard;
 	
 	/**
 	 * The constructor of the class
@@ -49,7 +65,10 @@ class Buffer
 	 */
 	public function __construct()
 	{
-		
+		$this->_text = ""; 
+		$this->_selectionStart = 0;
+		$this->_selectionEnd = 0;
+		$this->_clipboard = new Clipboard();
 	}
 	
 	/**
@@ -59,7 +78,7 @@ class Buffer
 	 */
 	public function getText()
 	{
-		
+		return $this->_text;
 	}
 	
 	/**
@@ -68,9 +87,9 @@ class Buffer
 	 * @param String $text the new content
 	 * @access public
 	 */
-	public function setText(String $text)
+	public function setText($text)
 	{
-		
+		$this->_text = $text;	
 	}
 	
 	/**
@@ -86,7 +105,7 @@ class Buffer
 	
 	/**
 	 * Set the end of the selection
-	 * @return void
+	 * @return void 
 	 * @param Integer $val the end of the selection
 	 * @access public
 	 */
@@ -96,13 +115,40 @@ class Buffer
 	}
 	
 	/**
-	 * Insert a character into the buffer
+	 * Set the begining and the end of the selection
 	 * @return void
-	 * @access public
+	 * @param Integer $start the begining of the selection
+	 * @param Integer $end the end of the selection
 	 */
-	public function insert()
+	public function setSelection($start, $end)
 	{
+		if($start <= $end){
+			$this->_selectionStart = $start;
+			$this->_selectionEnd = $end;
+		}
+		else{
+			$this->_selectionStart = $start;
+			$this->_selectionEnd = $end;
+		}
+	}
+	
+	/**
+	 * Insert a character into the buffer
+	 * @return void 
+	 * @param Character $char the character to be inserted
+	 */
+	public function insert($char)
+	{
+		$this->_text = substr($this->_text, 0, $this->_selectionStart);
+		$this->_text .= $char;
+		$this->_text .= substr($this->_text, $this->_selectionEnd, strlen($this->_text));
 		
+		$this->_selectionStart++;
+		
+		if($this->_selectionStart != $this->_selectionEnd)
+		{
+			$this->_selectionEnd = $this->_selectionStart;
+		}
 	}
 	
 	/**
@@ -110,9 +156,9 @@ class Buffer
 	 * @return void
 	 * @access private
 	 */
-	private function _setTextIntoClipBoard()
+	private function _setTextIntoClipBoard($text)
 	{
-		
+		return $this->_clipboard->setText($text);
 	}
 	
 	/**
@@ -121,7 +167,7 @@ class Buffer
 	 */
 	private function _getTextFromClipBoard()
 	{
-		
+		return $this->_clipboard->getText();
 	}
 	
 	/** Command methods **/
@@ -133,7 +179,10 @@ class Buffer
 	 */
 	public function copyText()
 	{
+		$text = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
 		
+		if ( $text !== "" ) 
+			$this->_setTextIntoClipBoard($text);
 	}
 	
 	/**
@@ -143,7 +192,18 @@ class Buffer
 	 */
 	public function cutText()
 	{
-		
+		if( $this->_selectionStart !== $this->_selectionEnd)
+		{
+			$text = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
+			$this->_setTextIntoClipBoard($text);
+			
+			$this->_text = substr($this->_text, 0, $this->_selectionStart);
+			$this->_text .= substr($this->_text, $this->_selectionEnd, strlen($this->_text));
+
+			// deselection
+			$this->_selectionEnd = $this->_selectionStart;
+
+		}
 	}
 	
 	/**
@@ -153,7 +213,21 @@ class Buffer
 	 */
 	public function pasteText()
 	{
-		
+		if( $this->_clipboard->getText() === "")
+		{
+			if( $this->_selectionStart !== $this->_selectionEnd)
+			{
+				$this->_text = substr($this->_text, 0, $this->_selectionStart);
+				$this->_text .= substr($this->_text, $this->_selectionEnd, strlen($this->_text));
+				
+				// deselection
+				$this->_selectionEnd = $this->_selectionStart;
+			}
+
+			$this->_text = substr($this->_text, 0, $this->_selectionStart);
+			$this->_text .= $this->_getTextFromClipBoard();
+			$this->_text .= substr($this->_text, $this->_selectionStart, strlen($this->_text));
+		}	
 	}
 	
 	/**  Observer methods **/
