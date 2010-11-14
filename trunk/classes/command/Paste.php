@@ -18,8 +18,8 @@
  * The paste command
  *
  * @author wassim Chegham & hugo Marchadour
- * @category Observer
- * @package observer
+ * @category Command
+ * @package command
  * @version 0.1
  */
 require_once ('./classes/command/Command.php');
