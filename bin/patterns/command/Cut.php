@@ -23,7 +23,7 @@
  * @version 0.1
  */
 
-require_once ('./classes/command/Command.php');
+require_once ('./bin/patterns/command/Command.php');
 
 
 class Cut implements Command
