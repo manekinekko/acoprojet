@@ -24,7 +24,7 @@
  * @version 0.1
  */
 
-class Buffer
+class Buffer implements Subject
 {
 	
 	/**
@@ -237,9 +237,12 @@ class Buffer
 	 * @return void
 	 * @param Observer $o the observer of this concrete subject
 	 */
-	public function attach($o)
+	public function attach(&$o)
 	{
-		
+		if(!in_array($o, $this->_observers))
+      {
+         $this->_observers[] = $o;
+      }
 	}
 	
 	/**
@@ -247,9 +250,13 @@ class Buffer
 	 * @return void
 	 * @param Observer $o the observer to be detached
 	 */
-	public function detach($o)
+	public function detach(&$o)
 	{
-		
+      $index = array_search($o, $this->_observers);
+		if($index)
+      {
+         unset($this->_observers[$index]);
+      }
 	}
 	
 	/**
@@ -259,7 +266,10 @@ class Buffer
 	 */
 	public function notify()
 	{
-		
+		foreach($this->_observers as $k => $o)
+      {
+            $o->update($this);
+      }
 	}
 }
 
