@@ -23,7 +23,7 @@
  * @package command
  * @version 0.1
  */
-
+require_once ('./bin/patterns/observer/Observer.php');
 class Buffer implements Subject
 {
 	
