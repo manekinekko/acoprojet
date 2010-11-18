@@ -24,7 +24,10 @@
  * @version 0.1
  */
 require_once ('./bin/patterns/observer/Observer.php');
-class Buffer implements Subject
+require_once ('./bin/patterns/observer/Subject.php');
+require_once ('./bin/patterns/command/IHM.php');
+
+class Buffer implements Observer, Subject
 {
 	
 	/**
@@ -271,6 +274,18 @@ class Buffer implements Subject
             $o->update($this);
       }
 	}
+
+   /**  Subject methods **/
+
+   public function update(&$s)
+   {
+      // the IHM subject who notify me that something has happened
+
+      // update current state of buffer
+      $this->_selectionStart = $s->_selectionStart;
+      $this->_selectionEnd = $s->_selectionEnd;
+      $this->_text = $s->_text;
+   }
 }
 
 ?>

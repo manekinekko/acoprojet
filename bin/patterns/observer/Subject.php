@@ -35,14 +35,16 @@ interface Subject
    private $_observers;
    
    /**
-    * 
-    * @return 
+    * Attach an observer to this concrete subject
+    * @return void
+    * @param Observer $o the observer of this concrete subject
     */
    public function attach($o);
 
    /**
-    * 
-    * @return 
+    * Detach an observer from this concrete subject
+    * @return void
+    * @param Observer $o the observer to be detached
     */
    public function detach($o);
    
