@@ -23,7 +23,7 @@
  * @version 0.1
  */
 
-require_once ('./classes/observer/Observer.php');
+require_once ('./bin/patterns/observer/Observer.php');
 
 
 class Ihm implements Observer
