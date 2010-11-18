@@ -22,21 +22,151 @@
  * @package observer
  * @version 0.1
  */
-
 require_once ('./bin/patterns/observer/Observer.php');
+require_once ('./bin/patterns/observer/Subject.php');
+require_once ('./bin/patterns/command/Buffer.php');
 
-
-class Ihm implements Observer
+class Ihm implements Observer, Subject
 {
+
+   /**
+    * The content of the current text
+    * @var _text
+    * @access private
+    * @type String
+    */
+   private $_text;
    
+   /**
+    * The begining of a selection.
+    * @var _selectionStart
+    * @access private
+    * @type Integer
+    */
+   private $_selectionStart;
+   
+   /**
+    * The end of a selection
+    * @var _selectionEnd
+    * @access private
+    * @type Integer
+    */
+   private $_selectionEnd;
+   
+   /**
+    * The clipboard object
+    * @var _clipboard
+    * @access private
+    * @type Clipboard
+    */
+   private $_clipboard;
+   
+   /**
+    * The constructor of the class
+    * @return void
+    */
    public function __construct()
    {
-      
+      $this->_text = ""; 
+      $this->_selectionStart = 0;
+      $this->_selectionEnd = 0;
+   }
+
+   /**
+    * Get the current text
+    * @return the current text
+    * @access public
+    */
+   public function getText()
+   {
+      return $this->_text;
    }
    
-   public function update($s)
+   /**
+    * Set the content of the current text
+    * @return void
+    * @param String $text the new content
+    * @access public
+    */
+   public function setText($text)
    {
-      
+      $this->_text = $text;   
+   }
+   
+   /**
+    * Set the begining of the selection
+    * @return void
+    * @param Integer $val the begining of the selection
+    * @access public
+    */
+   public function setSelectionStart($val)
+   {
+      $this->_selectionStart = $val;
+   }
+   
+   /**
+    * Set the end of the selection
+    * @return void 
+    * @param Integer $val the end of the selection
+    * @access public
+    */
+   public function setSelectionEnd($val)
+   {
+      $this->_selectionEnd = $val;
+   }
+
+   /**
+    * Attach an observer to this concrete subject
+    * @return void
+    * @param Observer $o the observer of this concrete subject
+    */
+   public function attach(&$o)
+   {
+      if(!in_array($o, $this->_observers))
+      {
+         $this->_observers[] = $o;
+      }
+   }
+   
+   /**  Observer methods **/
+
+   /**
+    * Detach an observer from this concrete subject
+    * @return void
+    * @param Observer $o the observer to be detached
+    */
+   public function detach(&$o)
+   {
+      $index = array_search($o, $this->_observers);
+      if($index)
+      {
+         unset($this->_observers[$index]);
+      }
+   }
+   
+   /**
+    * Notify the observers of this concrete subject
+    * @return void
+    * @access public
+    */
+   public function notify()
+   {
+      foreach($this->_observers as $k => $o)
+      {
+            $o->update($this);
+      }
+   }
+   
+   /**  Subject methods **/
+
+   public function update(&$s)
+   {
+      // the buffer subject who notify me that something has happened
+
+      // update current state of ihm
+      $this->_selectionStart = $s->_selectionStart;
+      $this->_selectionEnd = $s->_selectionEnd;
+      $this->_text = $s->_text;
    }
 }
 
