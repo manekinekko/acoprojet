@@ -25,7 +25,7 @@
  */
 require_once ('./bin/patterns/observer/Observer.php');
 require_once ('./bin/patterns/observer/Subject.php');
-require_once ('./bin/patterns/command/IHM.php');
+require_once ('./bin/patterns/observer/Ihm.php');
 
 class Buffer implements Observer, Subject
 {
@@ -255,11 +255,11 @@ class Buffer implements Observer, Subject
 	 */
 	public function detach(&$o)
 	{
-      $index = array_search($o, $this->_observers);
+      	$index = array_search($o, $this->_observers);
 		if($index)
-      {
-         unset($this->_observers[$index]);
-      }
+      	{
+       		unset($this->_observers[$index]);
+      	}
 	}
 	
 	/**
@@ -270,9 +270,9 @@ class Buffer implements Observer, Subject
 	public function notify()
 	{
 		foreach($this->_observers as $k => $o)
-      {
+      	{
             $o->update($this);
-      }
+      	}
 	}
 
    /**  Subject methods **/

@@ -15,29 +15,48 @@
  */
 
 /**
- * The cut command
- * 
+ * The paste command
+ *
  * @author wassim Chegham & hugo Marchadour
  * @category Command
  * @package command
  * @version 0.1
  */
-
 require_once ('./bin/patterns/command/Command.php');
 
 
-class Cut implements Command
+class Paste implements Command
 {
 	
-	public function __construct()
+	/**
+	 * @var the object receiver that 
+	 * @access protected
+	 * @type Buffer
+	 */
+	protected $_receiver;
+
+	/**
+	 * The constructor of the class
+	 * @return void
+	 * @param Buffer $receiver the object receiver of this command
+	 * @param Command $action the action to be performed
+	 * @access public
+	 */
+	public function __construct($receiver)
 	{
-		
+		$this->_receiver = $receiver;
 	}
 	
+	/**
+	 * Perfome the paste action
+	 * @return void
+	 * @access public
+	 */
 	public function execute()
 	{
-		
+		$this->_receiver->pasteText();
 	}
+	
 }
 
 ?>
