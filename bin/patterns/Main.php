@@ -24,19 +24,19 @@
  * @version 0.1
  */
 
-require_once ("patterns/Ihm.php");
-require_once ("patterns/Copy.php");
-require_once ("patterns/Cut.php");
-require_once ("patterns/Paste.php");
-require_once ("patterns/Buffer.php");
+require_once ('./bin/patterns/Ihm.php');
+require_once ('./bin/patterns/Copy.php');
+require_once ('./bin/patterns/Cut.php');
+require_once ('./bin/patterns/Paste.php');
+require_once ('./bin/patterns/Buffer.php');
 
 class Main
 {
 	
 	/**
-	 * @var
-	 * @access
-	 * @type
+	 * @var represents the instance of the current object
+	 * @access private
+	 * @type Main
 	 */
 	private static $_instance;
 
@@ -46,7 +46,10 @@ class Main
 	 */
 	public function __construct()
 	{
-		
+		if ( isset($_SESSION[self::$_instance]) == false )
+		{
+			throw new ErrorException("Singleton can only be accessed through Main::instance()");
+		}
 	}
 	
 	/**
@@ -78,6 +81,10 @@ class Main
 		
 		return new Main();
 	}
+	
+	/**  **/
+	
+	
 }
 
 ?>

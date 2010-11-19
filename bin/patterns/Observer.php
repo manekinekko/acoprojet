@@ -30,7 +30,7 @@ interface Observer
     * 
     * @return 
     */
-   public function update($s);
+   public function update(&$s);
    
 }
 

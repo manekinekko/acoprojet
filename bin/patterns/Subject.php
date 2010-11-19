@@ -27,26 +27,18 @@ interface Subject
 {
 
    /**
-    * The array who contains all observers
-    * @var _observers
-    * @access private
-    * @type array observer
-    */
-   private $_observers;
-   
-   /**
     * Attach an observer to this concrete subject
     * @return void
     * @param Observer $o the observer of this concrete subject
     */
-   public function attach($o);
+   public function attach(&$o);
 
    /**
     * Detach an observer from this concrete subject
     * @return void
     * @param Observer $o the observer to be detached
     */
-   public function detach($o);
+   public function detach(&$o);
    
 }
 

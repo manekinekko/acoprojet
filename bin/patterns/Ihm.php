@@ -22,9 +22,9 @@
  * @package observer
  * @version 0.1
  */
-require_once ('./bin/patterns/observer/Observer.php');
-require_once ('./bin/patterns/observer/Subject.php');
-require_once ('./bin/patterns/command/Buffer.php');
+require_once ('./bin/patterns/Observer.php');
+require_once ('./bin/patterns/Subject.php');
+require_once ('./bin/patterns/Buffer.php');
 
 class Ihm implements Observer, Subject
 {
@@ -60,6 +60,14 @@ class Ihm implements Observer, Subject
     * @type Clipboard
     */
    private $_clipboard;
+   
+   /**
+    * The array who contains all observers
+    * @var _observers
+    * @access private
+    * @type array observer
+    */
+   private $_observers;  
    
    /**
     * The constructor of the class
