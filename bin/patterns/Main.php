@@ -83,7 +83,14 @@ class Main
 	}
 	
 	/**  **/
-	
+	 public function scenario()
+	 {
+	 	
+		
+		
+		
+		
+	 }
 	
 }
 
