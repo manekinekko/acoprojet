@@ -23,9 +23,9 @@
  * @package command
  * @version 0.1
  */
-require_once ('./bin/patterns/observer/Observer.php');
-require_once ('./bin/patterns/observer/Subject.php');
-require_once ('./bin/patterns/observer/Ihm.php');
+require_once ('./bin/patterns/Observer.php');
+require_once ('./bin/patterns/Subject.php');
+require_once ('./bin/patterns/Ihm.php');
 
 class Buffer implements Observer, Subject
 {
@@ -62,6 +62,14 @@ class Buffer implements Observer, Subject
 	 */
 	private $_clipboard;
 	
+   	/**
+     * The array who contains all observers
+     * @var _observers
+     * @access private
+     * @type array observer
+     */
+   	private $_observers;
+   
 	/**
 	 * The constructor of the class
 	 * @return void
