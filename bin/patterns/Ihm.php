@@ -22,9 +22,9 @@
  * @package observer
  * @version 0.1
  */
-require_once ('./bin/patterns/Observer.php');
-require_once ('./bin/patterns/Subject.php');
-require_once ('./bin/patterns/Buffer.php');
+require_once ('Observer.php');
+require_once ('Subject.php');
+require_once ('Buffer.php');
 
 class Ihm implements Observer, Subject
 {

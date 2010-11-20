@@ -24,11 +24,11 @@
  * @version 0.1
  */
 
-require_once ('./bin/patterns/Ihm.php');
-require_once ('./bin/patterns/Copy.php');
-require_once ('./bin/patterns/Cut.php');
-require_once ('./bin/patterns/Paste.php');
-require_once ('./bin/patterns/Buffer.php');
+require_once ('Ihm.php');
+require_once ('Copy.php');
+require_once ('Cut.php');
+require_once ('Paste.php');
+require_once ('Buffer.php');
 
 class Main
 {

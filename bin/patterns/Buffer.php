@@ -23,9 +23,11 @@
  * @package command
  * @version 0.1
  */
-require_once ('./bin/patterns/Observer.php');
-require_once ('./bin/patterns/Subject.php');
-require_once ('./bin/patterns/Ihm.php');
+require_once ('Observer.php');
+require_once ('Subject.php');
+require_once ('Clipboard.php');
+require_once ('Ihm.php');
+
 
 class Buffer implements Observer, Subject
 {
@@ -104,12 +106,32 @@ class Buffer implements Observer, Subject
 	}
 	
 	/**
+	 * Get the begining of the selection
+	 * @return int the position of the begining of the selection
+	 * @access public
+	 */
+	public function getSelectionStart()
+	{
+		return $this->_selectionStart;
+	}
+		
+	/**
+	 * Set the end of the selection
+	 * @return int the position of the begining of the selection
+	 * @access public
+	 */
+	public function getSelectionEnd()
+	{
+		return $this->_selectionEnd;
+	}
+	
+	/**
 	 * Set the begining of the selection
 	 * @return void
 	 * @param Integer $val the begining of the selection
 	 * @access public
 	 */
-	public function setSelectionStart($val)
+	public function setSelectionStart()
 	{
 		$this->_selectionStart = $val;
 	}
@@ -167,7 +189,7 @@ class Buffer implements Observer, Subject
 	 * @return void
 	 * @access private
 	 */
-	private function _setTextIntoClipBoard($text)
+	public function _setTextIntoClipBoard($text)
 	{
 		return $this->_clipboard->setText($text);
 	}
@@ -176,7 +198,7 @@ class Buffer implements Observer, Subject
 	 * Get a text content from the clipboard
 	 * @return String the text content from the clipboard
 	 */
-	private function _getTextFromClipBoard()
+	public function _getTextFromClipBoard()
 	{
 		return $this->_clipboard->getText();
 	}
