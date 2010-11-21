@@ -1,12 +1,12 @@
-var Debbug = true;
+var Debbug = false;
 var Debbug1 = false;
 var TextId = 'text';
 
 function getChar(evt) {
    var char = '#';
    var charCode = (evt.which) ? evt.which : event.keyCode
-   char = String.fromCharCode(charCode);
-   
+   // redefine the char
+   /*
    if (charCode == 8) char = "backspace"; //  backspace
    if (charCode == 9) char = "tab"; //  tab
    if (charCode == 13) char = "enter"; //  enter
@@ -58,21 +58,12 @@ function getChar(evt) {
    if (charCode == 123) char = "F12"; // F12
    if (charCode == 144) char = "num lock"; // num lock
    if (charCode == 145) char = "scroll lock"; // scroll lock
-   if (charCode == 186) char = ";"; // semi-colon
-   if (charCode == 187) char = "="; // equal-sign
-   if (charCode == 188) char = ","; // comma
-   if (charCode == 189) char = "-"; // dash
-   if (charCode == 190) char = "."; // period
-   if (charCode == 191) char = "/"; // forward slash
-   if (charCode == 192) char = "`"; // grave accent
-   if (charCode == 219) char = "["; // open bracket
-   if (charCode == 220) char = "\\"; // back slash
-   if (charCode == 221) char = "]"; // close bracket
-   if (charCode == 222) char = "'"; // single quote
+   */
+   char = String.fromCharCode(charCode);
    return char;
 }
 
-function getSelectionStart () {
+function getSelectionStart() {
    var ctrl = document.getElementById(TextId);
    var CaretPos = 0;
    // IE Support
@@ -93,7 +84,7 @@ function getSelectionStart () {
 }
 
 
-function getSelectionEnd () {
+function getSelectionEnd() {
    var caretPos = getSelectionStart();
    var text = getSelText();
    if( text.length>0 || isNaN(text.length) ){
@@ -103,22 +94,6 @@ function getSelectionEnd () {
 
    return caretPos;
 }
-
-
-/*function setCursor(pos, obj){
-   if(obj.setSelectionRange)
-   {
-      obj.focus();
-      obj.setSelectionRange(pos,pos);
-   }
-   else if (obj.createTextRange) {
-      var range = obj.createTextRange();
-      range.collapse(true);
-      range.moveEnd('character', pos);
-      range.moveStart('character', pos);
-      range.select();
-   }
-}*/
 
 function getSelectedText(){
    if (window.getSelection){
@@ -131,8 +106,7 @@ function getSelectedText(){
    return str;
 }
 
-function getSelText()
-{
+function getSelText(){
    var txt = '';
    if (window.getSelection)
    {
@@ -146,9 +120,96 @@ function getSelText()
    {
       txt = document.selection.createRange().text;
    }
-   console.log(txt);
    return txt;
 }
+
+function setCursor(pos, obj){
+   if(obj.setSelectionRange)
+   {
+      obj.focus();
+      obj.setSelectionRange(pos,pos);
+   }
+   else if (obj.createTextRange) {
+      var range = obj.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', pos);
+      range.moveStart('character', pos);
+      range.select();
+   }
+}
+
+function setText(str){
+   console.log(str);
+   //Get the textarea
+   area = document.getElementById(TextId);
+ 
+   //Get the selection bounds
+   var start = area.selectionStart;
+   var end = area.selectionEnd;
+ 
+   //Break up the text by selection
+   var text = area.value;
+   var pre = text.substring(0, start);
+   var sel = text.substring(start, end);
+   var post = text.substring(end,text.length);
+ 
+   //Insert the text at the beginning of the selection
+   text = pre + str + sel + post;
+ 
+   //Put the text in the textarea
+   area.value = text;
+ 
+   //Re-establish the selection, adjusted for the added characters.
+   area.selectionStart = start+str.length;
+   area.selectionEnd = end+str.length;
+}
+
+function removeSelection(){
+   //Get the textarea
+   area = document.getElementById(TextId);
+ 
+   //Get the selection bounds
+   var start = area.selectionStart;
+   var end = area.selectionEnd;
+ 
+   //Break up the text by selection
+   var text = area.value;
+   var pre = text.substring(0, start);
+   var sel = text.substring(start, end);
+   var post = text.substring(end,text.length);
+ 
+   //Insert the text at the beginning of the selection
+   text = pre + post;
+ 
+   //Put the text in the textarea
+   area.value = text;
+ 
+   //Re-establish the selection, adjusted for the added characters.
+   area.selectionStart = start;
+   area.selectionEnd = end;
+}
+
+function paste(str) 
+{
+   setText(str);
+}
+
+function cut() 
+{
+   removeSelection();
+}
+
+function copy() 
+{
+   
+}
+
+function insert(c) 
+{
+   setText(c);
+}
+
+
 
 $(function(){
    
@@ -170,7 +231,7 @@ $(function(){
             
             beforeSend: function(){
                if(Debbug) console.log("updateSelectionStart beforeSend");
-               if(Debbug) console.log("selStart:"+ getSelectionStart());
+               console.log("selStart:"+ getSelectionStart());
             },
             success: function(d){
                /*$('#resultat').html(d.response);*/
@@ -207,7 +268,7 @@ $(function(){
             
             beforeSend: function(){
                if(Debbug) console.log("updateSelectionEnd beforeSend");
-               if(Debbug) console.log("selEnd:"+ getSelectionEnd());
+               console.log("selEnd:"+ getSelectionEnd());
             },
             success: function(d){
                /*$('#resultat').html(d.response);*/
@@ -245,10 +306,10 @@ $(function(){
             
             beforeSend: function(){
                if(Debbug) console.log("updateChar beforeSend");
-               if(Debbug) console.log("char:"+ char);
+               console.log("char:"+ char);
             },
             success: function(d){
-               /*$('#resultat').html(d.response);*/
+               insert(d.char);
                if(Debbug) console.log("updateChar success");
             },
             error: function(e){
@@ -276,7 +337,8 @@ $(function(){
             type : default_type,
             data : {
                // paramètres envoyés
-               fn: 'cutText'
+               fn: 'cutText',
+               text: getSelText()
             }, 
             dataType : default_dataType, // type de données recues
             
@@ -284,8 +346,8 @@ $(function(){
                if(Debbug) console.log("cutText beforeSend");
             },
             success: function(d){
-               /*$('#resultat').html(d.response);*/
-               if(Debbug) console.log("cutText success");
+               cut();
+               console.log("cutText success");
             },
             error: function(e){
                if(Debbug) console.log("cutText error" + e);
@@ -312,7 +374,8 @@ $(function(){
             type : default_type,
             data : {
                // paramètres envoyés
-               fn: 'copyText'
+               fn: 'copyText',
+               text: getSelText()
             }, 
             dataType : default_dataType, // type de données recues
             
@@ -320,7 +383,7 @@ $(function(){
                if(Debbug) console.log("copyText beforeSend");
             },
             success: function(d){
-               /*$('#resultat').html(d.response);*/
+               copy();
                if(Debbug) console.log("copyText success");
             },
             error: function(e){
@@ -350,11 +413,13 @@ $(function(){
                // paramètres envoyés
                fn: 'pasteText'
             }, 
-            
+            dataType : default_dataType, // type de données recues
+             
             beforeSend: function(){
                if(Debbug) console.log("paste beforeSend");
             },
             success: function(d){
+               paste(d.text);
                /*$('#resultat').html(d.response);*/
                if(Debbug) console.log("paste success");
             },
