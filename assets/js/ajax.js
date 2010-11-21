@@ -163,7 +163,7 @@ $(function(){
             type : default_type,
             data : {
                // paramètres envoyés
-               function: 'updateSelectionStart',
+               fn: 'updateSelectionStart',
                selStart: getSelectionStart()
             }, 
             dataType : default_dataType, // type de données recues
@@ -184,7 +184,8 @@ $(function(){
             }
          }
       );
-   }
+   };
+   
    $('#'+TextId).click(
       function(e){
          e.preventDefault();
@@ -199,7 +200,7 @@ $(function(){
             type : default_type,
             data : {
                // paramètres envoyés
-               function: 'updateSelectionEnd',
+               fn: 'updateSelectionEnd',
                selEnd: getSelectionEnd()
             }, 
             dataType : default_dataType, // type de données recues
@@ -220,7 +221,8 @@ $(function(){
             }
          }
       );
-   }
+   };
+   
    $('#'+TextId).click(
       function(e){
          e.preventDefault();
@@ -236,7 +238,7 @@ $(function(){
             type : default_type,
             data : {
                // paramètres envoyés
-               function: 'updateChar',
+               fn: 'updateChar',
                char: char
             }, 
             dataType : default_dataType, // type de données recues
@@ -257,7 +259,8 @@ $(function(){
             }
          }
       );
-   }
+   };
+   
    $('#'+TextId).keypress(
       function(e){
          e.preventDefault();
@@ -273,7 +276,7 @@ $(function(){
             type : default_type,
             data : {
                // paramètres envoyés
-               function: 'cutText'
+               fn: 'cutText'
             }, 
             dataType : default_dataType, // type de données recues
             
@@ -292,7 +295,8 @@ $(function(){
             }
          }
       );
-   }
+   };
+   
    $('#cutText').submit(
       function(e){
          e.preventDefault();
@@ -308,7 +312,7 @@ $(function(){
             type : default_type,
             data : {
                // paramètres envoyés
-               function: 'copyText'
+               fn: 'copyText'
             }, 
             dataType : default_dataType, // type de données recues
             
@@ -327,7 +331,8 @@ $(function(){
             }
          }
       );
-   }
+   };
+   
    $('#copyText').submit(
       function(e){
          e.preventDefault();
@@ -343,7 +348,7 @@ $(function(){
             type : default_type,
             data : {
                // paramètres envoyés
-               function: 'pasteText'
+               fn: 'pasteText'
             }, 
             
             beforeSend: function(){
@@ -361,7 +366,8 @@ $(function(){
             }
          }
       );
-   }
+   };
+   
    $('#pasteText').submit(
       function(e){
          e.preventDefault();
