@@ -11,13 +11,13 @@
  * GNU General Public License for more details
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 /**
  * This class represents a buffer, which contains a temporary text content;
  * This is also the concrete subject of the Obsever Design Pattern
- * 
+ *
  * @author wassim Chegham & hugo Marchadour
  * @category Command
  * @package command
@@ -31,7 +31,7 @@ require_once (BINPATH . 'Ihm.php');
 
 class Buffer implements Observer, Subject
 {
-	
+
 	/**
 	 * The content of the current text
 	 * @var _text
@@ -39,7 +39,7 @@ class Buffer implements Observer, Subject
 	 * @type String
 	 */
 	private $_text;
-	
+
 	/**
 	 * The begining of a selection.
 	 * @var _selectionStart
@@ -47,7 +47,7 @@ class Buffer implements Observer, Subject
 	 * @type Integer
 	 */
 	private $_selectionStart;
-	
+
 	/**
 	 * The end of a selection
 	 * @var _selectionEnd
@@ -55,7 +55,7 @@ class Buffer implements Observer, Subject
 	 * @type Integer
 	 */
 	private $_selectionEnd;
-	
+
 	/**
 	 * The clipboard object
 	 * @var _clipboard
@@ -63,27 +63,27 @@ class Buffer implements Observer, Subject
 	 * @type Clipboard
 	 */
 	private $_clipboard;
-	
-   	/**
-     * The array who contains all observers
-     * @var _observers
-     * @access private
-     * @type array observer
-     */
-   	private $_observers;
-   
+
+	/**
+	 * The array who contains all observers
+	 * @var _observers
+	 * @access private
+	 * @type array observer
+	 */
+	private $_observers;
+	 
 	/**
 	 * The constructor of the class
 	 * @return void
 	 */
 	public function __construct()
 	{
-		$this->_text = ""; 
+		$this->_text = "";
 		$this->_selectionStart = 0;
 		$this->_selectionEnd = 0;
 		$this->_clipboard = new Clipboard();
 	}
-	
+
 	/**
 	 * Get the current text
 	 * @return the current text
@@ -93,7 +93,7 @@ class Buffer implements Observer, Subject
 	{
 		return $this->_text;
 	}
-	
+
 	/**
 	 * Set the content of the current text
 	 * @return void
@@ -102,9 +102,9 @@ class Buffer implements Observer, Subject
 	 */
 	public function setText($text)
 	{
-		$this->_text = $text;	
+		$this->_text = $text;
 	}
-	
+
 	/**
 	 * Get the begining of the selection
 	 * @return int the position of the begining of the selection
@@ -114,7 +114,7 @@ class Buffer implements Observer, Subject
 	{
 		return $this->_selectionStart;
 	}
-		
+
 	/**
 	 * Set the end of the selection
 	 * @return int the position of the begining of the selection
@@ -124,7 +124,7 @@ class Buffer implements Observer, Subject
 	{
 		return $this->_selectionEnd;
 	}
-	
+
 	/**
 	 * Set the begining of the selection
 	 * @return void
@@ -135,10 +135,10 @@ class Buffer implements Observer, Subject
 	{
 		$this->_selectionStart = $val;
 	}
-	
+
 	/**
 	 * Set the end of the selection
-	 * @return void 
+	 * @return void
 	 * @param Integer $val the end of the selection
 	 * @access public
 	 */
@@ -146,7 +146,7 @@ class Buffer implements Observer, Subject
 	{
 		$this->_selectionEnd = $val;
 	}
-	
+
 	/**
 	 * Set the begining and the end of the selection
 	 * @return void
@@ -162,30 +162,33 @@ class Buffer implements Observer, Subject
 		}
 		else
 		{
-			$this->_selectionStart = $start;
-			$this->_selectionEnd = $end;
+			$this->_selectionStart = $end;
+			$this->_selectionEnd = $start;
 		}
 	}
-	
+
 	/**
 	 * Insert a character into the buffer
-	 * @return void 
+	 * @return void
 	 * @param Character $char the character to be inserted
 	 */
 	public function insert($char)
 	{
-		$this->_text = substr($this->_text, 0, $this->_selectionStart);
+		$tmp_str = $this->_text;
+
+		$this->_text = substr($tmp_str, 0, $this->_selectionStart);
 		$this->_text .= $char;
-		$this->_text .= substr($this->_text, $this->_selectionEnd, strlen($this->_text));
-		
+		$this->_text .= substr($tmp_str, $this->_selectionEnd);
+
 		$this->_selectionStart++;
-		
-		if($this->_selectionStart != $this->_selectionEnd)
+
+		if($this->_selectionStart !== $this->_selectionEnd)
 		{
 			$this->_selectionEnd = $this->_selectionStart;
 		}
+
 	}
-	
+
 	/**
 	 * Set a text content into the clipboard
 	 * @return void
@@ -195,7 +198,7 @@ class Buffer implements Observer, Subject
 	{
 		$this->_clipboard->setText($text);
 	}
-	
+
 	/**
 	 * Get a text content from the clipboard
 	 * @return String the text content from the clipboard
@@ -204,9 +207,9 @@ class Buffer implements Observer, Subject
 	{
 		return $this->_clipboard->getText();
 	}
-	
+
 	/** Command methods **/
-	
+
 	/**
 	 * Copy the current selection into clipboard
 	 * @return void
@@ -215,11 +218,11 @@ class Buffer implements Observer, Subject
 	public function copyText()
 	{
 		$text = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
-		
-		if ( $text !== "" ) 
-			$this->_setTextIntoClipBoard($text);
+
+		if ( $text !== "" )
+		$this->_setTextIntoClipBoard($text);
 	}
-	
+
 	/**
 	 * Cut the current selection into clipboard
 	 * @return void
@@ -227,26 +230,26 @@ class Buffer implements Observer, Subject
 	 */
 	public function cutText()
 	{
-		
+
 		if( $this->_selectionStart !== $this->_selectionEnd)
 		{
 			$tmp_str = $this->_text;
-			
+				
 			$text = substr($tmp_str, $this->_selectionStart, $this->_selectionEnd);
 			$this->_setTextIntoClipBoard($text);
-			
+				
 			$tmp_str = substr($tmp_str, 0, $this->_selectionStart);
 			$tmp_str .= substr($tmp_str, $this->_selectionEnd);
 
 			// deselection
 			$this->_selectionEnd = $this->_selectionStart;
-			
+				
 			$this->_text = $tmp_str;
 
 		}
-		
+
 	}
-	
+
 	/**
 	 * Paste the content of the clipboard into the buffer
 	 * @return void
@@ -257,29 +260,29 @@ class Buffer implements Observer, Subject
 
 		if( $this->_clipboard->getText() !== "")
 		{
-			
+				
 			$tmp_str = $this->_text;
 
 			$paste = $this->_getTextFromClipBoard();
-			
+				
 			$tmp_res = substr($tmp_str, 0, $this->_selectionStart);
-      $tmp_res .= $paste;
-      $tmp_res .= substr($tmp_str, $this->_selectionEnd);
-			
-      if( $this->_selectionStart !== $this->_selectionEnd )
+			$tmp_res .= $paste;
+			$tmp_res .= substr($tmp_str, $this->_selectionEnd);
+				
+			if( $this->_selectionStart !== $this->_selectionEnd )
 			{
 				// deselection
 				$this->_selectionStart += strlen($paste);
 			}
-            
-      $this->_text = $tmp_res;
-      
+
+			$this->_text = $tmp_res;
+
 		}
-		
+
 	}
-	
+
 	/**  Observer methods **/
-	
+
 	/**
 	 * Attach an observer to this concrete subject
 	 * @return void
@@ -288,11 +291,11 @@ class Buffer implements Observer, Subject
 	public function attach(&$o)
 	{
 		if(!in_array($o, $this->_observers))
-      {
-         $this->_observers[] = $o;
-      }
+		{
+			$this->_observers[] = $o;
+		}
 	}
-	
+
 	/**
 	 * Detach an observer from this concrete subject
 	 * @return void
@@ -300,13 +303,13 @@ class Buffer implements Observer, Subject
 	 */
 	public function detach(&$o)
 	{
-      	$index = array_search($o, $this->_observers);
+		$index = array_search($o, $this->_observers);
 		if($index)
-      	{
-       		unset($this->_observers[$index]);
-      	}
+		{
+			unset($this->_observers[$index]);
+		}
 	}
-	
+
 	/**
 	 * Notify the observers of this concrete subject
 	 * @return void
@@ -315,22 +318,22 @@ class Buffer implements Observer, Subject
 	public function notify()
 	{
 		foreach($this->_observers as $k => $o)
-      	{
-            $o->update($this);
-      	}
+		{
+			$o->update($this);
+		}
 	}
 
-   /**  Subject methods **/
+	/**  Subject methods **/
 
-   public function update(&$s)
-   {
-      // the IHM subject which notifies the buffer
+	public function update(&$s)
+	{
+		// the IHM subject which notifies the buffer
 
-      // update current state of buffer
-      $this->_selectionStart = $s->_selectionStart;
-      $this->_selectionEnd = $s->_selectionEnd;
-      $this->_text = $s->_text;
-   }
+		// update current state of buffer
+		$this->_selectionStart = $s->_selectionStart;
+		$this->_selectionEnd = $s->_selectionEnd;
+		$this->_text = $s->_text;
+	}
 }
 
 ?>

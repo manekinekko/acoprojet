@@ -11,13 +11,13 @@
  * GNU General Public License for more details
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 
 /**
  * This class represents the main entry of the application
- * 
+ *
  * @author wassim Chegham & hugo Marchadour
  * @category Command
  * @package command
@@ -32,7 +32,7 @@ require_once (BINPATH . 'Buffer.php');
 
 class Main
 {
-	
+
 	/**
 	 * @var represents the instance of the current object
 	 * @access private
@@ -46,14 +46,14 @@ class Main
 	 */
 	public function __construct()
 	{
-		
+
 		if ( isset($_SESSION[self::$_instance]) == false )
 		{
 			trigger_error( 'Singleton can only be accessed through Main::instance().', E_USER_ERROR );
 		}
-		
+
 	}
-	
+
 	/**
 	 * Save the current objet into session
 	 * @return void
@@ -63,17 +63,17 @@ class Main
 	{
 		$_SESSION[self::$_instance] = serialize($this);
 	}
-	
+
 	/**
-	 * Instance cloning is forbidden
+	 * Instance cloning is forbidden!
 	 * @return void
 	 * @access public
 	 */
 	public function __clone()
-  {
-    trigger_error( 'Clone is not allowed.', E_USER_ERROR );
-  }
-	
+	{
+		trigger_error( 'Clone is not allowed.', E_USER_ERROR );
+	}
+
 	/**
 	 * Singleton Pattern: keep one instance of the current object
 	 * @return the instance of the current object
@@ -81,27 +81,27 @@ class Main
 	 */
 	public static function instance()
 	{
-		
+
 		session_start();
-		
-		if(isset($_SESSION[self::$_instance]) === TRUE)
+
+		if(isset($_SESSION[self::$_instance]) === true)
 		{
 			return unserialize($_SESSION[self::$_instance]);
 		}
-		
+
 		return new Main();
 	}
-	
+
 	/**  **/
-	 public function scenario()
-	 {
-	 	
-		
-		
-		
-		
-	 }
-	
+	public function scenario()
+	{
+		 
+
+
+
+
+	}
+
 }
 
 ?>
