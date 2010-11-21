@@ -14,11 +14,17 @@
  * 
  */
 	
-  define("APPPATH", dirname(__FILE__));
+  //error_reporting(E_ALL);
+  
+//  define("APPPATH", dirname(__FILE__) . "/");
+//  define("BINPATH", APPPATH . "bin/patterns/");
+//  define("TESTPATH", APPPATH . "bin/tests/");
+//  
+//	require_once (BINPATH . "Main.php"); 
+//
+//	//$o = new Main();
+//	$o = Main::instance();
 
-	require_once ("bin/patterns/Main.php"); 
-	//$o = new Main();
-	$o = Main::instance();
-	echo "<pre>"; print_r($_SESSION); echo "</pre>";
+	echo "<pre>"; var_dump($_SESSION); echo "</pre>";
 		
 ?>
