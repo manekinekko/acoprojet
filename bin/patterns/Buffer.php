@@ -131,7 +131,7 @@ class Buffer implements Observer, Subject
 	 * @param Integer $val the begining of the selection
 	 * @access public
 	 */
-	public function setSelectionStart()
+	public function setSelectionStart($val)
 	{
 		$this->_selectionStart = $val;
 	}
@@ -155,11 +155,13 @@ class Buffer implements Observer, Subject
 	 */
 	public function setSelection($start, $end)
 	{
-		if($start <= $end){
+		if($start <= $end)
+		{
 			$this->_selectionStart = $start;
 			$this->_selectionEnd = $end;
 		}
-		else{
+		else
+		{
 			$this->_selectionStart = $start;
 			$this->_selectionEnd = $end;
 		}
@@ -191,7 +193,7 @@ class Buffer implements Observer, Subject
 	 */
 	public function _setTextIntoClipBoard($text)
 	{
-		return $this->_clipboard->setText($text);
+		$this->_clipboard->setText($text);
 	}
 	
 	/**
@@ -225,18 +227,24 @@ class Buffer implements Observer, Subject
 	 */
 	public function cutText()
 	{
+		
 		if( $this->_selectionStart !== $this->_selectionEnd)
 		{
-			$text = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
+			$tmp_str = $this->_text;
+			
+			$text = substr($tmp_str, $this->_selectionStart, $this->_selectionEnd);
 			$this->_setTextIntoClipBoard($text);
 			
-			$this->_text = substr($this->_text, 0, $this->_selectionStart);
-			$this->_text .= substr($this->_text, $this->_selectionEnd, strlen($this->_text));
+			$tmp_str = substr($tmp_str, 0, $this->_selectionStart);
+			$tmp_str .= substr($tmp_str, $this->_selectionEnd);
 
 			// deselection
 			$this->_selectionEnd = $this->_selectionStart;
+			
+			$this->_text = $tmp_str;
 
 		}
+		
 	}
 	
 	/**
@@ -246,21 +254,28 @@ class Buffer implements Observer, Subject
 	 */
 	public function pasteText()
 	{
-		if( $this->_clipboard->getText() === "")
-		{
-			if( $this->_selectionStart !== $this->_selectionEnd)
-			{
-				$this->_text = substr($this->_text, 0, $this->_selectionStart);
-				$this->_text .= substr($this->_text, $this->_selectionEnd, strlen($this->_text));
-				
-				// deselection
-				$this->_selectionEnd = $this->_selectionStart;
-			}
 
-			$this->_text = substr($this->_text, 0, $this->_selectionStart);
-			$this->_text .= $this->_getTextFromClipBoard();
-			$this->_text .= substr($this->_text, $this->_selectionStart, strlen($this->_text));
-		}	
+		if( $this->_clipboard->getText() !== "")
+		{
+			
+			$tmp_str = $this->_text;
+
+			$paste = $this->_getTextFromClipBoard();
+			
+			$tmp_res = substr($tmp_str, 0, $this->_selectionStart);
+      $tmp_res .= $paste;
+      $tmp_res .= substr($tmp_str, $this->_selectionEnd);
+			
+      if( $this->_selectionStart !== $this->_selectionEnd )
+			{
+				// deselection
+				$this->_selectionStart += strlen($paste);
+			}
+            
+      $this->_text = $tmp_res;
+      
+		}
+		
 	}
 	
 	/**  Observer methods **/
@@ -309,7 +324,7 @@ class Buffer implements Observer, Subject
 
    public function update(&$s)
    {
-      // the IHM subject who notify me that something has happened
+      // the IHM subject which notifies the buffer
 
       // update current state of buffer
       $this->_selectionStart = $s->_selectionStart;

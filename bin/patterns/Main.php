@@ -48,7 +48,7 @@ class Main
 	{
 		if ( isset($_SESSION[self::$_instance]) == false )
 		{
-			throw new ErrorException("Singleton can only be accessed through Main::instance()");
+			trigger_error( 'Singleton can only be accessed through Main::instance().', E_USER_ERROR );
 		}
 	}
 	
@@ -61,6 +61,18 @@ class Main
 	{
 		$_SESSION[self::$_instance] = serialize($this);
 	}
+	
+	/**
+	 * Instance cloning is forbidden
+	 * @return void
+	 * @access public
+	 */
+	public function __clone()
+  {
+    trigger_error( 'Clone is not allowed.', E_USER_ERROR );
+  }
+	
+	
 	
 	/**
 	 * Singleton Pattern: keep one instance of the current object
