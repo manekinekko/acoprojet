@@ -24,82 +24,30 @@
  * @version 0.1
  */
 
+require_once (BINPATH . 'Singleton.php');
 require_once (BINPATH . 'Ihm.php');
 require_once (BINPATH . 'Copy.php');
 require_once (BINPATH . 'Cut.php');
 require_once (BINPATH . 'Paste.php');
 require_once (BINPATH . 'Buffer.php');
 
-class Main
+class Main extends Singleton
 {
 
-	/**
-	 * @var represents the instance of the current object
-	 * @access private
-	 * @type Main
-	 */
-	private static $_instance;
-
-	/**
-	 * The constructor of the class
-	 * @return void
-	 */
-	public function __construct()
+  public function __construct()
+  {
+  	parent::instance();
+  }
+  
+  public function __destruct()
+  {
+  	parent::__destruct();
+  }
+	
+	/** a mock methode **/
+	public function debug()
 	{
-
-		if ( isset($_SESSION[self::$_instance]) == false )
-		{
-			trigger_error( 'Singleton can only be accessed through Main::instance().', E_USER_ERROR );
-		}
-
-	}
-
-	/**
-	 * Save the current objet into session
-	 * @return void
-	 * @access public
-	 */
-	public function __destruct()
-	{
-		$_SESSION[self::$_instance] = serialize($this);
-	}
-
-	/**
-	 * Instance cloning is forbidden!
-	 * @return void
-	 * @access public
-	 */
-	public function __clone()
-	{
-		trigger_error( 'Clone is not allowed.', E_USER_ERROR );
-	}
-
-	/**
-	 * Singleton Pattern: keep one instance of the current object
-	 * @return the instance of the current object
-	 * @access public
-	 */
-	public static function instance()
-	{
-
-		session_start();
-
-		if(isset($_SESSION[self::$_instance]) === true)
-		{
-			return unserialize($_SESSION[self::$_instance]);
-		}
-
-		return new Main();
-	}
-
-	/**  **/
-	public function scenario()
-	{
-		 
-
-
-
-
+	   echo "<pre>"; var_dump($_SESSION); echo "</pre>";
 	}
 
 }
