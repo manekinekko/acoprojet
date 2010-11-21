@@ -24,11 +24,11 @@
  * @version 0.1
  */
 
-require_once ('Ihm.php');
-require_once ('Copy.php');
-require_once ('Cut.php');
-require_once ('Paste.php');
-require_once ('Buffer.php');
+require_once (BINPATH . 'Ihm.php');
+require_once (BINPATH . 'Copy.php');
+require_once (BINPATH . 'Cut.php');
+require_once (BINPATH . 'Paste.php');
+require_once (BINPATH . 'Buffer.php');
 
 class Main
 {
@@ -46,10 +46,12 @@ class Main
 	 */
 	public function __construct()
 	{
+		
 		if ( isset($_SESSION[self::$_instance]) == false )
 		{
 			trigger_error( 'Singleton can only be accessed through Main::instance().', E_USER_ERROR );
 		}
+		
 	}
 	
 	/**
@@ -72,8 +74,6 @@ class Main
     trigger_error( 'Clone is not allowed.', E_USER_ERROR );
   }
 	
-	
-	
 	/**
 	 * Singleton Pattern: keep one instance of the current object
 	 * @return the instance of the current object
@@ -81,9 +81,7 @@ class Main
 	 */
 	public static function instance()
 	{
-		/**
-		 * Permet d'avoir l'instance courante de l'application
-		 */
+		
 		session_start();
 		
 		if(isset($_SESSION[self::$_instance]) === TRUE)

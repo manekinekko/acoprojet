@@ -23,10 +23,10 @@
  * @package command
  * @version 0.1
  */
-require_once ('Observer.php');
-require_once ('Subject.php');
-require_once ('Clipboard.php');
-require_once ('Ihm.php');
+require_once (BINPATH . 'Observer.php');
+require_once (BINPATH . 'Subject.php');
+require_once (BINPATH . 'Clipboard.php');
+require_once (BINPATH . 'Ihm.php');
 
 
 class Buffer implements Observer, Subject
