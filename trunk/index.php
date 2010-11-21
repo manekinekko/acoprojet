@@ -16,10 +16,9 @@
 	
   require_once ("config.php");
 	require_once (BINPATH . "Main.php"); 
-
-	//$o = new Main();
-	//$o = Main::instance();
-
-	echo "<pre>"; var_dump($_SESSION); echo "</pre>";
+  
+	
+	$o = new Main();
+	$o->debug();
 		
 ?>
