@@ -1,11 +1,17 @@
 <?php
 
-include_once('/var/www/acoprojet/bin/patterns/Buffer.php');
+// this is a hack to prevent the include path errors :)
+$script = basename(__FILE__);
+define("APPPATH", str_replace('/tests/command/' . $script, '', __FILE__ ) . "/patterns" );
+ini_set('include_path', ini_get('include_path').':'.APPPATH);
+//-------------
+
+include_once('Buffer.php');
 
 class BufferTest extends PHPUnit_Framework_TestCase
 {
 
-  public $this;
+  public $b;
 
 	public function setUp()
 	{
@@ -19,7 +25,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 	public function testConstructeur()
 	{
 		$thisb = new Buffer();
-		$this->assertTrue($thisb !== null);
+		$this->assertTrue($this->b !== null);
 		$this->assertNotSame($this->b, $thisb);
 	}
 
@@ -49,13 +55,13 @@ class BufferTest extends PHPUnit_Framework_TestCase
 	public function testcopyText() {
 		$this->b->setText("Hello");
 		
-		$this->b->setSelection(2, 4);
+		$this->b->setSelection(0, 4);
 		$this->b->copyText();
-		$this->assertEquals("ll", $this->b->_getTextFromClipboard());
+		$this->assertEquals("Hell", $this->b->_getTextFromClipboard());
 		
-		$this->b->setSelection(4, 2);
+		$this->b->setSelection(4, 0);
 		$this->b->copyText();
-		$this->assertEquals("ll", $this->b->_getTextFromClipboard());
+		$this->assertEquals("Hell", $this->b->_getTextFromClipboard());
 		
 		$this->b->setSelection(2, 2);
 		$this->b->copyText(); // ne doit rien changer
@@ -63,6 +69,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testpasteText() {
+		
 		$this->b->_setTextIntoClipboard("Hello"); // Hello dans le PP
 		$this->b->pasteText();
 		$this->assertEquals("Hello", $this->b->getText());
