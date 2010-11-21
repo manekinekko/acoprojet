@@ -14,8 +14,11 @@
  * 
  */
 	
+  define("APPPATH", dirname(__FILE__));
+
 	require_once ("bin/patterns/Main.php"); 
+	//$o = new Main();
 	$o = Main::instance();
 	echo "<pre>"; print_r($_SESSION); echo "</pre>";
-	
+		
 ?>
