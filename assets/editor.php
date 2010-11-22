@@ -6,6 +6,7 @@
 <html>
    <head>
       <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
+      <script  type="text/javascript" src="js/lib.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="js/jq.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="js/ajax.js" language="JavaScript" ></script>
    </head>
@@ -29,6 +30,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
          </form>
          <div class="col_right">
             <div id="console">
+               <p id="log">
+               </p>
             </div>
          </div>
       </div>
