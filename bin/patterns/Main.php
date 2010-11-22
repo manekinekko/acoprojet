@@ -25,6 +25,7 @@
  */
 
 require_once (BINPATH . 'Singleton.php');
+require_once (BINPATH . 'ConcreteMemento.php');
 require_once (BINPATH . 'Ihm.php');
 require_once (BINPATH . 'Copy.php');
 require_once (BINPATH . 'Cut.php');
