@@ -10,10 +10,13 @@
  * lib function removeSelection(obj);
  */
 
-var Debbug = false;
-var Debbug1 = false;
-var Debbug_position = false;
+
+var Debbug_selection = false;
 var Debbug_char = false;
+var Debbug_paste = true;
+var Debbug_copy = true;
+var Debbug_cut = true;
+
 var TextId = 'text';
 var LogId = 'log';
 
@@ -45,7 +48,6 @@ $(function(){
    var default_type = "POST";
    var default_dataType = "json";
    
-
    var updateSelection = function() {
       $.ajax(
          {
@@ -60,19 +62,21 @@ $(function(){
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
-               if(Debbug) console.log("updateSelection beforeSend");
-               console.log("selStart:"+ getSelectionStart(TextId));
-               console.log("selEnd:"+ getSelectionEnd(TextId));
+               if(Debbug_selection) {
+                  console.log("updateSelection beforeSend");
+                  console.log("selStart:"+ getSelectionStart(TextId));
+                  console.log("selEnd:"+ getSelectionEnd(TextId));
+               }
             },
             success: function(d){
                /*$('#resultat').html(d.response);*/
-               if(Debbug) console.log("updateSelection success");
+               if(Debbug_selection) console.log("updateSelection success");
             },
             error: function(e){
-               if(Debbug) console.log("updateSelection error" + e);
+               if(Debbug_selection) console.log("updateSelection error" + e);
             },
             complete: function(){
-               if(Debbug) console.log("updateSelection complete");
+               if(Debbug_selection) console.log("updateSelection complete");
             }
          }
       );
@@ -84,6 +88,7 @@ $(function(){
          updateSelection();
       }
    );
+   
    
    var updateChar = function(char) {
       $.ajax(
@@ -98,18 +103,20 @@ $(function(){
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
-               if(Debbug) console.log("updateChar beforeSend");
-               console.log("char:"+ char);
+               if(Debbug_char) {
+                  console.log("updateChar beforeSend");
+                  console.log("char:"+ char);
+               }
             },
             success: function(d){
                insert(char);
-               if(Debbug) console.log("updateChar success");
+               if(Debbug_char) console.log("updateChar success");
             },
             error: function(e){
-               if(Debbug) console.log("updateChar error" + e);
+               if(Debbug_char) console.log("updateChar error" + e);
             },
             complete: function(){
-               if(Debbug) console.log("updateChar complete");
+               if(Debbug_char) console.log("updateChar complete");
             }
          }
       );
@@ -122,6 +129,7 @@ $(function(){
       }
    );
    
+
    
    var cutText = function() {
       $.ajax(
@@ -135,17 +143,17 @@ $(function(){
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
-               if(Debbug) console.log("cutText beforeSend");
+               if(Debbug_cut) console.log("cutText beforeSend");
             },
             success: function(d){
                cut();
-               console.log("cutText success");
+               if(Debbug_cut) console.log("cutText success");
             },
             error: function(e){
-               if(Debbug) console.log("cutText error" + e);
+               if(Debbug_cut) console.log("cutText error" + e);
             },
             complete: function(){
-               if(Debbug) console.log("cutText complete");
+               if(Debbug_cut) console.log("cutText complete");
             }
          }
       );
@@ -158,6 +166,7 @@ $(function(){
       }
    );
    
+
    
    var copyText = function() {
       $.ajax(
@@ -171,17 +180,17 @@ $(function(){
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
-               if(Debbug) console.log("copyText beforeSend");
+               if(Debbug_copy) console.log("copyText beforeSend");
             },
             success: function(d){
                copy();
-               if(Debbug) console.log("copyText success");
+               if(Debbug_copy) console.log("copyText success");
             },
             error: function(e){
-               if(Debbug) console.log("copyText error" + e);
+               if(Debbug_copy) console.log("copyText error" + e);
             },
             complete: function(){
-               if(Debbug) console.log("copyText complete");
+               if(Debbug_copy) console.log("copyText complete");
             }
          }
       );
@@ -207,18 +216,17 @@ $(function(){
             dataType : default_dataType, // type de données recues
              
             beforeSend: function(){
-               if(Debbug) console.log("paste beforeSend");
+               if(Debbug_paste) console.log("paste beforeSend");
             },
             success: function(d){
                paste(d.text);
-               /*$('#resultat').html(d.response);*/
-               if(Debbug) console.log("paste success");
+               if(Debbug_paste) console.log("paste success");
             },
             error: function(e){
-               if(Debbug) console.log("paste error" + e);
+               if(Debbug_paste) console.log("paste error" + e);
             },
             complete: function(){
-               if(Debbug) console.log("paste complete");
+               if(Debbug_paste) console.log("paste complete");
             }
          }
       );
