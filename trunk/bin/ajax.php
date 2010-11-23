@@ -1,10 +1,11 @@
 <?php
-require_once ("/var/www/acoprojet/config.php");
-require_once (BINPATH . "Main.php");
 
-$o = Main::instance();
+$o = Main::getInstance();
 
-function main(){
+function ajax_handle(){
+	
+	global $o;
+	
 	$function_name_allowed = array('updateSelection', 'updateChar' ,'pasteText', 'copyText', 'cutText');
 	$function_name = 'default'; // function name
 	$function_valid = false; // status of function validation
@@ -62,7 +63,7 @@ function main(){
 				$params_valid = true;
 
 				// work with IHM and Buffer
-				cutText();
+				$o->executeCut();
 
 				// output define
 				/* nothing
@@ -81,7 +82,7 @@ function main(){
 				$params_valid = true;
 
 				// work with IHM and Buffer
-				cutText();
+				$o->executeCopy();
 
 				// output define
 				$output = array(); // nothing
@@ -99,8 +100,8 @@ function main(){
 
 				
 				// work with IHM and Buffer
-				$pasteText = pasteText();
-				
+				$o->executePaste();
+
 				// output define
 				/*
 				 * The real user IHM (Web browser) need to get the paste text contain in the clipboard
@@ -150,8 +151,7 @@ function main(){
 	else{
 		outputJsonError('Function name "'.$function_name.'" didn\'t recognize');
 	}
-
-
+	
 }
 
 function validPostFunction($function_name_allowed){
@@ -176,6 +176,7 @@ function outputJson($json){
 	else{
 		outputJsonError('Can not output with an array not initialized');
 	}
+	
 }
 
 function outputJsonError($msg){
@@ -191,18 +192,6 @@ function outputJsonError($msg){
 	echo json_encode( $output_json );
 }
 
-function pasteText(){
-  $o->paste();
-}
-
-function copyText(){
-  $o->copy();
-}
-
-function cutText(){
-  $o->cut();
-}
-
 function updateChar(){
 
 }
@@ -212,19 +201,26 @@ function updateSelection($selStart, $selEnd){
 }
 
 function getIhmAttributes(){
+   global $o;
+
    //todo : delete hack
-   /*return array(
+   //*
+   return array(
       'text' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       'selStart' => '3',
       'selEnd' => '9'
-   );*/
-   return array(
-      'text' => $o->ihm->getText(),
-      'selStart' => $o->ihm->getSelectionStart(),
-      'selEnd' => $o->ihm->getSelectionEnd()
    );
+   //*/
+   
+   /*
+   return array(
+      'text' => $o->getText(),
+      'selStart' => $o->getSelectionStart(),
+      'selEnd' => $o->getSelectionEnd()
+   );
+   //*/
 }
 
-main();
+ajax_handle();
 
 ?>

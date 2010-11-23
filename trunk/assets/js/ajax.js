@@ -44,7 +44,7 @@ function insert(c)
 
 $(function(){
    
-   var default_target = "/acoprojet/bin/ajax.php";
+   var default_target = "index.php?ajax";
    var default_type = "POST";
    var default_dataType = "json";
    

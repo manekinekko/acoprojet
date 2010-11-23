@@ -24,58 +24,127 @@
  * @version 0.1
  */
 
-require_once (BINPATH . 'Singleton.php');
-require_once (BINPATH . 'ConcreteMemento.php');
+//require_once (BINPATH . 'ConcreteMemento.php');
 require_once (BINPATH . 'Ihm.php');
 require_once (BINPATH . 'Copy.php');
 require_once (BINPATH . 'Cut.php');
 require_once (BINPATH . 'Paste.php');
 require_once (BINPATH . 'Buffer.php');
 
-class Main extends Singleton
+class Main
 {
 
+  private $_buffer;
+  private $_copy;
+  private $_cut;
+  private $_paste;
+  private $_ihm;
+
+
+  /**
+   * @var represents the instance of the current object
+   * @access private
+   * @type Main
+   */
+  private static $_instance = __CLASS__;
+
+  /**
+   * The constructor of the class
+   * @return void
+   */
   public function __construct()
   {
-  	parent::instance();
-  	$buffer = new Buffer();
-  	$copy = new Copy();
-  	$cut = new Cut();
-  	$paste = new Paste();
-  	$ifm = new Ihm();
+
+    if ( isset($_SESSION[self::$_instance]) )
+    {
+      trigger_error( 'Singleton can only be accessed through ' .__CLASS__. '::instance().', E_USER_ERROR );
+    }
+    else {
+    
+      session_start();
+      $this->_buffer = new Buffer();
+      $this->_copy = new Copy($this->_buffer);
+      $this->_cut = new Cut($this->_buffer);
+      $this->_paste = new Paste($this->_buffer);
+      $this->_ihm = new Ihm();
+    }
+
   }
-  
+
+  /**
+   * Save the current objet into session
+   * @return void
+   * @access public
+   */
   public function __destruct()
   {
-  	parent::__destruct();
+    //$_SESSION[self::$_instance] = serialize($this);
+    $_SESSION[self::$_instance] = $this;
   }
-	
-  public function copy()
+
+  /**
+   * Object cloning is forbidden!
+   * @return void
+   * @access public
+   */
+  public function __clone()
   {
-  	$copy->exexute();
+    trigger_error( 'Clone is not allowed.', E_USER_ERROR );
+  }
+
+  /**
+   * Singleton Pattern: keep a single instance of the current object
+   * @return the instance of the current object
+   * @access public
+   */
+  public static function getInstance()
+  {
+
+    if(isset($_SESSION[self::$_instance]) === false)
+    {
+      $c = __CLASS__;
+      //$_SESSION[self::$_instance] = serialize(new $c());
+      $_SESSION[self::$_instance] = new $c();
+    }
+
+    //return unserialize($_SESSION[self::$_instance]);
+    return $_SESSION[self::$_instance];
+
+  }
+
+  public function executeCopy()
+  {
+  	$this->_copy->execute();
   }
   
-  public function cut()
+  public function executeCut()
   {
-    $cut->exexute();
+    $this->_cut->execute();
   }
   
-  public function paste()
+  public function executePaste()
   {
-    $paste->exexute();
+    $this->_paste->execute();
   }
   
   public function getText()
   {
-  	return $ifm->getText();
+  	return $this->_buffer->getText();
   }
   
-	/** a mock methode **/
-	public function debug()
-	{
-	   echo "<pre>"; var_dump($_SESSION); echo "</pre>";
-	}
-
+  public function getSelectionStart()
+  {
+    return $this->_buffer->getSelectionStart();
+  }
+  
+  public function getSelectionEnd()
+  {
+    return $this->_buffer->getSelectionEnd();
+  }
 }
+
+/**/
+
+Main::getInstance();
 
 ?>

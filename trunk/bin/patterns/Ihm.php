@@ -24,7 +24,6 @@
  */
 require_once ('Observer.php');
 require_once ('Subject.php');
-require_once ('Buffer.php');
 
 class Ihm implements Observer, Subject
 {
@@ -189,7 +188,7 @@ class Ihm implements Observer, Subject
 
    public function update(&$s)
    {
-      // the buffer subject who notify me that something has happened
+      // the buffer subject which notifies that something has happened
 
       // update current state of ihm
       $this->_selectionStart = $s->_selectionStart;

@@ -14,14 +14,21 @@
  * 
  */
 	
-  require_once ("config.php");
-	require_once (BINPATH . "Main.php"); 
-  
-	require_once ("assets/editor.php");
-	
-	__halt_compiler();
-	
-	$o = new Main();
-	$o->debug();
+	include_once ("config.php");
+	include_once (BINPATH . "Main.php"); 	
+
+	if ( isset($_GET['clear']) )
+	{	
+		session_unset();
+		header('location:index.php');
+	}
+	else if ( isset($_GET['ajax']) ) 
+		require_once ( APPPATH. "bin/ajax.php");
 		
+	else
+	{
+		require_once (ASSETSPATH . "editor.php");
+		echo "<pre>"; print_r($_SESSION); echo "</pre>";
+	}
+	
 ?>
