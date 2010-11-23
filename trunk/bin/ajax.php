@@ -1,7 +1,5 @@
 <?php
 
-   
-   
    function main(){
       $function_name_allowed = array('updateSelection', 'updateChar' ,'pasteText', 'copyText', 'cutText');
       $function_name = 'default'; // function name
