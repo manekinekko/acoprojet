@@ -3,7 +3,7 @@
    
    
    function main(){
-      $function_name_allowed = array('pasteText', 'copyText', 'cutText', 'updateChar', 'updateSelectionEnd', 'updateSelectionStart');
+      $function_name_allowed = array('updateSelection', 'updateChar' ,'pasteText', 'copyText', 'cutText');
       $function_name = 'default'; // function name
       $function_valid = false; // status of function validation
       $params_valid = false; // status of params validation
@@ -16,29 +16,15 @@
 
          switch($function_name){
 
-            // the begining of the selection
-            case 'updateSelectionStart': 
-                  // check args
-                  if($params_valid = validPostArg('selStart')){
-                     $selStart = $_POST['selStart'];
-                     
-                     // work with IHM and Buffer
-                     updateSelectionStart($selStart);
-                     
-                     // output define
-                     $output = array(); // nothing
-                     $output_type = 'json';
-                  }
-               break;
-
             // the end of the selection
-            case 'updateSelectionEnd': 
+            case 'updateSelection': 
                   // check args
-                  if($params_valid = validPostArg('selEnd')){
+                  if($params_valid = validPostArg('selStart') && validPostArg('selEnd')){
+                     $selStart = $_POST['selStart'];
                      $selEnd = $_POST['selEnd'];
                      
                      // work with IHM and Buffer
-                     updateSelectionEnd($selEnd);
+                     updateSelection($selStart, $selEnd);
                      
                      // output define
                      $output = array(); // nothing
