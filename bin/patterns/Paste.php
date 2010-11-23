@@ -42,7 +42,7 @@ class Paste implements Command
 	 * @param Command $action the action to be performed
 	 * @access public
 	 */
-	public function __construct($receiver)
+	public function __construct(&$receiver)
 	{
 		$this->_receiver = $receiver;
 	}

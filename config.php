@@ -19,6 +19,7 @@
   define("APPPATH", dirname(__FILE__) . "/");
   define("BINPATH", APPPATH . "bin/patterns/");
   define("TESTPATH", APPPATH . "bin/tests/");
+  define("ASSETSPATH", APPPATH . "assets/");
   
   // a hack for the PHPUnit framework!
   ini_set('include_path', ini_get('include_path').':'.TESTPATH);

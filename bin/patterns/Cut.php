@@ -41,7 +41,7 @@ class Cut implements Command
 	 * @param Buffer $receiver the object receiver
 	 * @access public
 	 */
-	public function __construct($receiver)
+	public function __construct(&$receiver)
 	{
 		$this->_receiver = $receiver;
 	}
