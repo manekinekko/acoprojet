@@ -17,6 +17,9 @@
   require_once ("config.php");
 	require_once (BINPATH . "Main.php"); 
   
+	require_once ("assets/editor.php");
+	
+	__halt_compiler();
 	
 	$o = new Main();
 	$o->debug();

@@ -27,7 +27,7 @@ function paste(str)
 
 function cut() 
 {
-   removeSelection();
+   removeSelection(TextId);
 }
 
 function copy() 
@@ -44,7 +44,7 @@ function insert(c)
 
 $(function(){
    
-   var default_target = "../bin/ajax.php";
+   var default_target = "/acoprojet/bin/ajax.php";
    var default_type = "POST";
    var default_dataType = "json";
    
@@ -71,7 +71,7 @@ $(function(){
             success: function(response){
                /*$('#resultat').html(response.response);*/
                if(Debbug_selection) console.log("updateSelection success");
-               if(response.Error) console.log(response.Error);
+               if(response != undefined && response.Error) console.log(response.Error);
             },
             error: function(e){
                if(Debbug_selection) console.log("updateSelection error" + e);
@@ -112,7 +112,7 @@ $(function(){
             success: function(response){
                insert(char);
                if(Debbug_char) console.log("updateChar success");
-               if(response.Error) console.log(response.Error);
+               if(response != undefined && response.Error) console.log(response.Error);
             },
             error: function(e){
                console.log("updateChar error" + e);
@@ -126,8 +126,19 @@ $(function(){
    
    $('#'+TextId).keypress(
       function(e){
-         e.preventDefault();
-         updateChar(getChar(e));
+    	  
+    	  var o = getChar(e);
+    	  var char = o.char;
+    	  
+    	  // allow ascii chars only
+    	  if( ( o.code == 8 || o.code == 9 ) 
+    		  && o.code >= 13 && o.code <= 111 
+    		  && o.code >= 114 && o.code <= 222 
+    	  )
+    	  {
+    		  e.preventDefault();
+        	  updateChar(o.char);
+    	  }
       }
    );
    
@@ -150,7 +161,7 @@ $(function(){
             success: function(response){
                cut();
                if(Debbug_cut) console.log("cutText success");
-               if(response.Error) console.log(response.Error);
+               if(response != undefined && response.Error) console.log(response.Error);
             },
             error: function(e){
                console.log("cutText error" + e);
@@ -188,7 +199,7 @@ $(function(){
             success: function(response){
                copy();
                if(Debbug_copy) console.log("copyText success");
-               if(response.Error) console.log(response.Error);
+               if(response != undefined && response.Error) console.log(response.Error);
             },
             error: function(e){
                console.log("copyText error" + e);
@@ -223,13 +234,14 @@ $(function(){
                if(Debbug_paste) console.log("paste beforeSend");
             },
             success: function(response){
-               paste(response.return);
+               paste(response.text);
+               
                if(Debbug_paste) {
                   console.log("paste success");
                   console.log(response);
-                  console.log("paste from PP:"+response.return);
+                  console.log("paste from PP:"+response.text);
                }
-               if(response.Error) console.log(response.Error);
+               if(response != undefined && response.Error) console.log(response.Error);
             },
             error: function(e){
                console.log("paste error" + e);

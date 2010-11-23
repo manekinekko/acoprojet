@@ -38,6 +38,11 @@ class Main extends Singleton
   public function __construct()
   {
   	parent::instance();
+  	$buffer = new Buffer();
+  	$copy = new Copy();
+  	$cut = new Cut();
+  	$paste = new Paste();
+  	$ifm = new Ihm();
   }
   
   public function __destruct()
@@ -45,6 +50,26 @@ class Main extends Singleton
   	parent::__destruct();
   }
 	
+  public function copy()
+  {
+  	$copy->exexute();
+  }
+  
+  public function cut()
+  {
+    $cut->exexute();
+  }
+  
+  public function paste()
+  {
+    $paste->exexute();
+  }
+  
+  public function getText()
+  {
+  	return $ifm->getText();
+  }
+  
 	/** a mock methode **/
 	public function debug()
 	{

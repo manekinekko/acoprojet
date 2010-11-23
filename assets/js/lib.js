@@ -56,7 +56,7 @@ function getChar(evt) {
    if (charCode == 145) char = "scroll lock"; // scroll lock
    */
    char = String.fromCharCode(charCode);
-   return char;
+   return {char:char, code:charCode};
 }
 
 function getSelectionStart(obj_id) {
