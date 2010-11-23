@@ -15,7 +15,7 @@ function main(){
 	$function_valid = validPostArg('function_name') && validPostFunction($function_name_allowed);
 	
 	if($function_valid){
-		$function_name = $_POST['function_name'];
+		$function_name = $_REQUEST['function_name'];
 
 		switch($function_name){
 
@@ -24,8 +24,8 @@ function main(){
 				// check args
 				$params_valid = validPostArg('selStart') && validPostArg('selEnd');
 				if($params_valid){
-					$selStart = $_POST['selStart'];
-					$selEnd = $_POST['selEnd'];
+					$selStart = $_REQUEST['selStart'];
+					$selEnd = $_REQUEST['selEnd'];
 					 
 					// work with IHM and Buffer
 					updateSelection($selStart, $selEnd);
@@ -33,6 +33,7 @@ function main(){
 					// output define
 					$output = array(); // nothing
 					$output_type = 'json';
+               $output['Ihm'] = getIhmAttributes();
 				}
 				break;
 
@@ -41,7 +42,7 @@ function main(){
 				// check args
 				$params_valid = validPostArg('char');
 				if($params_valid){
-					$char = $_POST['char'];
+					$char = $_REQUEST['char'];
 
 					// work with IHM and Buffer
 					updateChar($char);
@@ -49,6 +50,7 @@ function main(){
 					// output define
 					$output = array(); // nothing
 					$output_type = 'json';
+               $output['Ihm'] = getIhmAttributes();
 				}
 				break;
 
@@ -68,6 +70,7 @@ function main(){
 				 */
 				$output = array();
 				$output_type = 'json';
+            $output['Ihm'] = getIhmAttributes();
 				break;
 
 			case 'copyText':
@@ -83,6 +86,7 @@ function main(){
 				// output define
 				$output = array(); // nothing
 				$output_type = 'json';
+            
 				break;
 
 			case 'pasteText':
@@ -104,7 +108,7 @@ function main(){
 				 * IHM (Web browser) and its image(Ihm.php) will update there attributs :
 				 * positionStart & positionEnd & text
 				 */
-				$output = array('text' => $pasteText);
+				$output['Ihm'] = getIhmAttributes();
 				$output_type = 'json';
 				break;
 
@@ -127,7 +131,7 @@ function main(){
 		if($params_valid){
 			switch($output_type){
 				case 'json':
-					outputJson(array('response'=>$output));
+					outputJson($output);
 					break;
 
 					/*
@@ -135,7 +139,7 @@ function main(){
 					 */
 
 				default :
-					outputJson(array('response'=>$output));
+					outputJson($output);
 					break;
 			}
 		}
@@ -144,18 +148,18 @@ function main(){
 		}
 	}
 	else{
-		outputJsonError('Function name didn\'t recognize');
+		outputJsonError('Function name "'.$function_name.'" didn\'t recognize');
 	}
 
 
 }
 
 function validPostFunction($function_name_allowed){
-	return is_array($function_name_allowed) && in_array($_POST['function_name'], $function_name_allowed);
+	return is_array($function_name_allowed) && in_array($_REQUEST['function_name'], $function_name_allowed);
 }
 
 function validPostArg($arg_label){
-	return isset($_POST[$arg_label]) && !empty($_POST[$arg_label]);
+	return isset($_REQUEST[$arg_label]) && !empty($_REQUEST[$arg_label]);
 }
  
 function validGetArg($arg_label){
@@ -189,7 +193,6 @@ function outputJsonError($msg){
 
 function pasteText(){
   $o->paste();
-  return $o->ihm->getText();
 }
 
 function copyText(){
@@ -206,6 +209,20 @@ function updateChar(){
 
 function updateSelection($selStart, $selEnd){
 
+}
+
+function getIhmAttributes(){
+   //todo : delete hack
+   /*return array(
+      'text' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      'selStart' => '3',
+      'selEnd' => '9'
+   );*/
+   return array(
+      'text' => $o->ihm->getText(),
+      'selStart' => $o->ihm->getSelectionStart(),
+      'selEnd' => $o->ihm->getSelectionEnd()
+   );
 }
 
 main();

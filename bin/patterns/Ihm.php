@@ -81,6 +81,26 @@ class Ihm implements Observer, Subject
    }
 
    /**
+    * Get the begining of the selection
+    * @return int the position of the begining of the selection
+    * @access public
+    */
+   public function getSelectionStart()
+   {
+      return $this->_selectionStart;
+   }
+
+   /**
+    * Set the end of the selection
+    * @return int the position of the begining of the selection
+    * @access public
+    */
+   public function getSelectionEnd()
+   {
+      return $this->_selectionEnd;
+   }
+
+   /**
     * Get the current text
     * @return the current text
     * @access public
