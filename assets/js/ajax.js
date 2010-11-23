@@ -12,6 +12,8 @@
 
 var Debbug = false;
 var Debbug1 = false;
+var Debbug_position = false;
+var Debbug_char = false;
 var TextId = 'text';
 var LogId = 'log';
 
@@ -135,7 +137,7 @@ $(function(){
                console.log("char:"+ char);
             },
             success: function(d){
-               insert(d.character);
+               insert(char);
                if(Debbug) console.log("updateChar success");
             },
             error: function(e){

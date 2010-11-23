@@ -163,8 +163,8 @@ function setText(str, obj_id){
    obj.value = text;
  
    //Re-establish the selection, adjusted for the added characters.
-   obj.selectionStart = start+str.length;
-   obj.selectionEnd = end+str.length;
+   obj.selectionStart = end;
+   obj.selectionEnd = end;
 }
 
 function removeSelection(obj_id){
