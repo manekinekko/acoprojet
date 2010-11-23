@@ -1,7 +1,7 @@
 <?php
 
-   main();
-
+   
+   
    function main(){
       $function_name_allowed = array('pasteText', 'copyText', 'cutText', 'updateChar', 'updateSelectionEnd', 'updateSelectionStart');
       $function_name = 'default'; // function name
@@ -150,6 +150,7 @@
          else{
             outputJsonError('Params or one of params have not a correct form');
          }
+      }
       else{
          outputJsonError('Function name didn\'t recognize');
       }
@@ -176,7 +177,7 @@
          echo json_encode( $json );
       }
       else{
-         outputJsonError('Can not output with an array not initialized')
+         outputJsonError('Can not output with an array not initialized');
       }
    }
 
@@ -190,7 +191,7 @@
          $output_json['Error'] = 'Error without feedback';
       }
       header('Content-Type: text/javascript');
-      echo json_encode( $json );
+      echo json_encode( $output_json );
    }
 
    function pasteText(){
@@ -217,6 +218,6 @@
 
    }
 
-
+   main();
 
 ?>
