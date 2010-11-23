@@ -7,17 +7,18 @@
       $params_valid = false; // status of params validation
       $output = array(); // output data
       $output_type = 'default'; //output type
-
-
-      if($function_valid = (validPostArg('function_name') && validPostFunction('function_name', &$array_func_allowed))){
+      
+      $function_valid = validPostArg('function_name') && validPostFunction($function_name_allowed);
+      if($function_valid){
          $function_name = $_POST['function_name'];
-
+      
          switch($function_name){
 
             // the end of the selection
             case 'updateSelection': 
                   // check args
-                  if($params_valid = validPostArg('selStart') && validPostArg('selEnd')){
+                  $params_valid = validPostArg('selStart') && validPostArg('selEnd'); 
+                  if($params_valid){
                      $selStart = $_POST['selStart'];
                      $selEnd = $_POST['selEnd'];
                      
@@ -33,7 +34,8 @@
             // the character to be stored
             case 'updateChar':
                   // check args
-                  if($params_valid = validPostArg('char')){
+                  $params_valid = validPostArg('char');
+                  if($params_valid){
                      $char = $_POST['char'];
 
                      // work with IHM and Buffer
@@ -87,6 +89,8 @@
 
                   // work with IHM and Buffer
                   $pasteText = pasteText();
+                  //TODO : deleted this hack
+                  $pasteText = '#paste#';
 
                   // output define
                   /*
@@ -111,11 +115,9 @@
             */
 
             default: 
-               
+                  
                break;
          }
-      }
-      if($function_valid){
          if($params_valid){
             switch($output_type){
                case 'json': 
@@ -138,10 +140,12 @@
       else{
          outputJsonError('Function name didn\'t recognize');
       }
+
+      
    }
 
-   function validPostFunction($func_label, &$array_func_allowed){
-      return is_array($array_func_allowed) && in_array($_POST[$func_label], $array_func_allowed);
+   function validPostFunction($function_name_allowed){
+      return is_array($function_name_allowed) && in_array($_POST['function_name'], $function_name_allowed);
    }
 
    function validPostArg($arg_label){
@@ -194,11 +198,7 @@
 
    }
 
-   function updateSelectionStart(){
-
-   }
-
-   function updateSelectionEnd(){
+   function updateSelection($selStart, $selEnd){
 
    }
 

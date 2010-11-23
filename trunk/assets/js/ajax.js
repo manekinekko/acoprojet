@@ -68,9 +68,10 @@ $(function(){
                   console.log("selEnd:"+ getSelectionEnd(TextId));
                }
             },
-            success: function(d){
-               /*$('#resultat').html(d.response);*/
+            success: function(response){
+               /*$('#resultat').html(response.response);*/
                if(Debbug_selection) console.log("updateSelection success");
+               if(response.Error) console.log(response.Error);
             },
             error: function(e){
                if(Debbug_selection) console.log("updateSelection error" + e);
@@ -108,12 +109,13 @@ $(function(){
                   console.log("char:"+ char);
                }
             },
-            success: function(d){
+            success: function(response){
                insert(char);
                if(Debbug_char) console.log("updateChar success");
+               if(response.Error) console.log(response.Error);
             },
             error: function(e){
-               if(Debbug_char) console.log("updateChar error" + e);
+               console.log("updateChar error" + e);
             },
             complete: function(){
                if(Debbug_char) console.log("updateChar complete");
@@ -145,12 +147,13 @@ $(function(){
             beforeSend: function(){
                if(Debbug_cut) console.log("cutText beforeSend");
             },
-            success: function(d){
+            success: function(response){
                cut();
                if(Debbug_cut) console.log("cutText success");
+               if(response.Error) console.log(response.Error);
             },
             error: function(e){
-               if(Debbug_cut) console.log("cutText error" + e);
+               console.log("cutText error" + e);
             },
             complete: function(){
                if(Debbug_cut) console.log("cutText complete");
@@ -159,7 +162,7 @@ $(function(){
       );
    };
    
-   $('#cutText').submit(
+   $('#cutText').click(
       function(e){
          e.preventDefault();
          cutText();
@@ -182,12 +185,13 @@ $(function(){
             beforeSend: function(){
                if(Debbug_copy) console.log("copyText beforeSend");
             },
-            success: function(d){
+            success: function(response){
                copy();
                if(Debbug_copy) console.log("copyText success");
+               if(response.Error) console.log(response.Error);
             },
             error: function(e){
-               if(Debbug_copy) console.log("copyText error" + e);
+               console.log("copyText error" + e);
             },
             complete: function(){
                if(Debbug_copy) console.log("copyText complete");
@@ -196,7 +200,7 @@ $(function(){
       );
    };
    
-   $('#copyText').submit(
+   $('#copyText').click(
       function(e){
          e.preventDefault();
          copyText();
@@ -218,12 +222,17 @@ $(function(){
             beforeSend: function(){
                if(Debbug_paste) console.log("paste beforeSend");
             },
-            success: function(d){
-               paste(d.text);
-               if(Debbug_paste) console.log("paste success");
+            success: function(response){
+               paste(response.return);
+               if(Debbug_paste) {
+                  console.log("paste success");
+                  console.log(response);
+                  console.log("paste from PP:"+response.return);
+               }
+               if(response.Error) console.log(response.Error);
             },
             error: function(e){
-               if(Debbug_paste) console.log("paste error" + e);
+               console.log("paste error" + e);
             },
             complete: function(){
                if(Debbug_paste) console.log("paste complete");
@@ -232,7 +241,7 @@ $(function(){
       );
    };
    
-   $('#pasteText').submit(
+   $('#pasteText').click(
       function(e){
          e.preventDefault();
          pasteText();
