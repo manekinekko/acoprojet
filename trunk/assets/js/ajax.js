@@ -45,80 +45,45 @@ $(function(){
    var default_type = "POST";
    var default_dataType = "json";
    
-   var updateSelectionStart = function() {
+
+   var updateSelection = function() {
       $.ajax(
          {
             url : default_target,
             type : default_type,
             data : {
                // paramètres envoyés
-               function_name: 'updateSelectionStart',
-               selStart: getSelectionStart(TextId)
-            }, 
-            dataType : default_dataType, // type de données recues
-            
-            beforeSend: function(){
-               if(Debbug) console.log("updateSelectionStart beforeSend");
-               console.log("selStart:"+ getSelectionStart(TextId));
-            },
-            success: function(d){
-               /*$('#resultat').html(d.response);*/
-               if(Debbug) console.log("updateSelectionStart success");
-            },
-            error: function(e){
-               if(Debbug) console.log("updateSelectionStart error" + e);
-            },
-            complete: function(){
-               if(Debbug) console.log("updateSelectionStart complete");
-            }
-         }
-      );
-   };
-   
-   $('#'+TextId).click(
-      function(e){
-         e.preventDefault();
-         updateSelectionStart();
-      }
-   );
-   
-   var updateSelectionEnd = function() {
-      $.ajax(
-         {
-            url : default_target,
-            type : default_type,
-            data : {
-               // paramètres envoyés
-               function_name: 'updateSelectionEnd',
+               function_name: 'updateSelection',
+               selStart: getSelectionStart(TextId),
                selEnd: getSelectionEnd(TextId)
             }, 
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
-               if(Debbug) console.log("updateSelectionEnd beforeSend");
+               if(Debbug) console.log("updateSelection beforeSend");
+               console.log("selStart:"+ getSelectionStart(TextId));
                console.log("selEnd:"+ getSelectionEnd(TextId));
             },
             success: function(d){
                /*$('#resultat').html(d.response);*/
-               if(Debbug) console.log("updateSelectionEnd success");
+               if(Debbug) console.log("updateSelection success");
             },
             error: function(e){
-               if(Debbug) console.log("updateSelectionEnd error" + e);
+               if(Debbug) console.log("updateSelection error" + e);
             },
             complete: function(){
-               if(Debbug) console.log("updateSelectionEnd complete");
+               if(Debbug) console.log("updateSelection complete");
             }
          }
       );
    };
    
-   $('#'+TextId).click(
+   $('#'+TextId).mouseup(
       function(e){
          e.preventDefault();
-         updateSelectionEnd();
+         updateSelection();
       }
    );
-   
    
    var updateChar = function(char) {
       $.ajax(
