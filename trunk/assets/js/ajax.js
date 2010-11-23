@@ -69,9 +69,9 @@ $(function(){
                }
             },
             success: function(response){
-               /*$('#resultat').html(response.response);*/
                if(Debbug_selection) console.log("updateSelection success");
                if(response != undefined && response.Error) console.log(response.Error);
+               update(TextId, response.Ihm);
             },
             error: function(e){
                if(Debbug_selection) console.log("updateSelection error" + e);
@@ -110,9 +110,10 @@ $(function(){
                }
             },
             success: function(response){
-               insert(char);
                if(Debbug_char) console.log("updateChar success");
                if(response != undefined && response.Error) console.log(response.Error);
+               update(TextId, response.Ihm);
+               
             },
             error: function(e){
                console.log("updateChar error" + e);
@@ -162,6 +163,7 @@ $(function(){
                cut();
                if(Debbug_cut) console.log("cutText success");
                if(response != undefined && response.Error) console.log(response.Error);
+               update(TextId, response.Ihm);
             },
             error: function(e){
                console.log("cutText error" + e);
@@ -200,6 +202,7 @@ $(function(){
                copy();
                if(Debbug_copy) console.log("copyText success");
                if(response != undefined && response.Error) console.log(response.Error);
+               update(TextId, response.Ihm);
             },
             error: function(e){
                console.log("copyText error" + e);
@@ -242,6 +245,7 @@ $(function(){
                   console.log("paste from PP:"+response.text);
                }
                if(response != undefined && response.Error) console.log(response.Error);
+               update(TextId, response.Ihm);
             },
             error: function(e){
                console.log("paste error" + e);
