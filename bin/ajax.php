@@ -1,7 +1,5 @@
 <?php
 
-$session = Session::getInstance();
-
 function ajax_handle(){
 	$debug = true;
 	global $session;

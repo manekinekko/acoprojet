@@ -26,28 +26,25 @@
 
 //require_once (BINPATH . 'ConcreteMemento.php');
 require_once (BINPATH . 'Ihm.php');
-require_once (BINPATH . 'Copy.php');
-require_once (BINPATH . 'Cut.php');
-require_once (BINPATH . 'Paste.php');
 require_once (BINPATH . 'Buffer.php');
 
 class Session
 {
-  private $_buffer;
-  public $ihm;
+  
+	public $ihm;
 
   /**
    * @var represents the instance of the current object
    * @access private
    * @type Session
    */
-  private static $_instance = __CLASS__;
+  private static $_instance = null;
 
   /**
    * The constructor of the class
    * @return void
    */
-  public function __construct()
+  private function __construct()
   {
 
     if ( isset($_SESSION[self::$_instance]) )
@@ -55,11 +52,10 @@ class Session
       trigger_error( 'Singleton can only be accessed through ' .__CLASS__. '::instance().', E_USER_ERROR );
     }
     else {
-      session_start();
-      $this->_buffer = new Buffer();
-      $this->ihm = new Ihm($this->_buffer);
-      $this->_buffer->attach($this->ihm);
-      $this->ihm->attach($this->_buffer);
+    	$_buffer = new Buffer();
+      $this->ihm = new Ihm($_buffer);
+      $_buffer->attach($this->ihm);
+      $this->ihm->attach($_buffer);
     }
   }
 
@@ -71,7 +67,7 @@ class Session
   public function __destruct()
   {
     //$_SESSION[self::$_instance] = serialize($this);
-    $_SESSION[self::$_instance] = $this;
+    $_SESSION[__CLASS__] = $this;
   }
 
   /**
@@ -89,23 +85,24 @@ class Session
    * @return the instance of the current object
    * @access public
    */
-  public static function getInstance()
+  public static function &getInstance()
   {
 
-    if(isset($_SESSION[self::$_instance]) === false)
+  	if( is_null(self::$_instance) )
     {
       $c = __CLASS__;
       //$_SESSION[self::$_instance] = serialize(new $c());
-      $_SESSION[self::$_instance] = new $c();
+      self::$_instance = new $c();
+      $_SESSION[__CLASS__] = self::$_instance;
     }
 
     //return unserialize($_SESSION[self::$_instance]);
-    return $_SESSION[self::$_instance];
+    return $_SESSION[__CLASS__];
   }
 }
 
 /**/
 
-Session::getInstance();
+$session =& Session::getInstance();
 
 ?>
