@@ -25,12 +25,14 @@
                   <legend><b>Editeur de texte</b></legend><textarea id="text" rows="10" cols="40"></textarea>
                </fieldset>
             </form>
+            <a href="?clear" >Vider la session</a>
          </div>
          <div class="col_right">
             <div id="console">
                <pre id='pre'></pre>
             </div>
          </div>
+    </div>
    </body>
    
 </html>
