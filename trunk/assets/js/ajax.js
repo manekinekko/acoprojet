@@ -80,6 +80,7 @@ $(function(){
                   console.log("selStart:"+ response.debug.Ihm.selStart);
                   console.log("selEnd:"+ response.debug.Ihm.selEnd);
                   console.log("text:"+ response.debug.Ihm.text);
+                  console.log("ihm_hash:"+ response.debug.Ihm.ihm_hash);
                   console.log("_PHP DEBUG_"); 
                }
                update(TextId, response.Ihm);
@@ -137,6 +138,7 @@ $(function(){
                   console.log("selStart:"+ response.debug.Ihm.selStart);
                   console.log("selEnd:"+ response.debug.Ihm.selEnd);
                   console.log("text:"+ response.debug.Ihm.text);
+                  console.log("ihm_hash:"+ response.debug.Ihm.ihm_hash);
                   console.log("_PHP DEBUG_"); 
                }
                if(Debbug_char) {
@@ -212,6 +214,7 @@ $(function(){
                   console.log("selStart:"+ response.debug.Ihm.selStart);
                   console.log("selEnd:"+ response.debug.Ihm.selEnd);
                   console.log("text:"+ response.debug.Ihm.text);
+                  console.log("ihm_hash:"+ response.debug.Ihm.ihm_hash);
                   console.log("_PHP DEBUG_"); 
                }
                if(Debbug_cut) {
@@ -271,6 +274,7 @@ $(function(){
                   console.log("selStart:"+ response.debug.Ihm.selStart);
                   console.log("selEnd:"+ response.debug.Ihm.selEnd);
                   console.log("text:"+ response.debug.Ihm.text);
+                  console.log("ihm_hash:"+ response.debug.Ihm.ihm_hash);
                   console.log("_PHP DEBUG_"); 
                }
                
@@ -326,6 +330,7 @@ $(function(){
                   console.log("selStart:"+ response.debug.Ihm.selStart);
                   console.log("selEnd:"+ response.debug.Ihm.selEnd);
                   console.log("text:"+ response.debug.Ihm.text);
+                  console.log("ihm_hash:"+ response.debug.Ihm.ihm_hash);
                   console.log("_PHP DEBUG_"); 
                }
                if(Debbug_paste) {
