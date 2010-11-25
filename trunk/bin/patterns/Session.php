@@ -31,20 +31,15 @@ require_once (BINPATH . 'Cut.php');
 require_once (BINPATH . 'Paste.php');
 require_once (BINPATH . 'Buffer.php');
 
-class Main
+class Session
 {
-
   private $_buffer;
-  private $_copy;
-  private $_cut;
-  private $_paste;
-  private $_ihm;
-
+  public $ihm;
 
   /**
    * @var represents the instance of the current object
    * @access private
-   * @type Main
+   * @type Session
    */
   private static $_instance = __CLASS__;
 
@@ -60,15 +55,10 @@ class Main
       trigger_error( 'Singleton can only be accessed through ' .__CLASS__. '::instance().', E_USER_ERROR );
     }
     else {
-    
       session_start();
       $this->_buffer = new Buffer();
-      $this->_copy = new Copy($this->_buffer);
-      $this->_cut = new Cut($this->_buffer);
-      $this->_paste = new Paste($this->_buffer);
-      $this->_ihm = new Ihm();
+      $this->ihm = new Ihm($this->_buffer);
     }
-
   }
 
   /**
@@ -109,42 +99,11 @@ class Main
 
     //return unserialize($_SESSION[self::$_instance]);
     return $_SESSION[self::$_instance];
-
-  }
-
-  public function executeCopy()
-  {
-  	$this->_copy->execute();
-  }
-  
-  public function executeCut()
-  {
-    $this->_cut->execute();
-  }
-  
-  public function executePaste()
-  {
-    $this->_paste->execute();
-  }
-  
-  public function getText()
-  {
-  	return $this->_buffer->getText();
-  }
-  
-  public function getSelectionStart()
-  {
-    return $this->_buffer->getSelectionStart();
-  }
-  
-  public function getSelectionEnd()
-  {
-    return $this->_buffer->getSelectionEnd();
   }
 }
 
 /**/
 
-Main::getInstance();
+Session::getInstance();
 
 ?>

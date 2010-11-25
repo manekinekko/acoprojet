@@ -22,10 +22,7 @@
                <button name="pasteText" name="pasteText" id="pasteText" value="1" type="button">coller</button>
             </fieldset>
             <fieldset>
-               <legend><b>Editeur de texte</b></legend>
-               <textarea id="text" rows="10" cols="80">
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-               </textarea>
+               <legend><b>Editeur de texte</b></legend><textarea id="text" rows="10" cols="80"></textarea>
             </fieldset>
          </form>
          <div class="col_right">
