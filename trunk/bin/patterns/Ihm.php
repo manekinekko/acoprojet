@@ -101,6 +101,7 @@ class Ihm implements Observer, Subject
       $this->_selectionStart = 0;
       $this->_selectionEnd = 0;
       $this->_crtime = strftime("%T", time());
+      $this->_hash = spl_object_hash($this);
    }
 
    public function getChar()

@@ -16,7 +16,8 @@
 	
 	include_once ("config.php");
 	include_once (BINPATH . "Session.php"); 	
-
+  session_start();
+	
 	if ( isset($_GET['clear']) )
 	{	
 		session_unset();
@@ -28,7 +29,7 @@
 	else if ( isset($_GET['debug']) ) {
       echo (strftime("%T", time()).' ');
       print_r($_SESSION);
-   }
+  }
 	else
 	{
 		require_once (ASSETSPATH . "editor.php");
