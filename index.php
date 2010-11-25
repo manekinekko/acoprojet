@@ -32,7 +32,7 @@
 	else
 	{
 		require_once (ASSETSPATH . "editor.php");
-		echo "<pre style='background-color:#000; color:#fff; font-size:10px' id='pre'>"; print_r($_SESSION); echo "</pre>";
+		/*echo "<pre style='background-color:#000; color:#fff; font-size:10px' id='pre'>"; print_r($_SESSION); echo "</pre>";*/
 	}
 	
 ?>

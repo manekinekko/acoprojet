@@ -128,7 +128,6 @@ function getSelText(obj_id){
 
 function update(obj_id, Ihm){
    var obj = document.getElementById(obj_id);
-   console.log(Ihm);
    obj.value = Ihm.text;
    
    if(obj.setSelectionRange)

@@ -58,6 +58,8 @@ class Session
       session_start();
       $this->_buffer = new Buffer();
       $this->ihm = new Ihm($this->_buffer);
+      $this->_buffer->attach($this->ihm);
+      $this->ihm->attach($this->_buffer);
     }
   }
 
