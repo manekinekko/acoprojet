@@ -34,6 +34,8 @@ class Insert implements Command
 	 */
 	protected $_receiver, $_sender;
 
+   private $_current_char, $_crtime, $_insert_hash;
+
 	/**
 	 * The constructor of the class
 	 * @return void
@@ -44,6 +46,9 @@ class Insert implements Command
 	{
 		$this->_receiver = $receiver;
       $this->_sender = $sender;
+      $this->_current_char = '#';
+      $_crtime = strftime("%T", time());
+      $_insert_hash = spl_object_hash ($this);
 	}
 	
 	/**
@@ -53,7 +58,9 @@ class Insert implements Command
 	 */
 	public function execute()
 	{
+      var_dump("hello");
       $char = $this->_sender->getChar();
+      $this->_current_char = $char;
 		$this->_receiver->insert($char);
 	}
 }

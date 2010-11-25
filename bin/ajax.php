@@ -187,7 +187,8 @@ function getIhmAttributes(){
 }
 
 function debug_me(){
-   return array('Ihm' => getIhmAttributes());
+   global $session;
+   return array('Ihm' => array_merge(getIhmAttributes(), array('ihm_hash' => spl_object_hash($session->ihm))));
 }
 
 ajax_handle();
