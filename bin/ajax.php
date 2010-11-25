@@ -3,7 +3,7 @@
 $session = Session::getInstance();
 
 function ajax_handle(){
-	
+	$debug = true;
 	global $session;
 	
 	$function_name_allowed = array('updateSelection', 'updateChar' ,'pasteText', 'copyText', 'cutText');
@@ -32,13 +32,15 @@ function ajax_handle(){
 					// work with IHM and Buffer
 					$session->ihm->setSelectionStart($selStart);
                $session->ihm->setSelectionStart($selEnd);
+               
 					// output define
 					$output_type = 'json';
                $output['Ihm'] = getIhmAttributes();
+               $output['debug'] = debug_me();
 				}
 				break;
 
-				// the character to be stored
+         // the character to be stored
 			case 'updateChar':
 				// check args
 				$params_valid = validPostArg('char');
@@ -46,11 +48,12 @@ function ajax_handle(){
 					$char = $_REQUEST['char'];
 
 					// work with IHM and Buffer
-					
                $session->ihm->setChar($char);
+
 					// output define
 					$output_type = 'json';
                $output['Ihm'] = getIhmAttributes();
+               $output['debug'] = debug_me();
 				}
 				break;
 
@@ -65,11 +68,9 @@ function ajax_handle(){
 				$session->ihm->cut();
 
 				// output define
-				/* nothing
-				 * the IHM (Web browser) will deleted the cut text from the textarea by himself
-				 */
 				$output_type = 'json';
             $output['Ihm'] = getIhmAttributes();
+            $output['debug'] = debug_me();
 				break;
 
 			case 'copyText':
@@ -92,40 +93,19 @@ function ajax_handle(){
 				 * and its image(Ihm.php) are syncronized at every command
 				 * Ihm.php must have the positionStart & positionEnd that IHM (Web browser)
 				 */
-
 				$params_valid = true;
-
 				
 				// work with IHM and Buffer
 				$session->ihm->paste();
 
 				// output define
-				/*
-				 * The real user IHM (Web browser) need to get the paste text contain in the clipboard
-				 * of the buffer.
-				 * IHM (Web browser) and its image(Ihm.php) will update there attributs :
-				 * positionStart & positionEnd & text
-				 */
+            $output_type = 'json';
 				$output['Ihm'] = getIhmAttributes();
-				$output_type = 'json';
-				break;
-
-				/*
-				 // add your commandTemplate label in $function_name_allowed array
-				 case 'commandTemplate':
-				 // check args
-				 $params_valid = true;
-				 // work with IHM and Buffer
-				 // output define
-				 $output = array();
-				 $output_type = 'json';
-				 */
-
-			default:
-
+            $output['debug'] = debug_me();
+				
 				break;
 		}
-      var_dump($output);
+
 		if($params_valid){
 			switch($output_type){
 				case 'json':
@@ -209,6 +189,10 @@ function getIhmAttributes(){
       'selEnd' => $session->ihm->getSelectionEnd()
    );
    //*/
+}
+
+function debug_me(){
+   
 }
 
 ajax_handle();

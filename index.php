@@ -26,7 +26,7 @@
 		require_once ( APPPATH. "bin/ajax.php");
 
 	else if ( isset($_GET['debug']) ) {
-      echo (strftime("%T", time()));
+      echo (strftime("%T", time()).' ');
       print_r($_SESSION);
    }
 	else

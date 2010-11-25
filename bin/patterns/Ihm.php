@@ -32,6 +32,7 @@ require_once ('Paste.php');
 class Ihm implements Observer, Subject
 {
 
+   private $_crtime;
    /**
     * The content of the current text
     * @var _text
@@ -96,6 +97,7 @@ class Ihm implements Observer, Subject
       $this->_current_char = '#';
       $this->_selectionStart = 0;
       $this->_selectionEnd = 0;
+      $this->_crtime = strftime("%T", time());
    }
 
    public function getChar()
