@@ -63,21 +63,36 @@ $(function(){
             
             beforeSend: function(){
                if(Debbug_selection) {
-                  console.log("updateSelection beforeSend");
+                  console.log("__________________________");
+                  console.log("updateSelection");
+                  console.log("out --->");
                   console.log("selStart:"+ getSelectionStart(TextId));
                   console.log("selEnd:"+ getSelectionEnd(TextId));
                }
             },
             success: function(response){
-               if(Debbug_selection) console.log("updateSelection success");
-               if(response != undefined &&response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
+               if(response != undefined && response.ErrorMsg){ 
+                  console.log(response.ErrorMsg); 
+                  console.log(response.ErrorData); 
+               }
+               if(response.debug) {
+                  console.log("_PHP DEBUG_"); 
+                  console.log("selStart:"+ response.debug.Ihm.selStart);
+                  console.log("selEnd:"+ response.debug.Ihm.selEnd);
+                  console.log("text:"+ response.debug.Ihm.text);
+                  console.log("_PHP DEBUG_"); 
+               }
                update(TextId, response.Ihm);
+               
+               if(Debbug_selection) {
+                  console.log("<--- in");
+                  console.log("nothing");
+               }
             },
             error: function(e){
                if(Debbug_selection) console.log("updateSelection error" + e);
             },
             complete: function(){
-               if(Debbug_selection) console.log("updateSelection complete");
             }
          }
       );
@@ -106,13 +121,30 @@ $(function(){
             
             beforeSend: function(){
                if(Debbug_char) {
-                  console.log("updateChar beforeSend");
+                  console.log("__________________________");
+                  console.log("updateChar");
+                  console.log("out --->");
                   console.log("char:"+ char);
                }
             },
             success: function(response){
-               console.log("updateChar success");
-               if(response != undefined && response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
+               if(response != undefined && response.ErrorMsg){ 
+                  console.log(response.ErrorMsg); 
+                  console.log(response.ErrorData); 
+               }
+               if(response.debug) {
+                  console.log("_PHP DEBUG_"); 
+                  console.log("selStart:"+ response.debug.Ihm.selStart);
+                  console.log("selEnd:"+ response.debug.Ihm.selEnd);
+                  console.log("text:"+ response.debug.Ihm.text);
+                  console.log("_PHP DEBUG_"); 
+               }
+               if(Debbug_char) {
+                  console.log("<--- in");
+                  console.log("selStart:"+ response.Ihm.selStart);
+                  console.log("selEnd:"+ response.Ihm.selEnd);
+                  console.log("text:"+ response.Ihm.text);
+               }
                update(TextId, response.Ihm);
                
             },
@@ -120,7 +152,6 @@ $(function(){
                console.log("updateChar error" + e);
             },
             complete: function(){
-               if(Debbug_char) console.log("updateChar complete");
             }
          }
       );
@@ -164,19 +195,37 @@ $(function(){
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
-               if(Debbug_cut) console.log("cutText beforeSend");
+               if(Debbug_cut) {
+                  console.log("__________________________");
+                  console.log("cutText");
+                  console.log("out --->");
+                  console.log("nothing");
+               }
             },
             success: function(response){
-               cut();
-               if(Debbug_cut) console.log("cutText success");
-               if(response != undefined &&response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
+               if(response != undefined && response.ErrorMsg){ 
+                  console.log(response.ErrorMsg); 
+                  console.log(response.ErrorData); 
+               }
+               if(response.debug) {
+                  console.log("_PHP DEBUG_"); 
+                  console.log("selStart:"+ response.debug.Ihm.selStart);
+                  console.log("selEnd:"+ response.debug.Ihm.selEnd);
+                  console.log("text:"+ response.debug.Ihm.text);
+                  console.log("_PHP DEBUG_"); 
+               }
+               if(Debbug_cut) {
+                  console.log("<--- in");
+                  console.log("selStart:"+ response.Ihm.selStart);
+                  console.log("selEnd:"+ response.Ihm.selEnd);
+                  console.log("text:"+ response.Ihm.text);
+               }
                update(TextId, response.Ihm);
             },
             error: function(e){
                console.log("cutText error" + e);
             },
             complete: function(){
-               if(Debbug_cut) console.log("cutText complete");
             }
          }
       );
@@ -204,13 +253,30 @@ $(function(){
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
-               if(Debbug_copy) console.log("copyText beforeSend");
+               if(Debbug_copy) {
+                  console.log("__________________________");
+                  console.log("copyText");
+                  console.log("out --->");
+                  console.log("nothing");
+               }
             },
             success: function(response){
-               copy();
-               if(Debbug_copy) console.log("copyText success");
-               if(response != undefined &&response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
-               update(TextId, response.Ihm);
+               
+               if(response != undefined && response.ErrorMsg){ 
+                  console.log(response.ErrorMsg); 
+                  console.log(response.ErrorData); 
+               }
+               if(response.debug) {
+                  console.log("_PHP DEBUG_"); 
+                  console.log("selStart:"+ response.debug.Ihm.selStart);
+                  console.log("selEnd:"+ response.debug.Ihm.selEnd);
+                  console.log("text:"+ response.debug.Ihm.text);
+                  console.log("_PHP DEBUG_"); 
+               }
+               
+               if(Debbug_copy) {
+                  console.log("<--- in");
+               }
             },
             error: function(e){
                console.log("copyText error" + e);
@@ -243,15 +309,30 @@ $(function(){
             dataType : default_dataType, // type de données recues
              
             beforeSend: function(){
-               if(Debbug_paste) console.log("paste beforeSend");
+               if(Debbug_paste) {
+                  console.log("__________________________");
+                  console.log("pasteText");
+                  console.log("out --->");
+                  console.log("nothing");
+               }
             },
             success: function(response){
-               paste(response.text);
-               
+               if(response != undefined && response.ErrorMsg){ 
+                  console.log(response.ErrorMsg); 
+                  console.log(response.ErrorData); 
+               }
+               if(response.debug) {
+                  console.log("_PHP DEBUG_"); 
+                  console.log("selStart:"+ response.debug.Ihm.selStart);
+                  console.log("selEnd:"+ response.debug.Ihm.selEnd);
+                  console.log("text:"+ response.debug.Ihm.text);
+                  console.log("_PHP DEBUG_"); 
+               }
                if(Debbug_paste) {
-                  console.log("paste success");
-                  console.log(response);
-                  console.log("paste from PP:"+response.text);
+                  console.log("<--- in");
+                  console.log("selStart:"+ response.Ihm.selStart);
+                  console.log("selEnd:"+ response.Ihm.selEnd);
+                  console.log("text:"+ response.Ihm.text);
                }
                if(response != undefined &&response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
                update(TextId, response.Ihm);
@@ -260,7 +341,6 @@ $(function(){
                console.log("paste error" + e);
             },
             complete: function(){
-               if(Debbug_paste) console.log("paste complete");
             }
          }
       );

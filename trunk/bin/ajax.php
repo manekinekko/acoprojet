@@ -20,12 +20,13 @@ function ajax_handle(){
 
 		switch($function_name){
 
-			// the end of the selection
+// 			// the end of the selection
 			case 'updateSelection':
 				// check args
 
 				$params_valid = validPostArg('selStart') && validPostArg('selEnd');
 				if($params_valid){
+               $output['debug'] = debug_me();
 					$selStart = $_REQUEST['selStart'];
 					$selEnd = $_REQUEST['selEnd'];
 					 
@@ -36,7 +37,6 @@ function ajax_handle(){
 					// output define
 					$output_type = 'json';
                $output['Ihm'] = getIhmAttributes();
-               $output['debug'] = debug_me();
 				}
 				break;
 
@@ -45,6 +45,7 @@ function ajax_handle(){
 				// check args
 				$params_valid = validPostArg('char');
 				if($params_valid){
+               $output['debug'] = debug_me();
 					$char = $_REQUEST['char'];
 
 					// work with IHM and Buffer
@@ -53,11 +54,11 @@ function ajax_handle(){
 					// output define
 					$output_type = 'json';
                $output['Ihm'] = getIhmAttributes();
-               $output['debug'] = debug_me();
 				}
 				break;
 
 			case 'cutText':
+            $output['debug'] = debug_me();
 				/* We don't need to get any args because the real IHM user (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
 				 * Ihm.php must have the positionStart & positionEnd that IHM (Web browser)
@@ -89,6 +90,7 @@ function ajax_handle(){
 				break;
 
 			case 'pasteText':
+            $output['debug'] = debug_me();
 				/* We don't need to get any args because the real user IHM (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
 				 * Ihm.php must have the positionStart & positionEnd that IHM (Web browser)
@@ -101,7 +103,6 @@ function ajax_handle(){
 				// output define
             $output_type = 'json';
 				$output['Ihm'] = getIhmAttributes();
-            $output['debug'] = debug_me();
 				
 				break;
 		}
@@ -175,11 +176,7 @@ function getIhmAttributes(){
 
    //todo : delete hack
    /*
-   return array(
-      'text' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      'selStart' => '3',
-      'selEnd' => '9'
-   );
+   return array('text' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'selStart' => '3','selEnd' => '9');
    */
    
    //*/
@@ -192,7 +189,7 @@ function getIhmAttributes(){
 }
 
 function debug_me(){
-   
+   return array('Ihm' => getIhmAttributes());
 }
 
 ajax_handle();
