@@ -131,20 +131,22 @@ $(function(){
     	  
     	  var o = getChar(e);
     	  var char = o.char;
-    	  
+    	  e.preventDefault();
         console.log(o.code);
         
     	  // allow ascii chars only
     	  if( ( o.code == 8 || o.code == 9 ) 
     		  || ( o.code >= 13 && o.code <= 111) 
-    		  || ( o.code >= 113 && o.code <= 222 ) 
+    		  || ( o.code >= 114 && o.code <= 222 ) 
     	  )
     	  {
-           
-    		  e.preventDefault();
+           console.log('char:'+o.char+'; char.code:'+o.code+'-> action');
         	  updateChar(o.char);
            debug();
     	  }
+    	  else{
+            console.log('char:'+o.char+'; char code:'+o.code+'-> no action');
+        }
       }
    );
    

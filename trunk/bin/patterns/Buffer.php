@@ -31,7 +31,7 @@ require_once (BINPATH . 'Ihm.php');
 
 class Buffer implements Observer, Subject
 {
-
+   private $_crtime;
 	/**
 	 * The content of the current text
 	 * @var _text
@@ -82,6 +82,7 @@ class Buffer implements Observer, Subject
 		$this->_selectionStart = 0;
 		$this->_selectionEnd = 0;
 		$this->_clipboard = new Clipboard();
+      $this->_crtime = strftime("%T", time());
 	}
 
 	/**
