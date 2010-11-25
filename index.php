@@ -15,7 +15,7 @@
  */
 	
 	include_once ("config.php");
-	include_once (BINPATH . "Main.php"); 	
+	include_once (BINPATH . "Session.php"); 	
 
 	if ( isset($_GET['clear']) )
 	{	
@@ -24,11 +24,15 @@
 	}
 	else if ( isset($_GET['ajax']) ) 
 		require_once ( APPPATH. "bin/ajax.php");
-		
+
+	else if ( isset($_GET['debug']) ) {
+      echo (strftime("%T", time()));
+      print_r($_SESSION);
+   }
 	else
 	{
 		require_once (ASSETSPATH . "editor.php");
-		echo "<pre>"; print_r($_SESSION); echo "</pre>";
+		echo "<pre style='background-color:#000; color:#fff; font-size:10px' id='pre'>"; print_r($_SESSION); echo "</pre>";
 	}
 	
 ?>

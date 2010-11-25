@@ -24,6 +24,10 @@
  */
 require_once ('Observer.php');
 require_once ('Subject.php');
+require_once ('Insert.php');
+require_once ('Copy.php');
+require_once ('Cut.php');
+require_once ('Paste.php');
 
 class Ihm implements Observer, Subject
 {
@@ -67,16 +71,41 @@ class Ihm implements Observer, Subject
     * @type array observer
     */
    private $_observers;  
+
+   /**
+    */
+   private $_current_char;  
    
+   /**
+    */
+   private $_commands;  
+
    /**
     * The constructor of the class
     * @return void
     */
-   public function __construct()
+   public function __construct(&$buffer)
    {
-      $this->_text = ""; 
+      $this->_commands = array();
+      $this->_commands['insert']= new Insert($this, $buffer);
+      $this->_commands['copy'] = new Copy($buffer);
+      $this->_commands['cut'] = new Cut($buffer);
+      $this->_commands['paste'] = new Paste($buffer);
+
+      $this->_text = "";
+      $this->_current_char = '#';
       $this->_selectionStart = 0;
       $this->_selectionEnd = 0;
+   }
+
+   public function getChar()
+   {
+      return $this->_current_char;
+   }
+   
+   public function setChar($char)
+   {
+      $this->_current_char = $char;
    }
 
    /**
@@ -140,6 +169,26 @@ class Ihm implements Observer, Subject
    public function setSelectionEnd($val)
    {
       $this->_selectionEnd = $val;
+   }
+
+   public function insert()
+   {
+       $this->_commands['insert']->execute();
+   }
+
+   public function copy()
+   {
+       $this->_commands['copy']->execute();
+   }
+   
+   public function cut()
+   {
+      $this->_commands['cut']->execute();
+   }
+   
+   public function paste()
+   {
+      $this->_commands['paste']->execute();
    }
 
    /**

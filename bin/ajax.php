@@ -1,10 +1,10 @@
 <?php
 
-$o = Main::getInstance();
+$session = Session::getInstance();
 
 function ajax_handle(){
 	
-	global $o;
+	global $session;
 	
 	$function_name_allowed = array('updateSelection', 'updateChar' ,'pasteText', 'copyText', 'cutText');
 	$function_name = 'default'; // function name
@@ -14,7 +14,7 @@ function ajax_handle(){
 	$output_type = 'default'; //output type
 
 	$function_valid = validPostArg('function_name') && validPostFunction($function_name_allowed);
-	
+
 	if($function_valid){
 		$function_name = $_REQUEST['function_name'];
 
@@ -23,16 +23,16 @@ function ajax_handle(){
 			// the end of the selection
 			case 'updateSelection':
 				// check args
+
 				$params_valid = validPostArg('selStart') && validPostArg('selEnd');
 				if($params_valid){
 					$selStart = $_REQUEST['selStart'];
 					$selEnd = $_REQUEST['selEnd'];
 					 
 					// work with IHM and Buffer
-					updateSelection($selStart, $selEnd);
-					 
+					$session->ihm->setSelectionStart($selStart);
+               $session->ihm->setSelectionStart($selEnd);
 					// output define
-					$output = array(); // nothing
 					$output_type = 'json';
                $output['Ihm'] = getIhmAttributes();
 				}
@@ -46,10 +46,9 @@ function ajax_handle(){
 					$char = $_REQUEST['char'];
 
 					// work with IHM and Buffer
-					updateChar($char);
-
+					
+               $session->ihm->setChar($char);
 					// output define
-					$output = array(); // nothing
 					$output_type = 'json';
                $output['Ihm'] = getIhmAttributes();
 				}
@@ -63,13 +62,12 @@ function ajax_handle(){
 				$params_valid = true;
 
 				// work with IHM and Buffer
-				$o->executeCut();
+				$session->ihm->cut();
 
 				// output define
 				/* nothing
 				 * the IHM (Web browser) will deleted the cut text from the textarea by himself
 				 */
-				$output = array();
 				$output_type = 'json';
             $output['Ihm'] = getIhmAttributes();
 				break;
@@ -82,10 +80,9 @@ function ajax_handle(){
 				$params_valid = true;
 
 				// work with IHM and Buffer
-				$o->executeCopy();
+				$session->ihm->copy();
 
 				// output define
-				$output = array(); // nothing
 				$output_type = 'json';
             
 				break;
@@ -100,7 +97,7 @@ function ajax_handle(){
 
 				
 				// work with IHM and Buffer
-				$o->executePaste();
+				$session->ihm->paste();
 
 				// output define
 				/*
@@ -128,7 +125,7 @@ function ajax_handle(){
 
 				break;
 		}
-
+      var_dump($output);
 		if($params_valid){
 			switch($output_type){
 				case 'json':
@@ -145,11 +142,11 @@ function ajax_handle(){
 			}
 		}
 		else{
-			outputJsonError('Params or one of params have not a correct form');
+			outputJsonError('Params or one of params have not a correct form', $output);
 		}
 	}
 	else{
-		outputJsonError('Function name "'.$function_name.'" didn\'t recognize');
+		outputJsonError('Function name "'.$function_name.'" didn\'t recognize', $output);
 	}
 	
 }
@@ -159,11 +156,11 @@ function validPostFunction($function_name_allowed){
 }
 
 function validPostArg($arg_label){
-	return isset($_REQUEST[$arg_label]) && !empty($_REQUEST[$arg_label]);
+	return isset($_REQUEST[$arg_label]) && (!empty($_REQUEST[$arg_label]) || $_REQUEST[$arg_label]==0 || $_REQUEST[$arg_label]=='0');
 }
  
 function validGetArg($arg_label){
-	return isset($_GET[$arg_label]) && !empty($_GET[$arg_label]);
+	return isset($_GET[$arg_label]) && (!empty($_GET[$arg_label]) || $_GET[$arg_label]==0 || $_GET[$arg_label]=='0');
 }
 
 function outputJson($json){
@@ -179,44 +176,37 @@ function outputJson($json){
 	
 }
 
-function outputJsonError($msg){
+function outputJsonError($msg, $json_error){
 	$output_json = array();
 
 	// output filter
-	if( isset($msg) )
-	$output_json['Error'] = $msg;
-	else{
+	if( isset($msg) ){
+      $output_json['ErrorMsg'] = $msg;
+      $output_json['ErrorData'] = $json_error;
+	}else{
 		$output_json['Error'] = 'Error without feedback';
 	}
 	header('Content-Type: text/javascript');
 	echo json_encode( $output_json );
 }
 
-function updateChar(){
-
-}
-
-function updateSelection($selStart, $selEnd){
-
-}
-
 function getIhmAttributes(){
-   global $o;
+   global $session;
 
    //todo : delete hack
-   //*
+   /*
    return array(
       'text' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
       'selStart' => '3',
       'selEnd' => '9'
    );
-   //*/
+   */
    
-   /*
+   //*/
    return array(
-      'text' => $o->getText(),
-      'selStart' => $o->getSelectionStart(),
-      'selEnd' => $o->getSelectionEnd()
+      'text' => $session->ihm->getText(),
+      'selStart' => $session->ihm->getSelectionStart(),
+      'selEnd' => $session->ihm->getSelectionEnd()
    );
    //*/
 }

@@ -11,8 +11,8 @@
  */
 
 
-var Debbug_selection = false;
-var Debbug_char = false;
+var Debbug_selection = true;
+var Debbug_char = true;
 var Debbug_paste = true;
 var Debbug_copy = true;
 var Debbug_cut = true;
@@ -70,7 +70,7 @@ $(function(){
             },
             success: function(response){
                if(Debbug_selection) console.log("updateSelection success");
-               if(response != undefined && response.Error) console.log(response.Error);
+               if(response != undefined &&response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
                update(TextId, response.Ihm);
             },
             error: function(e){
@@ -87,6 +87,7 @@ $(function(){
       function(e){
          e.preventDefault();
          updateSelection();
+         debug();
       }
    );
    
@@ -110,8 +111,8 @@ $(function(){
                }
             },
             success: function(response){
-               if(Debbug_char) console.log("updateChar success");
-               if(response != undefined && response.Error) console.log(response.Error);
+               console.log("updateChar success");
+               if(response != undefined && response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
                update(TextId, response.Ihm);
                
             },
@@ -131,14 +132,18 @@ $(function(){
     	  var o = getChar(e);
     	  var char = o.char;
     	  
+        console.log(o.code);
+        
     	  // allow ascii chars only
     	  if( ( o.code == 8 || o.code == 9 ) 
-    		  && o.code >= 13 && o.code <= 111 
-    		  && o.code >= 114 && o.code <= 222 
+    		  || ( o.code >= 13 && o.code <= 111) 
+    		  || ( o.code >= 113 && o.code <= 222 ) 
     	  )
     	  {
+           
     		  e.preventDefault();
         	  updateChar(o.char);
+           debug();
     	  }
       }
    );
@@ -162,7 +167,7 @@ $(function(){
             success: function(response){
                cut();
                if(Debbug_cut) console.log("cutText success");
-               if(response != undefined && response.Error) console.log(response.Error);
+               if(response != undefined &&response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
                update(TextId, response.Ihm);
             },
             error: function(e){
@@ -179,6 +184,7 @@ $(function(){
       function(e){
          e.preventDefault();
          cutText();
+         debug();
       }
    );
    
@@ -201,7 +207,7 @@ $(function(){
             success: function(response){
                copy();
                if(Debbug_copy) console.log("copyText success");
-               if(response != undefined && response.Error) console.log(response.Error);
+               if(response != undefined &&response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
                update(TextId, response.Ihm);
             },
             error: function(e){
@@ -218,6 +224,7 @@ $(function(){
       function(e){
          e.preventDefault();
          copyText();
+         debug();
       }
    );
    
@@ -244,7 +251,7 @@ $(function(){
                   console.log(response);
                   console.log("paste from PP:"+response.text);
                }
-               if(response != undefined && response.Error) console.log(response.Error);
+               if(response != undefined &&response.ErrorMsg){ console.log(response.Error); console.log(response.ErrorData); }
                update(TextId, response.Ihm);
             },
             error: function(e){
@@ -261,6 +268,11 @@ $(function(){
       function(e){
          e.preventDefault();
          pasteText();
+         debug();
       }
    );
+   
+   var debug = function(){
+      $('#pre').load('index.php?debug');
+   }
 });
