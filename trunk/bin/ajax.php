@@ -1,5 +1,7 @@
 <?php
 
+$session =& getInstance();
+
 function ajax_handle(){
 	$debug = true;
 	global $session;
@@ -188,6 +190,11 @@ function getIhmAttributes(){
 
 function debug_me(){
    global $session;
+   
+//   var_dump( spl_object_hash($session->ihm) );
+//   var_dump( $session->ihm->_ihm_hash );
+//   var_dump( spl_object_hash($session->ihm) === $session->ihm->_ihm_hash );
+   
    return array('Ihm' => array_merge(getIhmAttributes(), array('ihm_hash' => spl_object_hash($session->ihm))));
 }
 
