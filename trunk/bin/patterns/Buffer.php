@@ -159,12 +159,12 @@ class Buffer implements Observer, Subject
 	public function setSelection($start, $end)
 	{
 
-		if ( !is_in($start) || !is_int($end) )
+		if ( !is_int($start) || !is_int($end) )
 		{
-			trigger_error( 'Buffer->setSelection(int, int).', E_USER_ERROR );
+			throw new Exception( 'Buffer->setSelection(int, int).', E_USER_ERROR );
 		}
-    else {
-    	
+		else {
+
 			if( $start <= $end)
 			{
 				$this->_selectionStart = $start;
@@ -175,8 +175,9 @@ class Buffer implements Observer, Subject
 				$this->_selectionStart = $end;
 				$this->_selectionEnd = $start;
 			}
-			
-    }
+
+		}
+
 	}
 
 	/**
@@ -188,9 +189,9 @@ class Buffer implements Observer, Subject
 	{
 		$tmp_str = $this->_text;
 
-		$this->_text = substr($tmp_str, 0, $this->_selectionStart);
+		$this->_text = Buffer::_substr($tmp_str, 0, $this->_selectionStart);
 		$this->_text .= $char;
-		$this->_text .= substr($tmp_str, $this->_selectionEnd);
+		$this->_text .= Buffer::_substr($tmp_str, $this->_selectionEnd);
 
 		$this->_selectionStart++;
 
@@ -231,7 +232,7 @@ class Buffer implements Observer, Subject
 	 */
 	public function copyText()
 	{
-		$text = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
+		$text = Buffer::_substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
 
 		if ( $text !== "" )
 		$this->setTextIntoClipBoard($text);
@@ -244,22 +245,17 @@ class Buffer implements Observer, Subject
 	 */
 	public function cutText()
 	{
-
+		
 		if( $this->_selectionStart !== $this->_selectionEnd)
 		{
-				
-			$text_to_be_cut = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
 
-			var_dump($this->_selectionStart);
-			var_dump($this->_selectionEnd);
-			var_dump($text_to_be_cut);
-			exit;
-				
+			$text_to_be_cut = Buffer::_substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
 			$this->setTextIntoClipBoard($text_to_be_cut);
+//			var_dump($text_to_be_cut, $this->_selectionStart, $this->_selectionEnd);
 
-			$tmp_str = substr($this->_text, 0, $this->_selectionStart);
-			$tmp_str .= substr($this->_text, $this->_selectionEnd);
-
+			$tmp_str = Buffer::_substr($this->_text, 0, $this->_selectionStart);
+			$tmp_str .= Buffer::_substr($this->_text, $this->_selectionEnd);
+			
 			// deselection
 			$this->_selectionEnd = $this->_selectionStart;
 
@@ -284,11 +280,11 @@ class Buffer implements Observer, Subject
 
 			$paste = $this->getTextFromClipBoard();
 
-			$tmp_res = substr($this->_text, 0, $this->_selectionStart);
+			$tmp_res = Buffer::_substr($this->_text, 0, $this->_selectionStart);
 			$tmp_res .= $paste;
-			$tmp_res .= substr($this->_text, $this->_selectionEnd);
+			$tmp_res .= Buffer::_substr($this->_text, $this->_selectionEnd);
 
-				
+
 			if( $this->_selectionStart !== $this->_selectionEnd )
 			{
 
@@ -299,7 +295,7 @@ class Buffer implements Observer, Subject
 			}
 
 			$this->_text = $tmp_res;
-				
+
 			$this->notify();
 
 		}
@@ -358,6 +354,24 @@ class Buffer implements Observer, Subject
 		$this->_selectionStart = $s->getSelectionStart();
 		$this->_selectionEnd = $s->getSelectionEnd();
 		$this->_text = $s->getText();;
+	}
+	
+	/**
+	 * 
+	 * @param unknown_type $str
+	 * @param unknown_type $selStart
+	 * @param unknown_type $selEnd
+	 */
+	private static function _substr($str, $selStart, $selEnd=-1)
+	{
+		if ( $selEnd === -1 )
+		{
+			$selEnd = strlen($str);
+		}
+		else {
+			$selEnd -= $selStart;
+		}
+		return substr( $str, $selStart, $selEnd ); 
 	}
 }
 

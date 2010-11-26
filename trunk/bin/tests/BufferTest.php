@@ -14,13 +14,15 @@ class BufferTest extends PHPUnit_Framework_TestCase
 
 	public function tearDown()
 	{
-	}
+    unset($this->b);	
+  }
 
 	public function testconstructeur()
 	{
 		$b = new Buffer();
 		$this->assertTrue($this->b !== null);
 		$this->assertNotSame($this->b, $b);
+		$this->assertTrue(spl_object_hash($this->b) !== spl_object_hash($b));
 	}
 
 	public function testgetText(){
@@ -32,6 +34,40 @@ class BufferTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals("Hello", $this->b->getText());
 	}
 
+	public function testcutText() {
+    // Test cutText
+    $this->b->setText("Hello");
+    $this->b->setSelection(2, 4);
+    
+    $this->b->cutText();
+    
+    $this->assertEquals("Heo", $this->b->getText());
+    $this->assertEquals("ll", $this->b->getTextFromClipboard());
+
+    $this->assertEquals(2, $this->b->getSelectionStart());
+    $this->assertEquals(2, $this->b->getSelectionEnd());
+
+    // Test cutText inverse
+    $this->b->setText("Hello");
+    $this->b->setSelection(4, 2);
+    $this->b->cutText();
+    $this->assertEquals("Heo", $this->b->getText());
+    $this->assertEquals("ll", $this->b->getTextFromClipboard());
+
+    $this->assertEquals(2, $this->b->getSelectionStart());
+    $this->assertEquals(2, $this->b->getSelectionEnd());
+
+    // Test cutText qui ne change pas l'état du buffer & pp
+    $this->b->setSelection(3, 3);
+    $this->b->cutText();
+    $this->assertEquals("Heo", $this->b->getText());
+    $this->assertEquals("ll", $this->b->getTextFromClipboard());
+
+    $this->assertEquals(3, $this->b->getSelectionStart());
+    $this->assertEquals(3, $this->b->getSelectionEnd());
+
+  }
+	
 	public function testgetSelectionStart(){
 		$this->assertEquals(0, $this->b->getSelectionStart());
 
@@ -49,16 +85,24 @@ class BufferTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testsetSelection(){
-		$this->b->setSelection(0, 10);
+		$this->b->setSelection(0, 7);
 		$this->assertEquals(0, $this->b->getSelectionStart());
-		$this->assertEquals(10, $this->b->getSelectionEnd());
+		$this->assertEquals(7, $this->b->getSelectionEnd());
 
-		$this->b->setSelection(10, 0);
+		$this->b->setSelection(7, 0);
 		$this->assertEquals(0, $this->b->getSelectionStart());
-		$this->assertEquals(10, $this->b->getSelectionEnd());
-    
+		$this->assertEquals(7, $this->b->getSelectionEnd());
+
+		try {
+      $this->b->setSelection("", 7);
+      $this->b->setSelection(5, "");
+      $this->b->setSelection("", "");
+		}
+		catch(Exception $e){
+			$this->assertTrue(true);
+		}
+
 	}
-
 
 	public function testcopyText() {
 		$this->b->setText("Hello");
@@ -73,7 +117,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 
 		$this->b->setSelection(2, 2);
 		$this->b->copyText(); // ne doit rien changer
-		$this->assertEquals("ll", $this->b->getTextFromClipboard());
+		$this->assertEquals("Hell", $this->b->getTextFromClipboard());
 	}
 
 	public function testpasteText() {
@@ -91,41 +135,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals("HeHelloo", $this->b->getText());
 	}
 
-	public function testcutText() {
-		// Test cutText
-		$this->b->setText("Hello");
-		//$this->b->setSelection(1, 3);
-		$this->b->setSelectionStart(1);
-		$this->b->setSelectionEnd(3);
-		
-		$this->b->cutText();
-		$this->assertEquals("Ho", $this->b->getText());
-		$this->assertEquals("ell", $this->b->getTextFromClipboard());
-
-		$this->assertEquals(2, $this->b->getSelectionStart());
-		$this->assertEquals(2, $this->b->getSelectionEnd());
-
-		// Test cutText inverse
-		$this->b->setText("Hello");
-		$this->b->setSelection(4, 2);
-		$this->b->cutText();
-		$this->assertEquals("He", $this->b->getText());
-		$this->assertEquals("llo", $this->b->getTextFromClipboard());
-
-		$this->assertEquals(2, $this->b->getSelectionStart());
-		$this->assertEquals(2, $this->b->getSelectionEnd());
-
-		// Test cutText qui ne change pas l'état du buffer & pp
-		$this->b->setSelection(3, 3);
-		$this->b->cutText();
-		$this->assertEquals("He", $this->b->getText());
-		$this->assertEquals("llo", $this->b->getTextFromClipboard());
-
-		$this->assertEquals(3, $this->b->getSelectionStart());
-		$this->assertEquals(3, $this->b->getSelectionEnd());
-
-	}
-
+	
 	public function testinsert() {
 
 		$this->b->insert('H');
