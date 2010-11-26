@@ -18,9 +18,9 @@
             <form id="formulaire" method="" action="">
                <fieldset>
                   <legend><b>Menu</b></legend>
-                  <button name="cutText" name="cutText" id="cutText" value="1" type="button">Couper</button>
-                  <button name="copyText" name="copyText" id="copyText" value="1" type="button">Copier</button>
-                  <button name="pasteText" name="pasteText" id="pasteText" value="1" type="button">coller</button>
+                  <button name="cut" name="cutText" id="cutText" value="1" type="button">Couper</button>
+                  <button name="copy" name="copyText" id="copyText" value="1" type="button">Copier</button>
+                  <button name="paste" name="pasteText" id="pasteText" value="1" type="button">coller</button>
                </fieldset>
                <fieldset>
                   <legend><b>Editeur de texte</b></legend><textarea id="text" rows="10" cols="40"></textarea>

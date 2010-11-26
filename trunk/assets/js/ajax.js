@@ -10,6 +10,9 @@
  * lib function removeSelection(obj);
  */
 
+var default_target = "index.php?ajax";
+var default_type = "POST";
+var default_dataType = "json";
 
 var Debbug_selection = true;
 var Debbug_char = true;
@@ -20,33 +23,10 @@ var Debbug_cut = true;
 var TextId = 'text';
 var LogId = 'log';
 
-function paste(str) 
-{
-   setText(str, TextId);
-}
-
-function cut() 
-{
-   removeSelection(TextId);
-}
-
-function copy() 
-{
-   
-}
-
-function insert(c) 
-{
-   setText(c, TextId);
-}
-
-
 
 $(function(){
    
-   var default_target = "index.php?ajax";
-   var default_type = "POST";
-   var default_dataType = "json";
+
    
    var updateSelection = function() {
       $.ajax(
@@ -55,9 +35,7 @@ $(function(){
             type : default_type,
             data : {
                // paramètres envoyés
-               function_name: 'updateSelection',
-               selStart: getSelectionStart(TextId),
-               selEnd: getSelectionEnd(TextId)
+               function_name: 'updateSelection', selStart: getSelectionStart(TextId), selEnd: getSelectionEnd(TextId)
             }, 
             dataType : default_dataType, // type de données recues
             
@@ -108,22 +86,21 @@ $(function(){
    );
    
    
-   var updateChar = function(char) {
+   var insert = function(char) {
       $.ajax(
          {
             url : default_target,
             type : default_type,
             data : {
                // paramètres envoyés
-               function_name: 'updateChar',
-               char: char
+               function_name: 'insert', char: char
             }, 
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
                if(Debbug_char) {
                   console.log("__________________________");
-                  console.log("updateChar");
+                  console.log("insert");
                   console.log("out --->");
                   console.log("char:"+ char);
                }
@@ -151,7 +128,7 @@ $(function(){
                
             },
             error: function(e){
-               console.log("updateChar error" + e);
+               console.log("insert error" + e);
             },
             complete: function(){
             }
@@ -173,9 +150,9 @@ $(function(){
     		  || ( o.code >= 114 && o.code <= 222 ) 
     	  )
     	  {
-           console.log('char:'+o.char+'; char.code:'+o.code+'-> action');
-        	  updateChar(o.char);
-           debug();
+            console.log('char:'+o.char+'; char.code:'+o.code+'-> action');
+            insert(o.char);
+            debug();
     	  }
     	  else{
             console.log('char:'+o.char+'; char code:'+o.code+'-> no action');
@@ -185,21 +162,21 @@ $(function(){
    
 
    
-   var cutText = function() {
+   var cut = function() {
       $.ajax(
          {
             url : default_target,
             type : default_type,
             data : {
                // paramètres envoyés
-               function_name: 'cutText'
+               function_name: 'cut'
             }, 
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
                if(Debbug_cut) {
                   console.log("__________________________");
-                  console.log("cutText");
+                  console.log("cut");
                   console.log("out --->");
                   console.log("nothing");
                }
@@ -226,7 +203,7 @@ $(function(){
                update(TextId, response.Ihm);
             },
             error: function(e){
-               console.log("cutText error" + e);
+               console.log("cut error" + e);
             },
             complete: function(){
             }
@@ -234,31 +211,31 @@ $(function(){
       );
    };
    
-   $('#cutText').click(
+   $('#cut').click(
       function(e){
          e.preventDefault();
-         cutText();
+         cut();
          debug();
       }
    );
    
 
    
-   var copyText = function() {
+   var copy = function() {
       $.ajax(
          {
             url : default_target,
             type : default_type,
             data : {
                // paramètres envoyés
-               function_name: 'copyText'
+               function_name: 'copy'
             }, 
             dataType : default_dataType, // type de données recues
             
             beforeSend: function(){
                if(Debbug_copy) {
                   console.log("__________________________");
-                  console.log("copyText");
+                  console.log("copy");
                   console.log("out --->");
                   console.log("nothing");
                }
@@ -283,39 +260,39 @@ $(function(){
                }
             },
             error: function(e){
-               console.log("copyText error" + e);
+               console.log("copy error" + e);
             },
             complete: function(){
-               if(Debbug_copy) console.log("copyText complete");
+               if(Debbug_copy) console.log("copy complete");
             }
          }
       );
    };
    
-   $('#copyText').click(
+   $('#copy').click(
       function(e){
          e.preventDefault();
-         copyText();
+         copy();
          debug();
       }
    );
    
    
-   var pasteText = function() {
+   var paste = function() {
       $.ajax(
          {
             url : default_target,
             type : default_type,
             data : {
                // paramètres envoyés
-               function_name: 'pasteText'
+               function_name: 'paste'
             }, 
             dataType : default_dataType, // type de données recues
              
             beforeSend: function(){
                if(Debbug_paste) {
                   console.log("__________________________");
-                  console.log("pasteText");
+                  console.log("paste");
                   console.log("out --->");
                   console.log("nothing");
                }
@@ -351,10 +328,10 @@ $(function(){
       );
    };
    
-   $('#pasteText').click(
+   $('#paste').click(
       function(e){
          e.preventDefault();
-         pasteText();
+         paste();
          debug();
       }
    );

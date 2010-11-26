@@ -6,7 +6,7 @@ function ajax_handle(){
 	$debug = true;
 	global $session;
 	
-	$function_name_allowed = array('updateSelection', 'updateChar' ,'pasteText', 'copyText', 'cutText');
+	$function_name_allowed = array('updateSelection', 'insert' ,'paste', 'copy', 'cut');
 	$function_name = 'default'; // function name
 	$function_valid = false; // status of function validation
 	$params_valid = false; // status of params validation
@@ -40,7 +40,7 @@ function ajax_handle(){
 				break;
 
          // the character to be stored
-			case 'updateChar':
+			case 'insert':
 				// check args
 				$params_valid = validPostArg('char');
 				if($params_valid){
@@ -56,7 +56,7 @@ function ajax_handle(){
 				}
 				break;
 
-			case 'cutText':
+			case 'cut':
             $output['debug'] = debug_me();
 				/* We don't need to get any args because the real IHM user (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
@@ -73,7 +73,7 @@ function ajax_handle(){
             $output['debug'] = debug_me();
 				break;
 
-			case 'copyText':
+			case 'copy':
 				/* We don't need to get any args because the real IHM user (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
 				 * Ihm.php must have the positionStart & positionEnd that IHM (Web browser)
@@ -88,7 +88,7 @@ function ajax_handle(){
             
 				break;
 
-			case 'pasteText':
+			case 'paste':
             $output['debug'] = debug_me();
 				/* We don't need to get any args because the real user IHM (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
