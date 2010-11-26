@@ -90,14 +90,21 @@ class IhmTest extends PHPUnit_Framework_TestCase
 		$this->ihm->setText("Hello");
 		$this->b->setText("Hello");
 		$this->ihm->setSelectionStart(0);
-		$this->ihm->setSelectionEnd(4);
+		$this->ihm->setSelectionEnd(3);
 		$this->b->setSelectionStart(0);
-		$this->b->setSelectionEnd(4);
+		$this->b->setSelectionEnd(3);
 
 		$this->ihm->copy();
 
-		$this->assertEquals("Hello", $this->ihm->getText());
+		// buffer
+		$this->assertEquals(0, $this->b->getSelectionStart());
+		$this->assertEquals(3, $this->b->getSelectionEnd());
 		$this->assertEquals("Hell", $this->b->getTextFromClipBoard());
+		$this->assertEquals("Hello", $this->b->getText());
+
+		// ihm
+		$this->assertEquals("Hello", $this->ihm->getText());
+
 	}
 
 	/**
@@ -107,22 +114,24 @@ class IhmTest extends PHPUnit_Framework_TestCase
 
 		$this->ihm->setText("Hello");
 		$this->b->setText("Hello");
+		$this->b->setTextIntoClipBoard("####");
 		$this->ihm->setSelectionStart(0);
-		$this->ihm->setSelectionEnd(4);
+		$this->ihm->setSelectionEnd(3);
 		$this->b->setSelectionStart(0);
-		$this->b->setSelectionEnd(4);
+		$this->b->setSelectionEnd(3);
 
 		$this->ihm->cut();
 
+		// buffer
 		$this->assertEquals(0, $this->b->getSelectionStart());
 		$this->assertEquals(0, $this->b->getSelectionEnd());
 		$this->assertEquals("Hell", $this->b->getTextFromClipBoard());
+		$this->assertEquals("o", $this->b->getText());
 
+		// ihm
 		$this->assertEquals(0, $this->ihm->getSelectionStart());
 		$this->assertEquals(0, $this->ihm->getSelectionEnd());
-
-		//		$this->assertEquals("o", $this->ihm->getText());
-
+		$this->assertEquals("o", $this->ihm->getText());
 
 	}
 
