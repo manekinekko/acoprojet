@@ -247,9 +247,9 @@ class Ihm implements Observer, Subject
 		// the buffer subject which notifies that something has happened
 
 		// update current state of ihm
-		$this->_selectionStart = $s->_selectionStart;
-		$this->_selectionEnd = $s->_selectionEnd;
-		$this->_text = $s->_text;
+		$this->_selectionStart = $s->getSelectionStart();
+		$this->_selectionEnd = $s->getSelectionEnd();
+		$this->_text = $s->getText();
 	}
 }
 

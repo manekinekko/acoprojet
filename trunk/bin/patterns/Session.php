@@ -49,6 +49,7 @@ class Session
 
     	$_buffer = new Buffer();
       $this->ihm = new Ihm($_buffer);
+      
       $_buffer->attach($this->ihm);
       $this->ihm->attach($_buffer);
 

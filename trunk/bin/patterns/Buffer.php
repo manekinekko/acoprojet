@@ -191,6 +191,8 @@ class Buffer implements Observer, Subject
 		{
 			$this->_selectionEnd = $this->_selectionStart;
 		}
+		
+		$this->notify();
 
 	}
 
@@ -225,7 +227,7 @@ class Buffer implements Observer, Subject
 		$text = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
 
 		if ( $text !== "" )
-		$this->setTextIntoClipBoard($text);
+		  $this->setTextIntoClipBoard($text);
 	}
 
 	/**
@@ -250,6 +252,8 @@ class Buffer implements Observer, Subject
 			$this->_selectionEnd = $this->_selectionStart;
 				
 			$this->_text = $tmp_str;
+			
+			$this->notify();
 
 		}
 
@@ -281,6 +285,8 @@ class Buffer implements Observer, Subject
 			}
 
 			$this->_text = $tmp_res;
+			
+			$this->notify();
 
 		}
 
