@@ -6,7 +6,7 @@ include_once(BINPATH . 'Buffer.php');
 class IhmTest extends PHPUnit_Framework_TestCase
 {
 
-	public $ihm;
+	public $ihm, $b;
 
 	public function setUp()
 	{
@@ -81,15 +81,39 @@ class IhmTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals("Hello", $this->b->getText());
 
 	}
-	
+
+	/**
+	 * TO DO
+	 */
 	public function testcopy(){
-		
+
 		$this->ihm->setText("Hello");
 		$this->ihm->setSelectionStart(0);
 		$this->ihm->setSelectionEnd(3);
 		$this->ihm->copy();
-		
-		$this->assertEquals("Hell", $this->b->_getTextFromClipBoard());
+
+		$this->assertEquals("Hello", $this->ihm->getText());
+		$this->assertEquals("Hell", $this->b->getTextFromClipBoard());
+	}
+
+	/**
+	 * TO DO
+	 */
+	public function testcut(){
+
+		$this->ihm->setText("Hello");
+		$this->ihm->setSelectionStart(0);
+		$this->ihm->setSelectionEnd(3);
+		$this->ihm->cut();
+
+		$this->assertEquals("Hell", $this->b->getTextFromClipBoard());
+	}
+
+	public function testpaste(){
+
+		$this->ihm->paste();
+
+		$this->assertEquals("Hell", $this->ihm->getText());
 	}
 
 }

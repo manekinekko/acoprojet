@@ -16,7 +16,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 	{
 	}
 
-	public function testConstructeur()
+	public function testconstructeur()
 	{
 		$b = new Buffer();
 		$this->assertTrue($this->b !== null);
@@ -27,7 +27,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals("", $this->b->getText());
 	}
 
-	public function testSetText(){
+	public function testsetText(){
 		$this->b->setText("Hello");
 		$this->assertEquals("Hello", $this->b->getText());
 	}
@@ -48,7 +48,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 
 	}
 
-	public function testSetSelection(){
+	public function testsetSelection(){
 		$this->b->setSelection(0, 10);
 		$this->assertEquals(0, $this->b->getSelectionStart());
 		$this->assertEquals(10, $this->b->getSelectionEnd());
@@ -59,20 +59,20 @@ class BufferTest extends PHPUnit_Framework_TestCase
 
 		$this->b->setSelection(0, 4);
 		$this->b->copyText();
-		$this->assertEquals("Hell", $this->b->_getTextFromClipboard());
+		$this->assertEquals("Hell", $this->b->getTextFromClipboard());
 
 		$this->b->setSelection(4, 0);
 		$this->b->copyText();
-		$this->assertEquals("Hell", $this->b->_getTextFromClipboard());
+		$this->assertEquals("Hell", $this->b->getTextFromClipboard());
 
 		$this->b->setSelection(2, 2);
 		$this->b->copyText(); // ne doit rien changer
-		$this->assertEquals("ll", $this->b->_getTextFromClipboard());
+		$this->assertEquals("ll", $this->b->getTextFromClipboard());
 	}
 
 	public function testpasteText() {
 
-		$this->b->_setTextIntoClipboard("Hello"); // Hello dans le PP
+		$this->b->setTextIntoClipboard("Hello"); // Hello dans le PP
 		$this->b->pasteText();
 		$this->assertEquals("Hello", $this->b->getText());
 
@@ -80,7 +80,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 		$this->b->pasteText();
 		$this->assertEquals("HeHelloo", $this->b->getText());
 
-		$this->b->_setTextIntoClipboard(""); // rien dans le PP
+		$this->b->setTextIntoClipboard(""); // rien dans le PP
 		$this->b->pasteText();
 		$this->assertEquals("HeHelloo", $this->b->getText());
 	}
@@ -91,7 +91,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 		$this->b->setSelection(2, 4);
 		$this->b->cutText();
 		$this->assertEquals("He", $this->b->getText());
-		$this->assertEquals("llo", $this->b->_getTextFromClipboard());
+		$this->assertEquals("llo", $this->b->getTextFromClipboard());
 
 		$this->assertEquals(2, $this->b->getSelectionStart());
 		$this->assertEquals(2, $this->b->getSelectionEnd());
@@ -101,7 +101,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 		$this->b->setSelection(4, 2);
 		$this->b->cutText();
 		$this->assertEquals("He", $this->b->getText());
-		$this->assertEquals("llo", $this->b->_getTextFromClipboard());
+		$this->assertEquals("llo", $this->b->getTextFromClipboard());
 
 		$this->assertEquals(2, $this->b->getSelectionStart());
 		$this->assertEquals(2, $this->b->getSelectionEnd());
@@ -110,7 +110,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 		$this->b->setSelection(3, 3);
 		$this->b->cutText();
 		$this->assertEquals("He", $this->b->getText());
-		$this->assertEquals("llo", $this->b->_getTextFromClipboard());
+		$this->assertEquals("llo", $this->b->getTextFromClipboard());
 
 		$this->assertEquals(3, $this->b->getSelectionStart());
 		$this->assertEquals(3, $this->b->getSelectionEnd());

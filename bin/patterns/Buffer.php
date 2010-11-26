@@ -199,7 +199,7 @@ class Buffer implements Observer, Subject
 	 * @return void
 	 * @access private
 	 */
-	public function _setTextIntoClipBoard($text)
+	public function setTextIntoClipBoard($text)
 	{
 		$this->_clipboard->setText($text);
 	}
@@ -208,7 +208,7 @@ class Buffer implements Observer, Subject
 	 * Get a text content from the clipboard
 	 * @return String the text content from the clipboard
 	 */
-	public function _getTextFromClipBoard()
+	public function getTextFromClipBoard()
 	{
 		return $this->_clipboard->getText();
 	}
@@ -225,7 +225,7 @@ class Buffer implements Observer, Subject
 		$text = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
 
 		if ( $text !== "" )
-		$this->_setTextIntoClipBoard($text);
+		$this->setTextIntoClipBoard($text);
 	}
 
 	/**
@@ -241,7 +241,7 @@ class Buffer implements Observer, Subject
 			$tmp_str = $this->_text;
 				
 			$text = substr($tmp_str, $this->_selectionStart, $this->_selectionEnd);
-			$this->_setTextIntoClipBoard($text);
+			$this->setTextIntoClipBoard($text);
 				
 			$tmp_str = substr($tmp_str, 0, $this->_selectionStart);
 			$tmp_str .= substr($tmp_str, $this->_selectionEnd);
@@ -268,7 +268,7 @@ class Buffer implements Observer, Subject
 				
 			$tmp_str = $this->_text;
 
-			$paste = $this->_getTextFromClipBoard();
+			$paste = $this->getTextFromClipBoard();
 				
 			$tmp_res = substr($tmp_str, 0, $this->_selectionStart);
 			$tmp_res .= $paste;
