@@ -11,12 +11,12 @@
  * GNU General Public License for more details
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 /**
  * The InsertChar command
- * 
+ *
  * @author wassim Chegham & hugo Marchadour
  * @category Command
  * @package command
@@ -28,13 +28,13 @@ require_once ('Command.php');
 class Insert implements Command
 {
 	/**
-	 * @var the object receiver that 
+	 * @var the object receiver that
 	 * @access protected
 	 * @type Buffer
 	 */
 	protected $_receiver, $_sender;
 
-   private $_current_char, $_crtime, $_insert_hash;
+	private $_current_char, $_crtime, $_insert_hash;
 
 	/**
 	 * The constructor of the class
@@ -45,12 +45,12 @@ class Insert implements Command
 	public function __construct(&$sender, &$receiver)
 	{
 		$this->_receiver = $receiver;
-      $this->_sender = $sender;
-      $this->_current_char = '#';
-      $_crtime = strftime("%T", time());
-      $_insert_hash = spl_object_hash ($this);
+		$this->_sender = $sender;
+		$this->_current_char = '#';
+		$_crtime = strftime("%T", time());
+		$_insert_hash = spl_object_hash ($this);
 	}
-	
+
 	/**
 	 * Perfome the copy action
 	 * @return void
@@ -58,9 +58,8 @@ class Insert implements Command
 	 */
 	public function execute()
 	{
-      var_dump("hello");
-      $char = $this->_sender->getChar();
-      $this->_current_char = $char;
+		$char = $this->_sender->getChar();
+		$this->_current_char = $char;
 		$this->_receiver->insert($char);
 	}
 }
