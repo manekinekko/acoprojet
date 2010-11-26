@@ -10,22 +10,22 @@
  * lib function removeSelection(obj);
  */
 
-var default_target = "index.php?ajax";
-var default_type = "POST";
-var default_dataType = "json";
 
-var Debbug_selection = true;
-var Debbug_char = true;
-var Debbug_paste = true;
-var Debbug_copy = true;
-var Debbug_cut = true;
-
-var TextId = 'text';
-var LogId = 'log';
 
 
 $(function(){
-   
+   var default_target = "index.php?ajax";
+   var default_type = "POST";
+   var default_dataType = "json";
+
+   var Debbug_selection = true;
+   var Debbug_char = true;
+   var Debbug_paste = true;
+   var Debbug_copy = true;
+   var Debbug_cut = true;
+
+   var TextId = 'text';
+   var LogId = 'log';
 
    
    var updateSelection = function() {
