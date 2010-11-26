@@ -18,9 +18,9 @@ class BufferTest extends PHPUnit_Framework_TestCase
 
 	public function testConstructeur()
 	{
-		$this->b = new Buffer();
+		$b = new Buffer();
 		$this->assertTrue($this->b !== null);
-		$this->assertNotSame($this->b, $this->b);
+		$this->assertNotSame($this->b, $b);
 	}
 
 	public function testgetText(){
