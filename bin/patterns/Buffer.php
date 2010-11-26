@@ -284,12 +284,11 @@ class Buffer implements Observer, Subject
 			$tmp_res .= $paste;
 			$tmp_res .= Buffer::_substr($this->_text, $this->_selectionEnd);
 
-
+      $this->_selectionStart += strlen($paste);
 			if( $this->_selectionStart !== $this->_selectionEnd )
 			{
 
 				// deselection
-				$this->_selectionStart += strlen($paste);
 				$this->_selectionEnd = $this->_selectionStart;
 
 			}

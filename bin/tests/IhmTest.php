@@ -181,14 +181,14 @@ class IhmTest extends PHPUnit_Framework_TestCase
 		$this->ihm->paste();
 
 		// buffer
-		$this->assertEquals(4, $this->b->getSelectionStart());
-		$this->assertEquals(4, $this->b->getSelectionEnd());
+		$this->assertEquals(7, $this->b->getSelectionStart());
+		$this->assertEquals(7, $this->b->getSelectionEnd());
 		$this->assertEquals("Hel", $this->b->getTextFromClipBoard());
 		$this->assertEquals("HellHelo", $this->b->getText());
 
 		// ihm
-		$this->assertEquals(4, $this->ihm->getSelectionStart());
-		$this->assertEquals(4, $this->ihm->getSelectionEnd());
+		$this->assertEquals(7, $this->ihm->getSelectionStart());
+		$this->assertEquals(7, $this->ihm->getSelectionEnd());
 		$this->assertEquals("HellHelo", $this->ihm->getText());
 
 
