@@ -12,6 +12,9 @@ class IhmTest extends PHPUnit_Framework_TestCase
 	{
 		$this->b = new Buffer();
 		$this->ihm = new Ihm($this->b);
+
+		$this->b->attach($this->ihm);
+		$this->ihm->attach($this->b);
 	}
 
 	public function tearDown()
@@ -82,14 +85,15 @@ class IhmTest extends PHPUnit_Framework_TestCase
 
 	}
 
-	/**
-	 * TO DO
-	 */
 	public function testcopy(){
 
 		$this->ihm->setText("Hello");
+		$this->b->setText("Hello");
 		$this->ihm->setSelectionStart(0);
-		$this->ihm->setSelectionEnd(3);
+		$this->ihm->setSelectionEnd(4);
+		$this->b->setSelectionStart(0);
+		$this->b->setSelectionEnd(4);
+
 		$this->ihm->copy();
 
 		$this->assertEquals("Hello", $this->ihm->getText());
@@ -102,11 +106,24 @@ class IhmTest extends PHPUnit_Framework_TestCase
 	public function testcut(){
 
 		$this->ihm->setText("Hello");
+		$this->b->setText("Hello");
 		$this->ihm->setSelectionStart(0);
-		$this->ihm->setSelectionEnd(3);
+		$this->ihm->setSelectionEnd(4);
+		$this->b->setSelectionStart(0);
+		$this->b->setSelectionEnd(4);
+
 		$this->ihm->cut();
 
+		$this->assertEquals(0, $this->b->getSelectionStart());
+		$this->assertEquals(0, $this->b->getSelectionEnd());
 		$this->assertEquals("Hell", $this->b->getTextFromClipBoard());
+
+		$this->assertEquals(0, $this->ihm->getSelectionStart());
+		$this->assertEquals(0, $this->ihm->getSelectionEnd());
+
+		//		$this->assertEquals("o", $this->ihm->getText());
+
+
 	}
 
 	public function testpaste(){
