@@ -31,7 +31,7 @@ require_once (BINPATH . 'Ihm.php');
 
 class Buffer implements Observer, Subject
 {
-   public $crtime,$buffer_hash;
+	public $crtime,$buffer_hash;
 	/**
 	 * The content of the current text
 	 * @var _text
@@ -71,20 +71,20 @@ class Buffer implements Observer, Subject
 	 * @type array observer
 	 */
 	private $_observers;
-	 
+
 	/**
 	 * The constructor of the class
 	 * @return void
 	 */
 	public function __construct()
 	{
-    $this->_observers = array();
+		$this->_observers = array();
 		$this->_text = "";
 		$this->_selectionStart = 0;
 		$this->_selectionEnd = 0;
 		$this->_clipboard = new Clipboard();
-    $this->crtime = strftime("%T", time());
-    $this->buffer_hash = spl_object_hash($this);
+		$this->crtime = strftime("%T", time());
+		$this->buffer_hash = spl_object_hash($this);
 	}
 
 	/**
@@ -158,16 +158,25 @@ class Buffer implements Observer, Subject
 	 */
 	public function setSelection($start, $end)
 	{
-		if($start <= $end)
+
+		if ( !is_in($start) || !is_int($end) )
 		{
-			$this->_selectionStart = $start;
-			$this->_selectionEnd = $end;
+			trigger_error( 'Buffer->setSelection(int, int).', E_USER_ERROR );
 		}
-		else
-		{
-			$this->_selectionStart = $end;
-			$this->_selectionEnd = $start;
-		}
+    else {
+    	
+			if( $start <= $end)
+			{
+				$this->_selectionStart = $start;
+				$this->_selectionEnd = $end;
+			}
+			else
+			{
+				$this->_selectionStart = $end;
+				$this->_selectionEnd = $start;
+			}
+			
+    }
 	}
 
 	/**
@@ -189,7 +198,7 @@ class Buffer implements Observer, Subject
 		{
 			$this->_selectionEnd = $this->_selectionStart;
 		}
-		
+
 		$this->notify();
 
 	}
@@ -225,7 +234,7 @@ class Buffer implements Observer, Subject
 		$text = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
 
 		if ( $text !== "" )
-		  $this->setTextIntoClipBoard($text);
+		$this->setTextIntoClipBoard($text);
 	}
 
 	/**
@@ -238,19 +247,24 @@ class Buffer implements Observer, Subject
 
 		if( $this->_selectionStart !== $this->_selectionEnd)
 		{
-			$tmp_str = $this->_text;
 				
-			$text = substr($tmp_str, $this->_selectionStart, $this->_selectionEnd);
-			$this->setTextIntoClipBoard($text);
+			$text_to_be_cut = substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
+
+			var_dump($this->_selectionStart);
+			var_dump($this->_selectionEnd);
+			var_dump($text_to_be_cut);
+			exit;
 				
-			$tmp_str = substr($tmp_str, 0, $this->_selectionStart);
-			$tmp_str .= substr($tmp_str, $this->_selectionEnd);
+			$this->setTextIntoClipBoard($text_to_be_cut);
+
+			$tmp_str = substr($this->_text, 0, $this->_selectionStart);
+			$tmp_str .= substr($this->_text, $this->_selectionEnd);
 
 			// deselection
 			$this->_selectionEnd = $this->_selectionStart;
-				
+
 			$this->_text = $tmp_str;
-			
+
 			$this->notify();
 
 		}
@@ -267,23 +281,25 @@ class Buffer implements Observer, Subject
 
 		if( $this->_clipboard->getText() !== "")
 		{
-				
-			$tmp_str = $this->_text;
 
 			$paste = $this->getTextFromClipBoard();
-				
-			$tmp_res = substr($tmp_str, 0, $this->_selectionStart);
+
+			$tmp_res = substr($this->_text, 0, $this->_selectionStart);
 			$tmp_res .= $paste;
-			$tmp_res .= substr($tmp_str, $this->_selectionEnd);
+			$tmp_res .= substr($this->_text, $this->_selectionEnd);
+
 				
 			if( $this->_selectionStart !== $this->_selectionEnd )
 			{
+
 				// deselection
 				$this->_selectionStart += strlen($paste);
+				$this->_selectionEnd = $this->_selectionStart;
+
 			}
 
 			$this->_text = $tmp_res;
-			
+				
 			$this->notify();
 
 		}
@@ -339,9 +355,9 @@ class Buffer implements Observer, Subject
 		// the IHM subject which notifies the buffer
 
 		// update current state of buffer
-    $this->_selectionStart = $s->getSelectionStart();
-    $this->_selectionEnd = $s->getSelectionEnd();
-    $this->_text = $s->getText();;
+		$this->_selectionStart = $s->getSelectionStart();
+		$this->_selectionEnd = $s->getSelectionEnd();
+		$this->_text = $s->getText();;
 	}
 }
 
