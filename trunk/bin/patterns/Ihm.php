@@ -156,7 +156,7 @@ class Ihm implements Observer, Subject
 	{
 		$this->_text = $text;
 	}
-	 
+	
 	/**
 	 * Set the begining of the selection
 	 * @return void
@@ -166,6 +166,7 @@ class Ihm implements Observer, Subject
 	public function setSelectionStart($val)
 	{
 		$this->_selectionStart = $val;
+    $this->notify();
 	}
 	 
 	/**
@@ -177,7 +178,14 @@ class Ihm implements Observer, Subject
 	public function setSelectionEnd($val)
 	{
 		$this->_selectionEnd = $val;
+    $this->notify();
 	}
+
+  public function updateSelection($selStart, $selEnd){
+    $this->setSelectionStart($selStart);
+    $this->setSelectionEnd($selEnd);
+    $this->notify();
+  }
 
 	public function insert()
 	{

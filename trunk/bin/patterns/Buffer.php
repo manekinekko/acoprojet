@@ -339,9 +339,9 @@ class Buffer implements Observer, Subject
 		// the IHM subject which notifies the buffer
 
 		// update current state of buffer
-		$this->_selectionStart = $s->_selectionStart;
-		$this->_selectionEnd = $s->_selectionEnd;
-		$this->_text = $s->_text;
+    $this->_selectionStart = $s->getSelectionStart();
+    $this->_selectionEnd = $s->getSelectionEnd();
+    $this->_text = $s->getText();;
 	}
 }
 

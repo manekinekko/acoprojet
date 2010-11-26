@@ -30,13 +30,12 @@ function ajax_handle(){
 					$selStart = $_REQUEST['selStart'];
 					$selEnd = $_REQUEST['selEnd'];
 					 
-					// work with IHM and Buffer
-					$session->ihm->setSelectionStart($selStart);
-               $session->ihm->setSelectionStart($selEnd);
+				 // work with IHM and Buffer
+         $session->ihm-> updateSelection($selStart, $selEnd);
                
 					// output define
-					$output_type = 'json';
-               $output['Ihm'] = getIhmAttributes();
+				$output_type = 'json';
+         $output['Ihm'] = getIhmAttributes();
 				}
 				break;
 
