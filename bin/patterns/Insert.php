@@ -33,8 +33,8 @@ class Insert implements Command
 	 * @type Buffer
 	 */
 	protected $_receiver, $_sender;
-
-	private $_current_char, $_crtime, $_insert_hash;
+  public $crtime,$insert_hash, $receiver_hash, $sender_hash;
+	private $_current_char;
 
 	/**
 	 * The constructor of the class
@@ -46,9 +46,14 @@ class Insert implements Command
 	{
 		$this->_receiver = $receiver;
 		$this->_sender = $sender;
+ 
 		$this->_current_char = '#';
-		$_crtime = strftime("%T", time());
-		$_insert_hash = spl_object_hash ($this);
+		$this->crtime = strftime("%T", time());
+		$this->insert_hash = spl_object_hash ($this);
+      
+    $this->sender_hash = $sender->ihm_hash;
+    $this->receiver_hash = $receiver->buffer_hash;
+    
 	}
 
 	/**

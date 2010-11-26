@@ -31,8 +31,7 @@ require_once (BINPATH . 'Ihm.php');
 
 class Buffer implements Observer, Subject
 {
-   private $_crtime;
-   private $_buffer_hash;
+   public $crtime,$buffer_hash;
 	/**
 	 * The content of the current text
 	 * @var _text
@@ -79,14 +78,13 @@ class Buffer implements Observer, Subject
 	 */
 	public function __construct()
 	{
-      $this->_buffer_hash = spl_object_hash ($this);
-      $this->_observers = array();
+    $this->_observers = array();
 		$this->_text = "";
 		$this->_selectionStart = 0;
 		$this->_selectionEnd = 0;
 		$this->_clipboard = new Clipboard();
-    $this->_crtime = strftime("%T", time());
-    $this->_hash = spl_object_hash($this);
+    $this->crtime = strftime("%T", time());
+    $this->buffer_hash = spl_object_hash($this);
 	}
 
 	/**

@@ -32,8 +32,7 @@ require_once ('Paste.php');
 class Ihm implements Observer, Subject
 {
 	 
-	private $_crtime;
-	public $_ihm_hash;
+	public $crtime,$ihm_hash;
 	 
 	 
 	/**
@@ -90,19 +89,21 @@ class Ihm implements Observer, Subject
 	 */
 	public function __construct(&$buffer)
 	{
-		$this->_ihm_hash = spl_object_hash($this);
+		$this->ihm_hash = spl_object_hash($this);
 		$this->_commands = array();
 		$this->_observers = array();
-		$this->_commands['insert'] = new Insert($this, $buffer);
-		$this->_commands['copy'] = new Copy($buffer);
-		$this->_commands['cut'] = new Cut($buffer);
-		$this->_commands['paste'] = new Paste($buffer);
+
 
 		$this->_text = "";
 		$this->_current_char = '#';
 		$this->_selectionStart = 0;
 		$this->_selectionEnd = 0;
-		$this->_crtime = strftime("%T", time());
+		$this->crtime = strftime("%T", time());
+
+    $this->_commands['insert'] = new Insert($this, $buffer);
+    $this->_commands['copy'] = new Copy($buffer);
+    $this->_commands['cut'] = new Cut($buffer);
+    $this->_commands['paste'] = new Paste($buffer);
 	}
 
 	public function getChar()
@@ -180,7 +181,7 @@ class Ihm implements Observer, Subject
 
 	public function insert()
 	{
-		$this->_commands['insert']->execute();
+   $this->_commands['insert']->execute();
 	}
 
 	public function copy()
