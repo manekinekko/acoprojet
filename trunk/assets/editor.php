@@ -11,9 +11,10 @@
       <script  type="text/javascript" src="/acoprojet/assets/js/ajax.js" language="JavaScript" ></script>
    </head>
    <body>
-      <h1>ACO : Projet M1</h1>
+      
       <div id="content">
          <div class="col_left">
+            <h1>ACO : Projet M1</h1>
             <form id="formulaire" method="" action="">
                <fieldset>
                   <legend><b>Menu</b></legend>

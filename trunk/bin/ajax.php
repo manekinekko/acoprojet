@@ -49,8 +49,8 @@ function ajax_handle(){
 					$char = $_REQUEST['char'];
 
 					// work with IHM and Buffer
-               $session->ihm->setChar($char);
-
+          $session->ihm->setChar($char);
+          $session->ihm->insert();
 					// output define
 					$output_type = 'json';
                $output['Ihm'] = getIhmAttributes();
@@ -195,7 +195,15 @@ function debug_me(){
 //   var_dump( $session->ihm->_ihm_hash );
 //   var_dump( spl_object_hash($session->ihm) === $session->ihm->_ihm_hash );
    
-   return array('Ihm' => array_merge(getIhmAttributes(), array('ihm_hash' => spl_object_hash($session->ihm))));
+   return array(
+               'Ihm' => array_merge(
+                     array(),
+                     //getIhmAttributes(),
+                     array(
+                        'ihm_hash' =>$session->ihm->ihm_hash,
+                     )
+                  )
+         );
 }
 
 ajax_handle();
