@@ -93,10 +93,10 @@ class Session
 /**/
 function &getInstance()
 {
-	$o =& Session::getInstance();
-	$c = get_class($o);
+	$c = "Session";//get_class($o);
 	if ( !isset($_SESSION[ $c ]) ) 
 	{
+		$o =& Session::getInstance();
 		$_SESSION[ $c ] =& $o;
 	}
 	return $_SESSION[ $c ];
