@@ -95,7 +95,7 @@ class BufferTest extends PHPUnit_Framework_TestCase
 
 		try {
       $this->b->setSelection("", 7);
-      $this->b->setSelection(5, "");
+      $this->b->setSelection(6, "");
       $this->b->setSelection("", "");
 		}
 		catch(Exception $e){
@@ -125,7 +125,9 @@ class BufferTest extends PHPUnit_Framework_TestCase
 		$this->b->setTextIntoClipboard("Hello"); // Hello dans le PP
 		$this->b->pasteText();
 		$this->assertEquals("Hello", $this->b->getText());
-
+    $this->assertEquals(5, $this->b->getSelectionStart());
+    $this->assertEquals(5, $this->b->getSelectionEnd());
+		
 		$this->b->setSelection(2, 4);
 		$this->b->pasteText();
 		$this->assertEquals("HeHelloo", $this->b->getText());
