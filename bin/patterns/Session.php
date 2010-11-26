@@ -47,16 +47,11 @@ class Session
   private function __construct()
   {
 
-    if ( isset($_SESSION[self::$_instance]) )
-    {
-      trigger_error( 'Singleton can only be accessed through ' .__CLASS__. '::instance().', E_USER_ERROR );
-    }
-    else {
     	$_buffer = new Buffer();
       $this->ihm = new Ihm($_buffer);
       $_buffer->attach($this->ihm);
       $this->ihm->attach($_buffer);
-    }
+
   }
 
   /**
@@ -66,8 +61,6 @@ class Session
    */
   public function __destruct()
   {
-    //$_SESSION[self::$_instance] = serialize($this);
-    $_SESSION[__CLASS__] = $this;
   }
 
   /**
@@ -87,22 +80,26 @@ class Session
    */
   public static function &getInstance()
   {
-
-  	if( is_null(self::$_instance) )
+    
+  	if( is_null( self::$_instance ) )
     {
-      $c = __CLASS__;
-      //$_SESSION[self::$_instance] = serialize(new $c());
+	  	$c = __CLASS__;
       self::$_instance = new $c();
-      $_SESSION[__CLASS__] = self::$_instance;
     }
-
-    //return unserialize($_SESSION[self::$_instance]);
-    return $_SESSION[__CLASS__];
+    return self::$_instance;
   }
 }
 
 /**/
-
-$session =& Session::getInstance();
+function &getInstance()
+{
+	$o =& Session::getInstance();
+	$c = get_class($o);
+	if ( !isset($_SESSION[ $c ]) ) 
+	{
+		$_SESSION[ $c ] =& $o;
+	}
+	return $_SESSION[ $c ];
+}
 
 ?>

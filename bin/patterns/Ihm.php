@@ -33,7 +33,9 @@ class Ihm implements Observer, Subject
 {
    
    private $_crtime;
-   private $_ihm_hash;
+   public $_ihm_hash;
+   
+   
    /**
     * The content of the current text
     * @var _text
@@ -88,7 +90,7 @@ class Ihm implements Observer, Subject
     */
    public function __construct(&$buffer)
    {
-      $this->_ihm_hash = spl_object_hash ($this);
+      $this->_ihm_hash = spl_object_hash($this);
       $this->_commands = array();
       $this->_observers = array();
       $this->_commands['insert']= new Insert($this, $buffer);
@@ -101,7 +103,6 @@ class Ihm implements Observer, Subject
       $this->_selectionStart = 0;
       $this->_selectionEnd = 0;
       $this->_crtime = strftime("%T", time());
-      $this->_hash = spl_object_hash($this);
    }
 
    public function getChar()
