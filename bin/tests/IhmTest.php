@@ -62,6 +62,33 @@ class IhmTest extends PHPUnit_Framework_TestCase
 
 	}
 
+	public function testupdateSelection()
+	{
+		// execute
+		$this->ihm->updateSelection(2, 5);
+
+		// buffer
+		$this->assertEquals(2, $this->b->getSelectionStart());
+		$this->assertEquals(5, $this->b->getSelectionEnd());
+
+		// ihm
+		$this->assertEquals(2, $this->ihm->getSelectionStart());
+		$this->assertEquals(5, $this->ihm->getSelectionEnd());
+
+		// execute
+		$this->ihm->updateSelection(2, 2);
+
+		// buffer
+		$this->assertEquals(2, $this->b->getSelectionStart());
+		$this->assertEquals(2, $this->b->getSelectionEnd());
+
+		// ihm
+		$this->assertEquals(2, $this->ihm->getSelectionStart());
+		$this->assertEquals(2, $this->ihm->getSelectionEnd());
+
+
+	}
+
 	public function testinsert(){
 		$this->ihm->setChar('H');
 		$this->ihm->insert();
@@ -88,9 +115,10 @@ class IhmTest extends PHPUnit_Framework_TestCase
 	public function testcopy(){
 
 		$this->ihm->setText("Hello");
-		$this->b->setText("Hello");
 		$this->ihm->setSelectionStart(0);
 		$this->ihm->setSelectionEnd(3);
+
+		$this->b->setText("Hello");
 		$this->b->setSelectionStart(0);
 		$this->b->setSelectionEnd(3);
 
@@ -99,7 +127,7 @@ class IhmTest extends PHPUnit_Framework_TestCase
 		// buffer
 		$this->assertEquals(0, $this->b->getSelectionStart());
 		$this->assertEquals(3, $this->b->getSelectionEnd());
-		$this->assertEquals("Hell", $this->b->getTextFromClipBoard());
+		$this->assertEquals("Hel", $this->b->getTextFromClipBoard());
 		$this->assertEquals("Hello", $this->b->getText());
 
 		// ihm
@@ -107,16 +135,12 @@ class IhmTest extends PHPUnit_Framework_TestCase
 
 	}
 
-	/**
-	 * TO DO
-	 */
 	public function testcut(){
 
 		$this->ihm->setText("Hello");
-		$this->b->setText("Hello");
-		$this->b->setTextIntoClipBoard("####");
 		$this->ihm->setSelectionStart(0);
 		$this->ihm->setSelectionEnd(3);
+		$this->b->setText("Hello");
 		$this->b->setSelectionStart(0);
 		$this->b->setSelectionEnd(3);
 
@@ -125,21 +149,72 @@ class IhmTest extends PHPUnit_Framework_TestCase
 		// buffer
 		$this->assertEquals(0, $this->b->getSelectionStart());
 		$this->assertEquals(0, $this->b->getSelectionEnd());
-		$this->assertEquals("Hell", $this->b->getTextFromClipBoard());
-		$this->assertEquals("o", $this->b->getText());
+		$this->assertEquals("Hel", $this->b->getTextFromClipBoard());
+		$this->assertEquals("lo", $this->b->getText());
 
 		// ihm
 		$this->assertEquals(0, $this->ihm->getSelectionStart());
 		$this->assertEquals(0, $this->ihm->getSelectionEnd());
-		$this->assertEquals("o", $this->ihm->getText());
+		$this->assertEquals("lo", $this->ihm->getText());
 
 	}
 
 	public function testpaste(){
 
+		// init
+		$this->ihm->setText("Hello");
+		$this->ihm->setSelectionStart(0);
+		$this->ihm->setSelectionEnd(3);
+		$this->b->setText("Hello");
+		$this->b->setSelectionStart(0);
+		$this->b->setSelectionEnd(3);
+
+		// execute
+		$this->ihm->copy();
+
+		$this->b->setSelectionStart(4);
+		$this->b->setSelectionEnd(4);
+
+		$this->ihm->setSelectionStart(4);
+		$this->ihm->setSelectionEnd(4);
+
 		$this->ihm->paste();
 
-		$this->assertEquals("Hell", $this->ihm->getText());
+		// buffer
+		$this->assertEquals(4, $this->b->getSelectionStart());
+		$this->assertEquals(4, $this->b->getSelectionEnd());
+		$this->assertEquals("Hel", $this->b->getTextFromClipBoard());
+		$this->assertEquals("HellHelo", $this->b->getText());
+
+		// ihm
+		$this->assertEquals(4, $this->ihm->getSelectionStart());
+		$this->assertEquals(4, $this->ihm->getSelectionEnd());
+		$this->assertEquals("HellHelo", $this->ihm->getText());
+
+
+		// init
+		$this->ihm->setText("Hello");
+		$this->ihm->setSelectionStart(2);
+		$this->ihm->setSelectionEnd(3);
+		$this->b->setText("Hello");
+		$this->b->setSelectionStart(2);
+		$this->b->setSelectionEnd(3);
+
+		$this->b->setTextIntoClipBoard("###");
+		$this->ihm->paste();
+
+		// buffer
+		$this->assertEquals(5, $this->b->getSelectionStart());
+		$this->assertEquals(5, $this->b->getSelectionEnd());
+		$this->assertEquals("###", $this->b->getTextFromClipBoard());
+		$this->assertEquals("He###lo", $this->b->getText());
+
+		// ihm
+		$this->assertEquals(5, $this->ihm->getSelectionStart());
+		$this->assertEquals(5, $this->ihm->getSelectionEnd());
+		$this->assertEquals("He###lo", $this->ihm->getText());
+
+
 	}
 
 }

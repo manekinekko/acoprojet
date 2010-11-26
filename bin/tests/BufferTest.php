@@ -52,7 +52,13 @@ class BufferTest extends PHPUnit_Framework_TestCase
 		$this->b->setSelection(0, 10);
 		$this->assertEquals(0, $this->b->getSelectionStart());
 		$this->assertEquals(10, $this->b->getSelectionEnd());
+
+		$this->b->setSelection(10, 0);
+		$this->assertEquals(0, $this->b->getSelectionStart());
+		$this->assertEquals(10, $this->b->getSelectionEnd());
+    
 	}
+
 
 	public function testcopyText() {
 		$this->b->setText("Hello");
@@ -88,10 +94,13 @@ class BufferTest extends PHPUnit_Framework_TestCase
 	public function testcutText() {
 		// Test cutText
 		$this->b->setText("Hello");
-		$this->b->setSelection(2, 4);
+		//$this->b->setSelection(1, 3);
+		$this->b->setSelectionStart(1);
+		$this->b->setSelectionEnd(3);
+		
 		$this->b->cutText();
-		$this->assertEquals("He", $this->b->getText());
-		$this->assertEquals("llo", $this->b->getTextFromClipboard());
+		$this->assertEquals("Ho", $this->b->getText());
+		$this->assertEquals("ell", $this->b->getTextFromClipboard());
 
 		$this->assertEquals(2, $this->b->getSelectionStart());
 		$this->assertEquals(2, $this->b->getSelectionEnd());

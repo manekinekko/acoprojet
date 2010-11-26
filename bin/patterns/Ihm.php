@@ -181,7 +181,8 @@ class Ihm implements Observer, Subject
     $this->notify();
 	}
 
-  public function updateSelection($selStart, $selEnd){
+  public function updateSelection($selStart, $selEnd)
+  {
     $this->setSelectionStart($selStart);
     $this->setSelectionEnd($selEnd);
     $this->notify();
