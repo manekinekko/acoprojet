@@ -484,16 +484,16 @@ function update(obj_id, Ihm){
 	if(obj.setSelectionRange)
 	{
 		obj.focus();
-//		obj.setSelectionRange(Ihm.selStart,Ihm.selEnd);
+		obj.setSelectionRange(Ihm.selStart,Ihm.selEnd);
 	}
 	else if (obj.createTextRange) {
 		var range = obj.createTextRange();
-//		console.log(range);
-//		range.collapse(true);
-//		range.moveStart('character', Ihm.selStart);
-//		range.moveEnd('character', Ihm.selEnd);
-//		console.log(range);
-//		range.select();
+		console.log(range);
+		range.collapse(true);
+		range.moveStart('character', Ihm.selStart);
+		range.moveEnd('character', Ihm.selEnd);
+		console.log(range);
+		range.select();
 	}
 
 }
