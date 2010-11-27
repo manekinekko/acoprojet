@@ -1,11 +1,25 @@
 <?php
 
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 $session =& getInstance();
 
 function ajax_handle(){
 	$debug = true;
 	global $session;
-	
+
 	$function_name_allowed = array('updateSelection', 'insert' ,'paste', 'copy', 'cut');
 	$function_name = 'default'; // function name
 	$function_valid = false; // status of function validation
@@ -20,44 +34,44 @@ function ajax_handle(){
 
 		switch($function_name){
 
-// 			// the end of the selection
+			// 			// the end of the selection
 			case 'updateSelection':
 				// check args
 
 				$params_valid = validPostArg('selStart') && validPostArg('selEnd');
 				if($params_valid){
-               $output['debug'] = debug_me();
+					$output['debug'] = debug_me();
 					$selStart = $_REQUEST['selStart'];
 					$selEnd = $_REQUEST['selEnd'];
-					 
+
 				 // work with IHM and Buffer
-         $session->ihm-> updateSelection($selStart, $selEnd);
-               
+					$session->ihm->updateSelection($selStart, $selEnd);
+					 
 					// output define
-				$output_type = 'json';
-         $output['Ihm'] = getIhmAttributes();
+					$output_type = 'json';
+					$output['Ihm'] = getIhmAttributes();
 				}
 				break;
 
-         // the character to be stored
+				// the character to be stored
 			case 'insert':
 				// check args
 				$params_valid = validPostArg('char');
 				if($params_valid){
-               $output['debug'] = debug_me();
+					$output['debug'] = debug_me();
 					$char = $_REQUEST['char'];
 
 					// work with IHM and Buffer
-          $session->ihm->setChar($char);
-          $session->ihm->insert();
+					$session->ihm->setChar($char);
+					$session->ihm->insert();
 					// output define
 					$output_type = 'json';
-               $output['Ihm'] = getIhmAttributes();
+					$output['Ihm'] = getIhmAttributes();
 				}
 				break;
 
 			case 'cut':
-            $output['debug'] = debug_me();
+				$output['debug'] = debug_me();
 				/* We don't need to get any args because the real IHM user (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
 				 * Ihm.php must have the positionStart & positionEnd that IHM (Web browser)
@@ -69,8 +83,8 @@ function ajax_handle(){
 
 				// output define
 				$output_type = 'json';
-            $output['Ihm'] = getIhmAttributes();
-            $output['debug'] = debug_me();
+				$output['Ihm'] = getIhmAttributes();
+				$output['debug'] = debug_me();
 				break;
 
 			case 'copy':
@@ -85,24 +99,24 @@ function ajax_handle(){
 
 				// output define
 				$output_type = 'json';
-            
+
 				break;
 
 			case 'paste':
-            $output['debug'] = debug_me();
+				$output['debug'] = debug_me();
 				/* We don't need to get any args because the real user IHM (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
 				 * Ihm.php must have the positionStart & positionEnd that IHM (Web browser)
 				 */
 				$params_valid = true;
-				
+
 				// work with IHM and Buffer
 				$session->ihm->paste();
 
 				// output define
-            $output_type = 'json';
+				$output_type = 'json';
 				$output['Ihm'] = getIhmAttributes();
-				
+
 				break;
 		}
 
@@ -128,7 +142,7 @@ function ajax_handle(){
 	else{
 		outputJsonError('Function name "'.$function_name.'" didn\'t recognize', $output);
 	}
-	
+
 }
 
 function validPostFunction($function_name_allowed){
@@ -138,7 +152,7 @@ function validPostFunction($function_name_allowed){
 function validPostArg($arg_label){
 	return isset($_REQUEST[$arg_label]) && (!empty($_REQUEST[$arg_label]) || $_REQUEST[$arg_label]==0 || $_REQUEST[$arg_label]=='0');
 }
- 
+
 function validGetArg($arg_label){
 	return isset($_GET[$arg_label]) && (!empty($_GET[$arg_label]) || $_GET[$arg_label]==0 || $_GET[$arg_label]=='0');
 }
@@ -153,7 +167,7 @@ function outputJson($json){
 	else{
 		outputJsonError('Can not output with an array not initialized');
 	}
-	
+
 }
 
 function outputJsonError($msg, $json_error){
@@ -161,8 +175,8 @@ function outputJsonError($msg, $json_error){
 
 	// output filter
 	if( isset($msg) ){
-      $output_json['ErrorMsg'] = $msg;
-      $output_json['ErrorData'] = $json_error;
+		$output_json['ErrorMsg'] = $msg;
+		$output_json['ErrorData'] = $json_error;
 	}else{
 		$output_json['Error'] = 'Error without feedback';
 	}
@@ -171,38 +185,31 @@ function outputJsonError($msg, $json_error){
 }
 
 function getIhmAttributes(){
-   global $session;
+	global $session;
 
-   //todo : delete hack
-   /*
-   return array('text' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'selStart' => '3','selEnd' => '9');
-   */
-   
-   //*/
-   return array(
+	return array(
       'text' => $session->ihm->getText(),
       'selStart' => $session->ihm->getSelectionStart(),
       'selEnd' => $session->ihm->getSelectionEnd()
-   );
-   //*/
+	);
 }
 
 function debug_me(){
-   global $session;
-   
-//   var_dump( spl_object_hash($session->ihm) );
-//   var_dump( $session->ihm->_ihm_hash );
-//   var_dump( spl_object_hash($session->ihm) === $session->ihm->_ihm_hash );
-   
-   return array(
+	global $session;
+	 
+	//   var_dump( spl_object_hash($session->ihm) );
+	//   var_dump( $session->ihm->_ihm_hash );
+	//   var_dump( spl_object_hash($session->ihm) === $session->ihm->_ihm_hash );
+	 
+	return array(
                'Ihm' => array_merge(
-                     array(),
-                     //getIhmAttributes(),
-                     array(
+	array(),
+	//getIhmAttributes(),
+	array(
                         'ihm_hash' =>$session->ihm->ihm_hash,
-                     )
-                  )
-         );
+	)
+	)
+	);
 }
 
 ajax_handle();

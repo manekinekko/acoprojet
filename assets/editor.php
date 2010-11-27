@@ -6,8 +6,9 @@
 <html>
    <head>
       <link rel="stylesheet" type="text/css" media="screen" href="/acoprojet/assets/css/styles.css" />
-      <script  type="text/javascript" src="/acoprojet/assets/js/lib.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="/acoprojet/assets/js/jq.js" language="JavaScript" ></script>
+      <script  type="text/javascript" src="/acoprojet/assets/js/config.js" language="JavaScript" ></script>
+      <script  type="text/javascript" src="/acoprojet/assets/js/lib.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="/acoprojet/assets/js/ajax.js" language="JavaScript" ></script>
    </head>
    <body>
