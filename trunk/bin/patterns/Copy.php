@@ -14,30 +14,28 @@
  * 
  */
 
+require_once ('Command.php');
+
 /**
  * The copy command
  * 
  * @author wassim Chegham & hugo Marchadour
- * @category Command
- * @package command
+ * @package Command
  * @version 0.1
  */
-
-require_once ('Command.php');
-
 class Copy implements Command
 {
+
 	/**
-	 * @var the object receiver that 
+	 * @var Buffer The receiver object of the Copy command (the Buffer)
 	 * @access protected
-	 * @type Buffer
 	 */
 	protected $_receiver;
 
 	/**
-	 * The constructor of the class
+	 * The constructor of the Copy command
 	 * @return void
-	 * @param Buffer $receiver the object receiver
+	 * @param Buffer $receiver The reference of the receiver object
 	 * @access public
 	 */
 	public function __construct(&$receiver)

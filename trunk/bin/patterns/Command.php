@@ -18,18 +18,17 @@
  * The command interface
  * 
  * @author wassim Chegham & hugo Marchadour
- * @category Command
- * @package command
+ * @package Command
  * @version 0.1
  */
 
 interface Command
 {
 	
-	/**
-	 * 
-	 * @return 
-	 */
+  /**
+   * Execute the command
+   * @access public
+   */
 	public function execute();
 	
 }

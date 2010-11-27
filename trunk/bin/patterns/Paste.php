@@ -14,34 +14,30 @@
  * 
  */
 
+require_once ('Command.php');
+
 /**
  * The paste command
  *
  * @author wassim Chegham & hugo Marchadour
- * @category Command
- * @package command
+ * @package Command
  * @version 0.1
  */
-require_once ('Command.php');
-
-
 class Paste implements Command
 {
 	
-	/**
-	 * @var the object receiver that 
-	 * @access protected
-	 * @type Buffer
-	 */
+  /**
+   * @var Buffer The object receiver of the Cut command (the Buffer)
+   * @access protected
+   */
 	protected $_receiver;
 
-	/**
-	 * The constructor of the class
-	 * @return void
-	 * @param Buffer $receiver the object receiver of this command
-	 * @param Command $action the action to be performed
-	 * @access public
-	 */
+  /**
+   * The constructor of the Paste command
+   * @return void
+   * @param Buffer $receiver The reference of the receiver object of the Paste command
+   * @access public
+   */
 	public function __construct(&$receiver)
 	{
 		$this->_receiver = $receiver;

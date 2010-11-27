@@ -14,66 +14,66 @@
  *
  */
 
-/**
- * This class represents a buffer, which contains a temporary text content;
- * This is also the concrete subject of the Obsever Design Pattern
- *
- * @author wassim Chegham & hugo Marchadour
- * @category Command
- * @package command
- * @version 0.1
- */
 require_once (BINPATH . 'Observer.php');
 require_once (BINPATH . 'Subject.php');
 require_once (BINPATH . 'Clipboard.php');
 require_once (BINPATH . 'Ihm.php');
 
-
+/**
+ * This class represents a buffer, which contains a temporary text content;
+ * This is also the concrete subject of the Obsever Design Pattern
+ *
+ * @author wassim Chegham & hugo Marchadour
+ * @package Command
+ * @version 0.1
+ */
 class Buffer implements Observer, Subject
 {
-	public $crtime,$buffer_hash;
+  
+  /**
+   * @var Integer $crtime The current time (used for debugging).
+   * @access public
+   */
+  public $crtime;
+
+  /**
+   * @var String $ihm_hash The unique hash of this object (used for debugging).
+   * @access public
+   */
+  public $ihm_hash;
+	
 	/**
-	 * The content of the current text
-	 * @var _text
+	 * @var String $_text The content of the current text.
 	 * @access private
-	 * @type String
 	 */
 	private $_text;
 
 	/**
-	 * The begining of a selection.
-	 * @var _selectionStart
+	 * @var Ineteger $_selectionStart The begining of a selection.
 	 * @access private
-	 * @type Integer
 	 */
 	private $_selectionStart;
 
 	/**
-	 * The end of a selection
-	 * @var _selectionEnd
+	 * @var Integer $_selectionEnd The end of a selection.
 	 * @access private
-	 * @type Integer
 	 */
 	private $_selectionEnd;
 
 	/**
-	 * The clipboard object
-	 * @var _clipboard
+	 * @var Integer $_clipboard The clipboard object.
 	 * @access private
-	 * @type Clipboard
 	 */
 	private $_clipboard;
 
 	/**
-	 * The array who contains all observers
-	 * @var _observers
+	 * @var Observer[] $_observers The array who contains all observers.
 	 * @access private
-	 * @type array observer
 	 */
 	private $_observers;
 
 	/**
-	 * The constructor of the class
+	 * The constructor of the Buffer
 	 * @return void
 	 */
 	public function __construct()
@@ -155,6 +155,7 @@ class Buffer implements Observer, Subject
 	 * @return void
 	 * @param Integer $start the begining of the selection
 	 * @param Integer $end the end of the selection
+	 * @access public
 	 */
 	public function setSelection($start, $end)
 	{
@@ -184,6 +185,7 @@ class Buffer implements Observer, Subject
 	 * Insert a character into the buffer
 	 * @return void
 	 * @param Character $char the character to be inserted
+	 * @access public
 	 */
 	public function insert($char)
 	{
@@ -207,7 +209,7 @@ class Buffer implements Observer, Subject
 	/**
 	 * Set a text content into the clipboard
 	 * @return void
-	 * @access private
+	 * @access public
 	 */
 	public function setTextIntoClipBoard($text)
 	{
@@ -217,13 +219,12 @@ class Buffer implements Observer, Subject
 	/**
 	 * Get a text content from the clipboard
 	 * @return String the text content from the clipboard
+	 * @access public
 	 */
 	public function getTextFromClipBoard()
 	{
 		return $this->_clipboard->getText();
 	}
-
-	/** Command methods **/
 
 	/**
 	 * Copy the current selection into clipboard
@@ -251,7 +252,6 @@ class Buffer implements Observer, Subject
 
 			$text_to_be_cut = Buffer::_substr($this->_text, $this->_selectionStart, $this->_selectionEnd);
 			$this->setTextIntoClipBoard($text_to_be_cut);
-//			var_dump($text_to_be_cut, $this->_selectionStart, $this->_selectionEnd);
 
 			$tmp_str = Buffer::_substr($this->_text, 0, $this->_selectionStart);
 			$tmp_str .= Buffer::_substr($this->_text, $this->_selectionEnd);
@@ -301,8 +301,6 @@ class Buffer implements Observer, Subject
 
 	}
 
-	/**  Observer methods **/
-
 	/**
 	 * Attach an observer to this concrete subject
 	 * @return void
@@ -343,23 +341,26 @@ class Buffer implements Observer, Subject
 		}
 	}
 
-	/**  Subject methods **/
-
+  /**
+   * Update the current state of the buffer
+   * @param Ihm $s The reference of the observer of the subject
+   */
 	public function update(&$s)
 	{
-		// the IHM subject which notifies the buffer
 
-		// update current state of buffer
 		$this->_selectionStart = $s->getSelectionStart();
 		$this->_selectionEnd = $s->getSelectionEnd();
 		$this->_text = $s->getText();;
 	}
 	
 	/**
-	 * 
-	 * @param unknown_type $str
-	 * @param unknown_type $selStart
-	 * @param unknown_type $selEnd
+	 * Get a sub string from another string
+	 * @param String $str The string where from where the sub string should be got 
+	 * @param Integer $selStart The index where to start
+	 * @param Integer $selEnd The index where to end
+	 * @return String The sub string
+	 * @access public
+	 * @static
 	 */
 	private static function _substr($str, $selStart, $selEnd=-1)
 	{

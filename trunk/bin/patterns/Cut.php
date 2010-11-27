@@ -14,31 +14,28 @@
  * 
  */
 
+require_once ('Command.php');
+
 /**
  * The cut command
  * 
  * @author wassim Chegham & hugo Marchadour
- * @category Command
- * @package command
+ * @package Command
  * @version 0.1
  */
-
-require_once ('Command.php');
-
-
 class Cut implements Command
 {
+
 	/**
-	 * @var the object receiver that 
+	 * @var Buffer The object receiver of the Cut command (the Buffer)
 	 * @access protected
-	 * @type Buffer
 	 */
 	protected $_receiver;
 
 	/**
-	 * The constructor of the class
+	 * The constructor of the Cut command
 	 * @return void
-	 * @param Buffer $receiver the object receiver
+	 * @param Buffer $receiver The reference of the receiver object of the Cut command
 	 * @access public
 	 */
 	public function __construct(&$receiver)

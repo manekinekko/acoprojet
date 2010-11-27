@@ -18,17 +18,15 @@
  * The Observer interface
  * 
  * @author wassim Chegham & hugo Marchadour
- * @category Observer
- * @package observer
+ * @package Observer
  * @version 0.1
  */
 
 interface Observer
 {
-   
    /**
-    * 
-    * @return 
+    * Update the subject's state
+    * @param Object $s The reference of the subject
     */
    public function update(&$s);
    
