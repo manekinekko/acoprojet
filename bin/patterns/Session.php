@@ -14,34 +14,34 @@
  *
  */
 
+require_once (BINPATH . 'ConcreteMemento.php');
+require_once (BINPATH . 'Ihm.php');
+require_once (BINPATH . 'Buffer.php');
 
 /**
  * This class represents the main entry of the application
  *
  * @author wassim Chegham & hugo Marchadour
- * @category Command
- * @package command
+ * @package Singleton
  * @version 0.1
  */
-
-//require_once (BINPATH . 'ConcreteMemento.php');
-require_once (BINPATH . 'Ihm.php');
-require_once (BINPATH . 'Buffer.php');
-
 class Session
 {
   
+	/**
+	 * @var Ihm $ihm The ihm object
+	 */
 	public $ihm;
 
   /**
-   * @var represents the instance of the current object
+   * @var Session $_instance Represents the instance of the current object
    * @access private
-   * @type Session
+   * @static
    */
   private static $_instance = null;
 
   /**
-   * The constructor of the class
+   * The constructor of the Session
    * @return void
    */
   private function __construct()
@@ -55,7 +55,7 @@ class Session
   } 
 
   /**
-   * Save the current objet into session
+   * Override the __destrcutor methode of the Session class
    * @return void
    * @access public
    */
@@ -64,7 +64,8 @@ class Session
   }
 
   /**
-   * Object cloning is forbidden!
+   * Override the __clone methode of the Session class
+   * in order to forbide Object cloning.
    * @return void
    * @access public
    */
@@ -90,7 +91,9 @@ class Session
   }
 }
 
-/**/
+/**
+ * Call this function to get the current instance of the Session object
+ */
 function &getInstance()
 {
 	$c = "Session";//get_class($o);

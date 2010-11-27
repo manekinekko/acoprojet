@@ -14,14 +14,6 @@
  *
  */
 
-/**
- * The Ihm Observer
- *
- * @author wassim Chegham & hugo Marchadour
- * @category Observer
- * @package observer
- * @version 0.1
- */
 require_once ('Observer.php');
 require_once ('Subject.php');
 require_once ('Insert.php');
@@ -29,65 +21,77 @@ require_once ('Copy.php');
 require_once ('Cut.php');
 require_once ('Paste.php');
 
+/**
+ * The Ihm Observer
+ *
+ * @author wassim Chegham & hugo Marchadour
+ * @package Observer
+ * @version 0.1
+ */
 class Ihm implements Observer, Subject
 {
-	 
-	public $crtime,$ihm_hash;
-	 
-	 
+
 	/**
-	 * The content of the current text
-	 * @var _text
+	 * @var Integer $crtime The current time (used for debugging).
+	 * @access public
+	 */
+	public $crtime;
+
+	/**
+	 * @var String $ihm_hash The unique hash of this object (used for debugging).
+	 * @access public
+	 */
+	public $ihm_hash;
+
+
+	/**
+	 * @var String $_text The content of the current text.
 	 * @access private
-	 * @type String
 	 */
 	private $_text;
-	 
+
 	/**
-	 * The begining of a selection.
-	 * @var _selectionStart
+	 * @var Integer $_selectionStart The begining of a selection.
 	 * @access private
-	 * @type Integer
 	 */
 	private $_selectionStart;
-	 
+
 	/**
-	 * The end of a selection
-	 * @var _selectionEnd
+	 * @var Integer $_selectionEnd The end of a selection.
 	 * @access private
-	 * @type Integer
 	 */
 	private $_selectionEnd;
-	 
+
 	/**
-	 * The clipboard object
-	 * @var _clipboard
+	 * @var Clipboard $_clipboard The clipboard object.
 	 * @access private
-	 * @type Clipboard
 	 */
 	private $_clipboard;
-	 
+
 	/**
-	 * The array who contains all observers
-	 * @var _observers
+	 * @var Observer[] $_observers The array which contains all observers.
 	 * @access private
-	 * @type array observer
 	 */
 	private $_observers;
 
 	/**
+	 * @var Character $_current_char The current character.
+	 * @access private
 	 */
 	private $_current_char;
-	 
-	/**
-	 */
+
+  /**
+   * @var Command[] $_commands The arrau which contains all commands.
+   * @access private
+   */
 	private $_commands;
 
-	/**
-	 * The constructor of the class
-	 * @return void
-	 */
-	public function __construct(&$buffer)
+  /**
+   * The constructor of the Ihm class
+   * 
+   * @param Buffer $buffer The reference of the buffer
+   */
+		public function __construct(&$buffer)
 	{
 		$this->ihm_hash = spl_object_hash($this);
 		$this->_commands = array();
@@ -100,17 +104,27 @@ class Ihm implements Observer, Subject
 		$this->_selectionEnd = 0;
 		$this->crtime = strftime("%T", time());
 
-    $this->_commands['insert'] = new Insert($this, $buffer);
-    $this->_commands['copy'] = new Copy($buffer);
-    $this->_commands['cut'] = new Cut($buffer);
-    $this->_commands['paste'] = new Paste($buffer);
+		$this->_commands['insert'] = new Insert($this, $buffer);
+		$this->_commands['copy'] = new Copy($buffer);
+		$this->_commands['cut'] = new Cut($buffer);
+		$this->_commands['paste'] = new Paste($buffer);
 	}
 
+	/**
+	 * Get the current character
+	 * @return Character The current character
+	 * @access public
+	 */
 	public function getChar()
 	{
 		return $this->_current_char;
 	}
-	 
+
+	/**
+	 * Set the current character
+	 * @param Character $char The current character
+	 * @access public
+	 */
 	public function setChar($char)
 	{
 		$this->_current_char = $char;
@@ -145,7 +159,7 @@ class Ihm implements Observer, Subject
 	{
 		return $this->_text;
 	}
-	 
+
 	/**
 	 * Set the content of the current text
 	 * @return void
@@ -156,7 +170,7 @@ class Ihm implements Observer, Subject
 	{
 		$this->_text = $text;
 	}
-	
+
 	/**
 	 * Set the begining of the selection
 	 * @return void
@@ -166,9 +180,9 @@ class Ihm implements Observer, Subject
 	public function setSelectionStart($val)
 	{
 		$this->_selectionStart = $val;
-    $this->notify();
+		$this->notify();
 	}
-	 
+
 	/**
 	 * Set the end of the selection
 	 * @return void
@@ -178,31 +192,58 @@ class Ihm implements Observer, Subject
 	public function setSelectionEnd($val)
 	{
 		$this->_selectionEnd = $val;
-    $this->notify();
+		$this->notify();
 	}
 
-  public function updateSelection($selStart, $selEnd)
-  {
-    $this->setSelectionStart($selStart);
-    $this->setSelectionEnd($selEnd);
-    $this->notify();
-  }
+	/**
+	 * Update the current selection
+	 * @param Inetger $selStart The begining of the selection
+	 * @param Integer $selEnd The end of the selection
+	 * @return void
+	 * @access public
+	 */
+	public function updateSelection($selStart, $selEnd)
+	{
+		$this->setSelectionStart($selStart);
+		$this->setSelectionEnd($selEnd);
+		$this->notify();
+	}
 
+	/**
+	 * Insert a new character into the buffer
+	 * @return void
+	 * @access public
+	 */
 	public function insert()
 	{
-   $this->_commands['insert']->execute();
+		$this->_commands['insert']->execute();
 	}
 
+	/**
+	 * Copy the selected text into the buffer
+	 * @return void
+	 * @access public
+	 */
 	public function copy()
 	{
 		$this->_commands['copy']->execute();
 	}
-	 
+
+	/**
+	 * Cut the selected text into the buffer
+	 * @return void
+	 * @access public
+	 */
 	public function cut()
 	{
 		$this->_commands['cut']->execute();
 	}
-	 
+
+	/**
+	 * Paste the text from the clipboard into the buffer
+	 * @return void
+	 * @access public
+	 */
 	public function paste()
 	{
 		$this->_commands['paste']->execute();
@@ -211,7 +252,7 @@ class Ihm implements Observer, Subject
 	/**
 	 * Attach an observer to this concrete subject
 	 * @return void
-	 * @param Observer $o the observer of this concrete subject
+	 * @param Observer $o The reference of the observer of this concrete subject
 	 */
 	public function attach(&$o)
 	{
@@ -220,13 +261,11 @@ class Ihm implements Observer, Subject
 			$this->_observers[] = $o;
 		}
 	}
-	 
-	/**  Observer methods **/
 
 	/**
 	 * Detach an observer from this concrete subject
 	 * @return void
-	 * @param Observer $o the observer to be detached
+	 * @param Observer $o The reference of the observer to be detached
 	 */
 	public function detach(&$o)
 	{
@@ -236,7 +275,7 @@ class Ihm implements Observer, Subject
 			unset($this->_observers[$index]);
 		}
 	}
-	 
+
 	/**
 	 * Notify the observers of this concrete subject
 	 * @return void
@@ -249,14 +288,13 @@ class Ihm implements Observer, Subject
 			$o->update($this);
 		}
 	}
-	 
-	/**  Subject methods **/
 
+  /**
+   * Update the current IHM's state 
+   * @param Buffer $s The reference of the subject
+   */
 	public function update(&$s)
 	{
-		// the buffer subject which notifies that something has happened
-
-		// update current state of ihm
 		$this->_selectionStart = $s->getSelectionStart();
 		$this->_selectionEnd = $s->getSelectionEnd();
 		$this->_text = $s->getText();

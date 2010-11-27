@@ -18,8 +18,7 @@
  * The Subject interface
  * 
  * @author wassim Chegham & hugo Marchadour
- * @category Observer
- * @package observer
+ * @package Observer
  * @version 0.1
  */
 

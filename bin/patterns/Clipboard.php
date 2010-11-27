@@ -18,23 +18,21 @@
  * This class represents a clipboard
  * 
  * @author wassim Chegham & hugo Marchadour
- * @category Command
- * @package command
+ * @package Command
  * @version 0.1
  */
-
 class Clipboard
 {
 	/**
-	 * @var _text the current text content
+	 * @var String $_text the current text content
 	 * @access private
-	 * @type String
 	 */
 	private $_text;
 	
 	/**
-	 * The constructor
+	 * The constructor of the Clipboard
 	 * @return void
+	 * @access public
 	 */
 	public function __construct($str="")
 	{
@@ -45,6 +43,7 @@ class Clipboard
 	 * Set the current text
 	 * @return void
 	 * @param String $str the new text content
+	 * @access public
 	 */
 	public function setText($str)
 	{ 
@@ -54,6 +53,7 @@ class Clipboard
 	/**
 	 * Get the current text content
 	 * @return the current text
+	 * @access public
 	 */
 	public function getText()
 	{ 

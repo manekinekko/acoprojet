@@ -14,46 +14,77 @@
  *
  */
 
+require_once ('Command.php');
+
 /**
  * The InsertChar command
  *
  * @author wassim Chegham & hugo Marchadour
- * @category Command
- * @package command
+ * @package Command
  * @version 0.1
  */
-
-require_once ('Command.php');
-
 class Insert implements Command
 {
+
 	/**
-	 * @var the object receiver that
+	 * @var Buffer $_receiver The object receiver of the Cut command (the Buffer)
 	 * @access protected
-	 * @type Buffer
 	 */
-	protected $_receiver, $_sender;
-  public $crtime,$insert_hash, $receiver_hash, $sender_hash;
+	protected $_receiver;
+
+	/**
+	 * @var Buffer $_sender The object sender of the Cut command (the Ihm)
+	 * @access protected
+	 */
+	protected $_sender;
+
+	/**
+	 * @var Integer $crtime The time when this object is created
+	 * @access public
+	 */
+	public $crtime;
+
+	/**
+	 * @var String $insert_hash The unique hash of this object
+	 * @access public
+	 */
+	public $insert_hash;
+
+	/**
+	 * @var String $insert_hash The unique hash of the receiver object
+	 * @access public
+	 */
+	public $receiver_hash;
+
+	/**
+	 * @var String $insert_hash The unique hash of the sender object
+	 * @access public
+	 */
+	public $sender_hash;
+
+	/**
+	 * @var Character $_current_char The current character to be inserted
+	 * @access private
+	 */
 	private $_current_char;
 
 	/**
-	 * The constructor of the class
-	 * @return void
-	 * @param Buffer $receiver the object receiver
-	 * @access public
+	 * The constructor of the Insert command
+	 * @param Ihm $sender The Ihm object from where to get the character to be inserted
+	 * @param Buffer $receiver The Buffer object where to insert the current character
 	 */
 	public function __construct(&$sender, &$receiver)
 	{
 		$this->_receiver = $receiver;
 		$this->_sender = $sender;
- 
+
 		$this->_current_char = '#';
 		$this->crtime = strftime("%T", time());
 		$this->insert_hash = spl_object_hash ($this);
-      
-    $this->sender_hash = $sender->ihm_hash;
-    $this->receiver_hash = $receiver->buffer_hash;
-    
+
+		$this->sender_hash = $sender->ihm_hash;
+		$this->receiver_hash = $receiver->buffer_hash;
+
 	}
 
 	/**

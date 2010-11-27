@@ -16,7 +16,7 @@
       <div id="content">
          <div class="col_left">
             <h1>ACO : Projet M1</h1>
-            <form id="formulaire" method="" action="">
+            <form id="formulaire" method="post" action="">
                <fieldset>
                   <legend><b>Menu</b></legend>
                   <button name="cut" id="cut" value="1" type="button">Couper</button>
