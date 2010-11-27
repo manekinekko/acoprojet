@@ -93,8 +93,10 @@ function debug(){
  * @return
  */
 function copy() {
-	$.ajax(
-			{
+	
+	var prev_selection = {};
+	
+	$.ajax({
 				url : config.ajax.target,
 				type : config.ajax.type,
 				data : {
@@ -110,6 +112,11 @@ function copy() {
 					console.log("out --->");
 					console.log("nothing");
 				}
+				
+				prev_selection.selStart = getSelectionStart(config.html.textareaId);
+				prev_selection.selEnd = getSelectionEnd(config.html.textareaId);
+				setSelection(config.html.textareaId, prev_selection);
+				
 			},
 			success: function(response){
 
@@ -117,6 +124,7 @@ function copy() {
 					console.log(response.ErrorMsg); 
 					console.log(response.ErrorData); 
 				}
+
 				if(config.debug.all && response.debug) {
 					console.log("_PHP DEBUG_"); 
 					console.log("selStart:"+ response.debug.Ihm.selStart);
@@ -129,15 +137,20 @@ function copy() {
 				if(config.debug.all && config.debug.copy) {
 					console.log("<--- in");
 				}
+				
 			},
+			
 			error: function(e){
 				console.log("copy error" + e);
 			},
+			
 			complete: function(){
 				if(config.debug.all && config.debug.copy) console.log("copy complete");
+				
+				setSelection(config.html.textareaId, prev_selection);
 			}
-			}
-	);
+			
+		});
 };
 
 /**
@@ -442,7 +455,7 @@ function getSelectedText(obj_id){
 		var str = document.getSelection();
 	}else {
 		var str = document.selection.createRange().text;
-		
+
 	}
 	return str;
 }
@@ -478,9 +491,25 @@ function getSelText(obj_id){
  * @return
  */
 function update(obj_id, Ihm){
+	
 	var obj = document.getElementById(obj_id);
+	
 	obj.value = Ihm.text;
 
+	setSelection(obj_id, Ihm);
+
+}
+
+/**
+ * 
+ * @param obj_id
+ * @param Ihm
+ * @return
+ */
+function setSelection(obj_id, Ihm){
+	var obj = document.getElementById(obj_id);
+	console.log(Ihm);
+	
 	if(obj.setSelectionRange)
 	{
 		obj.focus();
@@ -495,7 +524,7 @@ function update(obj_id, Ihm){
 		console.log(range);
 		range.select();
 	}
-
+	
 }
 
 /**
