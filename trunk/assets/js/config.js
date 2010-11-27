@@ -21,7 +21,7 @@ config.ajax.target = "index.php?ajax";
 config.ajax.type = "POST";
 config.ajax.dataType = "json";
 
-config.debug.all = true;
+config.debug.all = false;
 config.debug.selection = true;
 config.debug.char = true;
 config.debug.paste = true;

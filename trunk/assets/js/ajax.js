@@ -54,7 +54,7 @@ $(function(){
 	$('#cut').click(
 			function(e){
 				e.preventDefault();
-				if ( getSelectedText() != "" )
+				if ( getSelText(config.html.textareaId) != "" )
 				{
 					cut();
 					debug();
@@ -66,7 +66,7 @@ $(function(){
 	$('#copy').click(
 			function(e){
 				e.preventDefault();
-				if ( getSelectedText() != "" )
+				if ( getSelText(config.html.textareaId) != "" )
 				{
 					copy();
 					debug();
