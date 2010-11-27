@@ -59,6 +59,20 @@ function getChar(evt) {
    return {char:char, code:charCode};
 }
 
+function getSelectionStart(id) 
+{
+	var el = document.getElementById(id);
+	
+	if ( typeof el.selectionStart != 'undefined' )
+		return el.selectionStart;
+	// IE Support
+	el.focus();
+	var range = el.createTextRange();
+	range.moveToBookmark(document.selection.createRange().getBookmark());
+	range.moveEnd('character', el.value.length);
+	return el.value.length - range.text.length;
+}
+
 function getSelectionStart(obj_id) {
    var obj = document.getElementById(obj_id);
 
