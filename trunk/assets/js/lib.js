@@ -91,65 +91,88 @@ function debug(){
  * 
  * @return
  */
-function copy() {
-	
-	var prev_selection = {};
-	
+function init() {
 	$.ajax({
-				url : config.ajax.target,
-				type : config.ajax.type,
-				data : {
-				// paramètres envoyés
-				function_name: 'copy'
-			}, 
-			dataType : config.ajax.dataType, // type de données recues
+		url : config.ajax.target,
+		type : config.ajax.type,
+		data : {
+		function_name: 'init'
+	}, 
+	dataType : config.ajax.dataType,
+	beforeSend: function(){},
+	success: function(response){
+		update(config.html.textareaId, response.Ihm);
+		debug();
+	},
+	error: function(e){},
+	complete: function(){}
 
-			beforeSend: function(){
-				if(config.debug.all && config.debug.copy) {
-					console.log("__________________________");
-					console.log("copy");
-					console.log("out --->");
-					console.log("nothing");
-				}
-				
-				prev_selection.selStart = getSelectionStart(config.html.textareaId);
-				prev_selection.selEnd = getSelectionEnd(config.html.textareaId);
-				setSelection(config.html.textareaId, prev_selection);
-				
-			},
-			success: function(response){
+	});
+};
 
-				if(response != undefined && response.ErrorMsg){ 
-					console.log(response.ErrorMsg); 
-					console.log(response.ErrorData); 
-				}
+/**
+ * 
+ * @return
+ */
+function copy() {
 
-				if(config.debug.all && response.debug) {
-					console.log("_PHP DEBUG_"); 
-					console.log("selStart:"+ response.debug.Ihm.selStart);
-					console.log("selEnd:"+ response.debug.Ihm.selEnd);
-					console.log("text:"+ response.debug.Ihm.text);
-					console.log("ihm_hash:"+ response.debug.Ihm.ihm_hash);
-					console.log("_PHP DEBUG_"); 
-				}
+	var prev_selection = {};
 
-				if(config.debug.all && config.debug.copy) {
-					console.log("<--- in");
-				}
-				
-			},
-			
-			error: function(e){
-				console.log("copy error" + e);
-			},
-			
-			complete: function(){
-				if(config.debug.all && config.debug.copy) console.log("copy complete");
-				
-				setSelection(config.html.textareaId, prev_selection);
-			}
-			
-		});
+	$.ajax({
+		url : config.ajax.target,
+		type : config.ajax.type,
+		data : {
+		// paramètres envoyés
+		function_name: 'copy'
+	}, 
+	dataType : config.ajax.dataType, // type de données recues
+
+	beforeSend: function(){
+		if(config.debug.all && config.debug.copy) {
+			console.log("__________________________");
+			console.log("copy");
+			console.log("out --->");
+			console.log("nothing");
+		}
+
+		prev_selection.selStart = getSelectionStart(config.html.textareaId);
+		prev_selection.selEnd = getSelectionEnd(config.html.textareaId);
+		setSelection(config.html.textareaId, prev_selection);
+
+	},
+	success: function(response){
+
+		if(response != undefined && response.ErrorMsg){ 
+			console.log(response.ErrorMsg); 
+			console.log(response.ErrorData); 
+		}
+
+		if(config.debug.all && response.debug) {
+			console.log("_PHP DEBUG_"); 
+			console.log("selStart:"+ response.debug.Ihm.selStart);
+			console.log("selEnd:"+ response.debug.Ihm.selEnd);
+			console.log("text:"+ response.debug.Ihm.text);
+			console.log("ihm_hash:"+ response.debug.Ihm.ihm_hash);
+			console.log("_PHP DEBUG_"); 
+		}
+
+		if(config.debug.all && config.debug.copy) {
+			console.log("<--- in");
+		}
+
+	},
+
+	error: function(e){
+		console.log("copy error" + e);
+	},
+
+	complete: function(){
+		if(config.debug.all && config.debug.copy) console.log("copy complete");
+
+		setSelection(config.html.textareaId, prev_selection);
+	}
+
+	});
 };
 
 /**
@@ -490,9 +513,9 @@ function getSelText(obj_id){
  * @return
  */
 function update(obj_id, Ihm){
-	
+
 	var obj = document.getElementById(obj_id);
-	
+
 	obj.value = Ihm.text;
 
 	setSelection(obj_id, Ihm);
@@ -507,7 +530,7 @@ function update(obj_id, Ihm){
  */
 function setSelection(obj_id, Ihm){
 	var obj = document.getElementById(obj_id);
-	
+
 	if(obj.setSelectionRange)
 	{
 		obj.focus();
@@ -520,7 +543,7 @@ function setSelection(obj_id, Ihm){
 		range.moveEnd('character', Ihm.selEnd);
 		range.select();
 	}
-	
+
 }
 
 /**

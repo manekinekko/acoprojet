@@ -14,6 +14,9 @@
 
 $(function(){
 
+	// triggered on load
+	init();
+	
 	$('#'+config.html.textareaId).bind("select, click", function(e){
 
 		updateSelection(e);		
@@ -120,7 +123,9 @@ $(function(){
 		// [|] => 124
 		// [}] => 125
 		// [~] => 126
-		if( o.code >= 33 && o.code <= 126 ){
+		if( (o.code >= 33 && o.code <= 126) 
+				|| o.code == 13 
+				|| o.code == 32 ){
 			insert(o.char);
 			debug();
 		}
