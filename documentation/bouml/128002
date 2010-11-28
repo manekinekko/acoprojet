@@ -2241,6 +2241,14 @@ ${members}}
 "
 	    classrelation_ref 138498 // <association>
       end
+
+      classrelation 146306 // <realization>
+	relation 145154 -_-|>
+	  a public
+	    php "${type}"
+	    classrelation_ref 146306 // <realization>
+	  b parent class_ref 128514 // Command
+      end
     end
 
     class 136194 "PasteSave"
@@ -2294,6 +2302,14 @@ ${members}}
 	    php "  ${comment}${visibility}${const}${static}${var}${name}${value};
 "
 	    classrelation_ref 138754 // <association>
+      end
+
+      classrelation 146434 // <realization>
+	relation 145282 -_-|>
+	  a public
+	    php "${type}"
+	    classrelation_ref 146434 // <realization>
+	  b parent class_ref 128514 // Command
       end
     end
 
@@ -2349,6 +2365,14 @@ ${members}}
 "
 	    classrelation_ref 139266 // <association>
       end
+
+      classrelation 146690 // <realization>
+	relation 145538 -_-|>
+	  a public
+	    php "${type}"
+	    classrelation_ref 146690 // <realization>
+	  b parent class_ref 128514 // Command
+      end
     end
 
     class 136450 "CopySave"
@@ -2402,6 +2426,14 @@ ${members}}
 	    php "  ${comment}${visibility}${const}${static}${var}${name}${value};
 "
 	    classrelation_ref 139010 // <association>
+      end
+
+      classrelation 146562 // <realization>
+	relation 145410 -_-|>
+	  a public
+	    php "${type}"
+	    classrelation_ref 146562 // <realization>
+	  b parent class_ref 128514 // Command
       end
     end
 
@@ -2605,8 +2637,29 @@ ${members}}
     end
 
     classdiagram 136194 "v2 Command & save & memento"
-      draw_all_relations yes hide_attributes no hide_operations no hide_getset_operations default show_members_full_definition yes show_members_visibility yes show_members_stereotype yes show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode class drawing_language php show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-      size A3
+      draw_all_relations no hide_attributes no hide_operations no hide_getset_operations default show_members_full_definition yes show_members_visibility yes show_members_stereotype yes show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode class drawing_language php show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    classinstance 134530 "Insert"
+      type class_ref 129282 // Insert
+      attributes
+        end
+      relations
+        end
+    end
+
+    class 143618 "d"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${visibility}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
     end
   end
 end
