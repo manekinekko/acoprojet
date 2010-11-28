@@ -508,7 +508,6 @@ function update(obj_id, Ihm){
  */
 function setSelection(obj_id, Ihm){
 	var obj = document.getElementById(obj_id);
-	console.log(Ihm);
 	
 	if(obj.setSelectionRange)
 	{
@@ -517,11 +516,9 @@ function setSelection(obj_id, Ihm){
 	}
 	else if (obj.createTextRange) {
 		var range = obj.createTextRange();
-		console.log(range);
 		range.collapse(true);
 		range.moveStart('character', Ihm.selStart);
 		range.moveEnd('character', Ihm.selEnd);
-		console.log(range);
 		range.select();
 	}
 	

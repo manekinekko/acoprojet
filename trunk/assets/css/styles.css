@@ -17,10 +17,18 @@ body{
    color:#fff; 
    font-size:10px;
    overflow:auto;
-   max-height:500px;
+   max-height:550px;
+   padding:10px;
 }
 
 #pre a {
   color:#02fe15;
   text-decoration:none;
+}
+
+textarea {
+  border:1px solid #aaa;
+  height:300px;
+  width:410px;
+  padding:5px;
 }
