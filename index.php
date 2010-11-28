@@ -15,6 +15,7 @@
  */
 	
 	include_once ("config.php");
+	include_once (HELPERPATH . "functions.php");
 	include_once (BINPATH . "Session.php"); 	
   session_start();
 	
@@ -28,6 +29,7 @@
 
 	else if ( isset($_GET['debug']) ) {
       echo (strftime("%T", time()).' ');
+//      print_r_tree($_SESSION);
       print_r($_SESSION);
   }
 	else

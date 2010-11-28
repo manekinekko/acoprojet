@@ -16,4 +16,11 @@ body{
    background-color:#000; 
    color:#fff; 
    font-size:10px;
+   overflow:auto;
+   max-height:500px;
+}
+
+#pre a {
+  color:#02fe15;
+  text-decoration:none;
 }
