@@ -30,7 +30,7 @@ class Copy implements Command
 	 * @var Buffer The receiver object of the Copy command (the Buffer)
 	 * @access protected
 	 */
-	protected $_receiver;
+	protected $receiver;
 
 	/**
 	 * The constructor of the Copy command
@@ -40,7 +40,7 @@ class Copy implements Command
 	 */
 	public function __construct(&$receiver)
 	{
-		$this->_receiver = $receiver;
+		$this->receiver = $receiver;
 	}
 	
 	/**
@@ -50,7 +50,7 @@ class Copy implements Command
 	 */
 	public function execute()
 	{
-		$this->_receiver->copyText();
+		$this->receiver->copyText();
 	}
 }
 

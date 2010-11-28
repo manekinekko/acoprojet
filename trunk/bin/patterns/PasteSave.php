@@ -18,24 +18,39 @@ require_once (BINPATH . "Command.php" );
 require_once (BINPATH . "Save.php");
 
 /**
- * 
- * 
+ *
+ *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
  * @version 0.1
  */
- 
+
 class PasteSave implements Command
 {
-  
-  public function __construct()
-  {
-    
-  }
-  
-  public function execute()
-  {
-    
-  }
-  
+	/**
+	 * @var unknown_type
+	 */
+	private $_paste, $_caretaker;
+	
+	public function __construct(& $insert, & $caretaker)
+	{
+		$this->_paste = $insert;
+		$this->_caretaker = $caretaker;
+	}
+
+	public function execute()
+	{
+		$this->_paste->execute();
+		$this->_caretaker->save($this);
+	}
+
+	public function &getMemento()
+	{
+		return new ConcreteMementoInsert(
+			$this->_insert->receiver->getTextFromClipBoard(),
+			$this->_insert->receiver->getSelectionStart(),
+			$this->_insert->receiver->getSelectionEnd()
+		);
+	}
+
 }

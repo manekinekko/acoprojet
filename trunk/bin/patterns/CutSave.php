@@ -18,24 +18,38 @@ require_once (BINPATH . "Command.php" );
 require_once (BINPATH . "Cut.php");
 
 /**
- * 
- * 
+ *
+ *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
  * @version 0.1
  */
- 
+
 class CutSave implements Command
 {
-  
-  public function __construct()
-  {
-    
-  }
-  
-  public function execute()
-  {
-    
-  }
-  
+	/**
+	 * @var unknown_type
+	 */
+	private $_cut, $_caretaker;
+
+	public function __construct(& $insert, & $caretaker)
+	{
+		$this->_cut = $insert;
+		$this->_caretaker = $caretaker;
+	}
+
+	public function execute()
+	{
+		$this->_cut->execute();
+		$this->_caretaker->save($this);
+	}
+
+	public function &getMemento()
+	{
+		return new ConcreteMementoInsert(
+		$this->_insert->receiver->getTextFromClipBoard(),
+		$this->_insert->receiver->getSelectionStart(),
+		$this->_insert->receiver->getSelectionEnd()
+		);
+	}
 }

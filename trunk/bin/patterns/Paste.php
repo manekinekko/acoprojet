@@ -30,7 +30,7 @@ class Paste implements Command
    * @var Buffer The object receiver of the Cut command (the Buffer)
    * @access protected
    */
-	protected $_receiver;
+	protected $receiver;
 
   /**
    * The constructor of the Paste command
@@ -40,7 +40,7 @@ class Paste implements Command
    */
 	public function __construct(&$receiver)
 	{
-		$this->_receiver = $receiver;
+		$this->receiver = $receiver;
 	}
 	
 	/**
@@ -50,7 +50,7 @@ class Paste implements Command
 	 */
 	public function execute()
 	{
-		$this->_receiver->pasteText();
+		$this->receiver->pasteText();
 	}
 	
 }
