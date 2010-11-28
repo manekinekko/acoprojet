@@ -28,7 +28,8 @@
 		require_once ( APPPATH. "bin/ajax.php");
 
 	else if ( isset($_GET['debug']) ) {
-      echo (strftime("%T", time()).' ');
+    echo ("PHP Object Dump") ; 
+		echo ("[ "  . strftime("%T", time()) . " ]\n");
 //      print_r_tree($_SESSION);
       print_r($_SESSION);
   }
