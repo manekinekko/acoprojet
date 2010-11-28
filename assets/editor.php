@@ -5,6 +5,7 @@
 ?>
 <html>
    <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
       <link rel="stylesheet" type="text/css" media="screen" href="/acoprojet/assets/css/styles.css" />
       <script  type="text/javascript" src="/acoprojet/assets/js/jq.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="/acoprojet/assets/js/config.js" language="JavaScript" ></script>

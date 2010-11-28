@@ -46,7 +46,7 @@ function ajax_handle(){
 
 				 // work with IHM and Buffer
 					$session->ihm->updateSelection($selStart, $selEnd);
-					 
+
 					// output define
 					$output_type = 'json';
 					$output['Ihm'] = getIhmAttributes();
@@ -74,7 +74,7 @@ function ajax_handle(){
 				$output['debug'] = debug_me();
 				/* We don't need to get any args because the real IHM user (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
-				 * Ihm.php must have the positionStart & positionEnd that IHM (Web browser)
+         * Ihm.php must have the same positionStart & positionEnd as the IHM (Web browser)
 				 */
 				$params_valid = true;
 
@@ -90,7 +90,7 @@ function ajax_handle(){
 			case 'copy':
 				/* We don't need to get any args because the real IHM user (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
-				 * Ihm.php must have the positionStart & positionEnd that IHM (Web browser)
+         * Ihm.php must have the same positionStart & positionEnd as the IHM (Web browser)
 				 */
 				$params_valid = true;
 
@@ -106,7 +106,7 @@ function ajax_handle(){
 				$output['debug'] = debug_me();
 				/* We don't need to get any args because the real user IHM (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
-				 * Ihm.php must have the positionStart & positionEnd that IHM (Web browser)
+				 * Ihm.php must have the same positionStart & positionEnd as the IHM (Web browser)
 				 */
 				$params_valid = true;
 
@@ -136,11 +136,11 @@ function ajax_handle(){
 			}
 		}
 		else{
-			outputJsonError('Params or one of params have not a correct form', $output);
+			outputJsonError('All or one of the parameter is not well formed!', $output);
 		}
 	}
 	else{
-		outputJsonError('Function name "'.$function_name.'" didn\'t recognize', $output);
+		outputJsonError('Function name "'.$function_name.'" could not be recognized!', $output);
 	}
 
 }
@@ -196,19 +196,13 @@ function getIhmAttributes(){
 
 function debug_me(){
 	global $session;
-	 
+
 	//   var_dump( spl_object_hash($session->ihm) );
 	//   var_dump( $session->ihm->_ihm_hash );
 	//   var_dump( spl_object_hash($session->ihm) === $session->ihm->_ihm_hash );
-	 
+
 	return array(
-               'Ihm' => array_merge(
-	array(),
-	//getIhmAttributes(),
-	array(
-                        'ihm_hash' =>$session->ihm->ihm_hash,
-	)
-	)
+    'Ihm' => array_merge(array(),array('ihm_hash' =>$session->ihm->ihm_hash) )
 	);
 }
 
