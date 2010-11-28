@@ -29,6 +29,13 @@ class Session
 {
   
 	/**
+	 * @var Integer $allocatedSize The allocated size of this object in Bytes
+	 * @access public
+	 */
+	public $allocatedSize;
+	
+	
+	/**
 	 * @var Ihm $ihm The ihm object
 	 */
 	public $ihm;
@@ -71,7 +78,7 @@ class Session
    */
   public function __clone()
   {
-    trigger_error( 'Clone is not allowed.', E_USER_ERROR );
+    trigger_error( 'Clone is not allowed when using a singleton class.', E_USER_ERROR );
   }
 
   /**
@@ -85,7 +92,11 @@ class Session
   	if( is_null( self::$_instance ) )
     {
 	  	$c = __CLASS__;
+	  	$mem_before = memory_get_usage(true);
       self::$_instance = new $c();
+      $mem_after = memory_get_usage(true);
+      self::$_instance->allocatedSize = ($mem_after - $mem_before);
+      
     }
     return self::$_instance;
   }

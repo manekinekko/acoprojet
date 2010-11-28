@@ -20,7 +20,7 @@ function ajax_handle(){
 	$debug = true;
 	global $session;
 
-	$function_name_allowed = array('updateSelection', 'insert' ,'paste', 'copy', 'cut');
+	$function_name_allowed = array('init', 'updateSelection', 'insert' ,'paste', 'copy', 'cut');
 	$function_name = 'default'; // function name
 	$function_valid = false; // status of function validation
 	$params_valid = false; // status of params validation
@@ -34,7 +34,13 @@ function ajax_handle(){
 
 		switch($function_name){
 
-			// 			// the end of the selection
+			case 'init':
+				// output define
+				$output_type = 'json';
+				$output['Ihm'] = getIhmAttributes();
+				break;
+
+				// the end of the selection
 			case 'updateSelection':
 				// check args
 
@@ -74,7 +80,7 @@ function ajax_handle(){
 				$output['debug'] = debug_me();
 				/* We don't need to get any args because the real IHM user (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
-         * Ihm.php must have the same positionStart & positionEnd as the IHM (Web browser)
+				 * Ihm.php must have the same positionStart & positionEnd as the IHM (Web browser)
 				 */
 				$params_valid = true;
 
@@ -90,7 +96,7 @@ function ajax_handle(){
 			case 'copy':
 				/* We don't need to get any args because the real IHM user (Web browser)
 				 * and its image(Ihm.php) are syncronized at every command
-         * Ihm.php must have the same positionStart & positionEnd as the IHM (Web browser)
+				 * Ihm.php must have the same positionStart & positionEnd as the IHM (Web browser)
 				 */
 				$params_valid = true;
 
@@ -120,7 +126,7 @@ function ajax_handle(){
 				break;
 		}
 
-		if($params_valid){
+		if($function_name == 'init' || $params_valid){
 			switch($output_type){
 				case 'json':
 					outputJson($output);

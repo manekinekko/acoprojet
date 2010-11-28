@@ -30,3 +30,13 @@ config.debug.cut = true;
 
 config.html.textareaId = 'text';
 config.html.logId = 'log';
+
+// console.log() hack
+if ( console )
+{
+	// nothing
+}
+else {
+	var console = {};
+	console.log = function(str){ return str; };
+}
