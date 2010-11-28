@@ -26,15 +26,13 @@ require_once (BINPATH . "Memento");
  
 class ConcreteMementoInsert implements Memento
 {
-  
-  public function __construct()
+  private $_char;
+  private $_selectionStart;
+  private $_selectionEnd;
+  public function __construct($char, $selStart, $selEnd)
   {
-    
+      $this->_char = $char;
+      $this->_selectionStart = $selStart;
+      $this->_selectionEnd = $selEnd;
   }
-  
-  public function execute()
-  {
-    
-  }
-  
 }
