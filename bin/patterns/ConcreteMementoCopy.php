@@ -27,11 +27,14 @@ require_once (BINPATH . "Memento");
 class ConcreteMementoCopy implements Memento
 {
   
-  private $_clipboardText;
-  
-  public function __construct($clipboardText)
+  public function __construct()
   {
-      $this->_clipboardText = $clipboardText;
+    
+  }
+  
+  public function execute()
+  {
+    
   }
   
 }

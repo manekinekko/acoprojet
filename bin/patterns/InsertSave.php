@@ -18,39 +18,24 @@ require_once (BINPATH . "Command.php");
 require_once (BINPATH . "Insert.php");
 
 /**
- *
- *
+ * 
+ * 
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
  * @version 0.1
  */
-
+ 
 class InsertSave implements Command
 {
-	/**
-	 * @var unknown_type
-	 */
-	private $_insert, $_caretaker;
-
-	public function __construct(& $insert, & $caretaker)
+	
+	public function __construct()
 	{
-		$this->_insert = $insert;
-		$this->_caretaker = $caretaker;
+		
 	}
-
+	
 	public function execute()
 	{
-		$this->_insert->execute();
-		$this->_caretaker->save($this);
+		
 	}
-
-	public function &getMemento()
-	{
-		return new ConcreteMementoInsert(
-			$this->_insert->current_char,
-			$this->_insert->receiver->getSelectionStart(),
-			$this->_insert->receiver->getSelectionEnd()
-		);
-	}
-
+	
 }

@@ -27,15 +27,14 @@ require_once (BINPATH . "Memento");
 class ConcreteMementoCut implements Memento
 {
   
-  private $_textCut;
-  private $_selectionStart;
-  private $_selectionEnd;
-  
-  public function __construct($textCut, $selStart, $selEnd)
+  public function __construct()
   {
-      $this->_textCut = $textCut;
-      $this->_selectionStart = $selStart;
-      $this->_selectionEnd = $selEnd;
+    
+  }
+  
+  public function execute()
+  {
+    
   }
   
 }

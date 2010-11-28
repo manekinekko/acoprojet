@@ -14,6 +14,7 @@
  *
  */
 
+require_once (BINPATH . 'ConcreteMemento.php');
 require_once (BINPATH . 'Ihm.php');
 require_once (BINPATH . 'Buffer.php');
 

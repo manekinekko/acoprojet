@@ -27,19 +27,32 @@ class Caretaker
   /**
    * @var unknown_type
    */
-  private $_mementos;
+	private $_memento;
 
+	/**
+	 * @var unknown_type
+	 */
+  private $_insertSave;
+  
+  /**
+   * @var unknown_type
+   */
+  private $_pasteSave;
+  
+  /**
+   * @var unknown_type
+   */
+  private $_copySave;
+  
+  /**
+   * @var unknown_type
+   */
+  private $_cutSave;
   
   public function __construct()
   {
-      $this->_mementos = array();
+  	
   }
-   
-  public function save(& $commandSave){
-      $memento =& $commandSave->getMemento();
-      $this->_mementos[] = $memento;
-  }
-
 
 }
 

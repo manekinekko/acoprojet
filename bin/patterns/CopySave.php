@@ -18,37 +18,24 @@ require_once (BINPATH . "Command.php" );
 require_once (BINPATH . "Copy.php");
 
 /**
- *
- *
+ * 
+ * 
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
  * @version 0.1
  */
-
+ 
 class CopySave implements Command
 {
-	/**
-	 * @var unknown_type
-	 */
-	private $_copy, $_caretaker;
-	
-	public function __construct(& $insert, & $caretaker)
-	{
-		$this->_copy = $insert;
-		$this->_caretaker = $caretaker;
-	}
-
-	public function execute()
-	{
-		$this->_copy->execute();
-		$this->_caretaker->save($this);
-	}
-	
-	public function &getMemento()
-	{
-		return new ConcreteMementoInsert(
-			$this->_insert->receiver->getTextFromClipBoard()
-		);
-	}
-
+  
+  public function __construct()
+  {
+    
+  }
+  
+  public function execute()
+  {
+    
+  }
+  
 }

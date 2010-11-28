@@ -30,7 +30,7 @@ class Cut implements Command
 	 * @var Buffer The object receiver of the Cut command (the Buffer)
 	 * @access protected
 	 */
-	protected $receiver;
+	protected $_receiver;
 
 	/**
 	 * The constructor of the Cut command
@@ -40,7 +40,7 @@ class Cut implements Command
 	 */
 	public function __construct(&$receiver)
 	{
-		$this->receiver = $receiver;
+		$this->_receiver = $receiver;
 	}
 	
 	/**
@@ -50,7 +50,7 @@ class Cut implements Command
 	 */
 	public function execute()
 	{
-		$this->receiver->cutText();
+		$this->_receiver->cutText();
 	}
 }
 
