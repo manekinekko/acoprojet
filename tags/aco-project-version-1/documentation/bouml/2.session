@@ -1,0 +1,16 @@
+window_sizes 1280 746 266 1008 608 64
+diagrams
+  classdiagram_ref 135682 // Command & save
+    963 567 80 3 228 0
+  active  classdiagram_ref 136194 // v2 Command & save & memento
+    1168 681 110 3 108 0
+end
+show_stereotypes
+selected attribute_ref 129538 // _receiver
+open
+  class_ref 128514 // Command
+  class_ref 128898 // Copy
+  class_ref 136066 // InsertSave
+  class_ref 128770 // Memento
+end
+end
