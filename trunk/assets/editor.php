@@ -15,19 +15,21 @@
       
       <div id="content">
          <div class="col_left">
-            <h1>ACO : Projet M1</h1>
+            <h1>ACO : Project M1</h1>
             <form id="formulaire" method="post" action="">
                <fieldset>
                   <legend><b>Menu</b></legend>
-                  <button name="cut" id="cut" value="1" type="button">Couper</button>
-                  <button name="copy" id="copy" value="1" type="button">Copier</button>
-                  <button name="paste" id="paste" value="1" type="button">coller</button>
+                  <button name="cut" id="cut" value="1" type="button">Cut</button>
+                  <button name="copy" id="copy" value="1" type="button">Copy</button>
+                  <button name="paste" id="paste" value="1" type="button">Paste</button>
                </fieldset>
                <fieldset>
-                  <legend><b>Editeur de texte</b></legend><textarea id="text" rows="10" cols="40"></textarea>
+                  <legend><b>Text Editor</b></legend><textarea id="text" rows="10" cols="40"></textarea>
                </fieldset>
             </form>
-            <a href="?clear" >Vider la session</a>
+            <a href="bin/tests/PHPUnitTest-coverage/" >Unit Tests</a> | 
+            <a href="documentation/phpdoc/" >API Documentation</a> | 
+            <a href="?clear" >Clear Session</a>
          </div>
          <div class="col_right">
             <div id="console">
