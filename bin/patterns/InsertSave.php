@@ -27,15 +27,25 @@ require_once (BINPATH . "Insert.php");
  
 class InsertSave implements Command
 {
-	
-	public function __construct()
-	{
-		
-	}
-	
-	public function execute()
-	{
-		
-	}
+  /**
+   * @var unknown_type
+   */
+  private $_insert;
+  
+  public function __construct(& $insert)
+  {
+      $this->_insert = $insert;
+  }
+  
+  public function execute()
+  {
+      $this->_insert->execute();
+
+      $memento = new ConcreteMementoInsert(
+                     $this->_insert->getCurrentChar(), 
+                     $this->_insert->getCurrentSelectionStart(),
+                     $this->_insert->getCurrentSelectionEnd()
+               );
+  }
 	
 }

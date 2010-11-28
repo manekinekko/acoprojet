@@ -98,6 +98,16 @@ class Insert implements Command
 		$this->_current_char = $char;
 		$this->_receiver->insert($char);
 	}
+
+   public function getCurrentChar(){
+      return $this->_current_char;
+   }
+   public function getCurrentSelectionStart(){
+      return $this->_receiver->getSelectionStart();
+   }
+   public function getCurrentSelectionEnd(){
+      return $this->_receiver->getSelectionEnd();
+   }
 }
 
 ?>
