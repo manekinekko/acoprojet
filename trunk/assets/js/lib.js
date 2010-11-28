@@ -79,7 +79,6 @@ function getChar(evt) {
 	return {char:char, code:charCode};
 }
 
-
 /**
  * 
  * @return
