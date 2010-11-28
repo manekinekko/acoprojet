@@ -1,7 +1,7 @@
 format 74
 "patterns" // patterns
-  revision 7
-  modified_by 2 "border"
+  revision 8
+  modified_by 2 "maneki"
   // class settings
   //class diagram settings
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -2484,7 +2484,7 @@ methods strings, instead of Memento instances.
       end
     end
 
-    class 136706 "ConcreateMementoInsert"
+    class 136706 "ConcreteMementoInsert"
       visibility package 
       cpp_decl ""
       java_decl ""
@@ -2504,7 +2504,7 @@ ${members}}
       end
     end
 
-    class 136834 "ConcreateMementoPaste"
+    class 136834 "ConcreteMementoPaste"
       visibility package 
       cpp_decl ""
       java_decl ""
@@ -2524,7 +2524,7 @@ ${members}}
       end
     end
 
-    class 136962 "ConcreateMementoCopy"
+    class 136962 "ConcreteMementoCopy"
       visibility package 
       cpp_decl ""
       java_decl ""
@@ -2544,7 +2544,7 @@ ${members}}
       end
     end
 
-    class 137090 "ConcreateMementoCut"
+    class 137090 "ConcreteMementoCut"
       visibility package 
       cpp_decl ""
       java_decl ""
