@@ -1,0 +1,122 @@
+format 74
+
+classinstance 128386 class_ref 136578 // Caretaker
+ color green  name ""   xyz 836.8 3.2 2000 life_line_z 2000
+note 128514 "Command"
+  color yellow  xyzwh 26.9 46.3 0 879 419
+classinstance 128642 class_ref 136066 // InsertSave
+  name "insert"   xyz 442.1 4.2 2000 life_line_z 2010
+note 128770 "Observer"
+  xyzwh 41.7 168.9 2000 359 76
+classinstance 128898 class_ref 129154 // Ihm
+  name ""   xyz 99.5 4.2 2000 life_line_z 2010
+classinstance 129026 class_ref 128002 // Buffer
+  name ""   xyz 286.7 4.2 2000 life_line_z 2010
+classinstance 131586 class_ref 136706 // ConcreateMementoInsert
+ color green  name "m"   xyz 670.2 326.5 2000 life_line_z 2000
+durationcanvas 129154 classinstance_ref 129026 // :Buffer
+  color mediumyellow
+  xyzwh 305 148.8 2020 11 120
+  overlappingdurationcanvas 129282
+    color lightmediumblue
+    xyzwh 311 185 2025 11 42
+  end
+end
+durationcanvas 129410 classinstance_ref 128898 // :Ihm
+  color mediumyellow
+  xyzwh 118 79.4 2020 11 182
+  overlappingdurationcanvas 129538
+    color mediumyellow
+    xyzwh 124 104.8 2020 11 39
+  end
+  overlappingdurationcanvas 129666
+    color lightmediumblue
+    xyzwh 124 211 2025 11 29
+  end
+end
+durationcanvas 129794 classinstance_ref 128642 // insert:InsertSave
+  color mediumyellow
+  xyzwh 488 83 2020 11 375
+  overlappingdurationcanvas 131330
+    color mediumgreen
+    xyzwh 494 260 2030 11 192
+  end
+end
+durationcanvas 131074 classinstance_ref 128386 // :Caretaker
+  color mediumgreen
+  xyzwh 866 194.2 2010 11 257
+end
+durationcanvas 131714 classinstance_ref 131586 // m:ConcreateMementoInsert
+  color mediumgreen
+  xyzwh 750 375.2 2010 11 45
+end
+msg 129922 synchronous
+  from durationcanvas_ref 129794
+  to durationcanvas_ref 129538
+  yz 108 2025 msg operation_ref 132610 // "getChar()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 209 93
+msg 130050 asynchronous
+  from durationcanvas_ref 129282
+  to durationcanvas_ref 129666
+  yz 212 2030 explicitmsg "update(this)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 206 202
+reflexivemsg 130178 asynchronous
+  to durationcanvas_ref 129282
+  yz 187 2030 msg operation_ref 130050 // "notify() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 345 182
+msg 130306 synchronous
+  from durationcanvas_ref 129794
+  to durationcanvas_ref 129154
+  yz 150 2030 explicitmsg "insert(c)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 387 135
+msg 130434 synchronous
+  from durationcanvas_ref 129410
+  to durationcanvas_ref 129794
+  yz 85 2015 explicitmsg "execute()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 210 69
+msg 130562 return
+  from durationcanvas_ref 129538
+  to durationcanvas_ref 129794
+  yz 128 2025 explicitmsg "c"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 232 113
+msg 130946 return
+  from durationcanvas_ref 129154
+  to durationcanvas_ref 129794
+  yz 249 2025 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+msg 131202 asynchronous
+  from durationcanvas_ref 129794
+  to durationcanvas_ref 131074
+  yz 272 2025 explicitmsg "save(insert)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 688 260
+msg 131458 asynchronous
+  from durationcanvas_ref 131074
+  to durationcanvas_ref 131330
+  yz 305 2035 explicitmsg "getMemento()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 682 293
+msg 131842 synchronous
+  from durationcanvas_ref 131330
+  to durationcanvas_ref 131714
+  yz 377 2035 explicitmsg "new ConcreateMemento(insert)"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 547 362
+msg 131970 return
+  from durationcanvas_ref 131714
+  to durationcanvas_ref 131330
+  yz 407 2035 unspecifiedmsg
+  show_full_operations_definition default drawing_language default show_context_mode default
+msg 132610 return
+  from durationcanvas_ref 131330
+  to durationcanvas_ref 131074
+  yz 437 2035 explicitmsg "m"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 550 427
+end
