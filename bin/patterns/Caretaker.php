@@ -35,7 +35,7 @@ class Caretaker
       $this->_mementos = array();
   }
    
-  public function save(&$commandSave){
+  public function save(& $commandSave){
       $memento =& $commandSave->getMemento();
       $this->_mementos[] = $memento;
   }

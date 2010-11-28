@@ -27,14 +27,15 @@ require_once (BINPATH . "Memento");
 class ConcreteMementoPaste implements Memento
 {
   
-  public function __construct()
-  {
-    
-  }
+  private $_clipboardText;
+  private $_selectionStart;
+  private $_selectionEnd;
   
-  public function execute()
+  public function __construct($clipboardText, $selStart, $selEnd)
   {
-    
+      $this->_clipboardText = $clipboardText;
+      $this->_selectionStart = $selStart;
+      $this->_selectionEnd = $selEnd;
   }
   
 }

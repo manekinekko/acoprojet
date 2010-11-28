@@ -30,13 +30,13 @@ class Insert implements Command
 	 * @var Buffer $_receiver The object receiver of the Cut command (the Buffer)
 	 * @access protected
 	 */
-	protected $_receiver;
+	protected $receiver;
 
 	/**
 	 * @var Buffer $_sender The object sender of the Cut command (the Ihm)
 	 * @access protected
 	 */
-	protected $_sender;
+	protected $sender;
 
 	/**
 	 * @var Integer $crtime The time when this object is created
@@ -66,7 +66,7 @@ class Insert implements Command
 	 * @var Character $_current_char The current character to be inserted
 	 * @access private
 	 */
-	private $_current_char;
+	protected $current_char;
 
 	/**
 	 * The constructor of the Insert command
@@ -75,10 +75,10 @@ class Insert implements Command
 	 */
 	public function __construct(&$sender, &$receiver)
 	{
-		$this->_receiver = $receiver;
-		$this->_sender = $sender;
+		$this->receiver = $receiver;
+		$this->sender = $sender;
 
-		$this->_current_char = '#';
+		$this->current_char = '#';
 		$this->crtime = strftime("%T", time());
 		$this->insert_hash = spl_object_hash ($this);
 
@@ -95,19 +95,9 @@ class Insert implements Command
 	public function execute()
 	{
 		$char = $this->_sender->getChar();
-		$this->_current_char = $char;
-		$this->_receiver->insert($char);
+		$this->current_char = $char;
+		$this->receiver->insert($char);
 	}
-
-   public function getCurrentChar(){
-      return $this->_current_char;
-   }
-   public function getCurrentSelectionStart(){
-      return $this->_receiver->getSelectionStart();
-   }
-   public function getCurrentSelectionEnd(){
-      return $this->_receiver->getSelectionEnd();
-   }
 }
 
 ?>
