@@ -16,6 +16,7 @@
 
 require_once (BINPATH . "Command.php" );
 require_once (BINPATH . "Cut.php");
+require_once (BINPATH . "ConcreteMementoCut.php");
 
 /**
  *
@@ -46,10 +47,11 @@ class CutSave implements Command
 
 	public function &getMemento()
 	{
-		return new ConcreteMementoInsert(
-		$this->_insert->receiver->getTextFromClipBoard(),
-		$this->_insert->receiver->getSelectionStart(),
-		$this->_insert->receiver->getSelectionEnd()
+		$mem = new ConcreteMementoCut(
+			$this->_insert->receiver->getTextFromClipBoard(),
+			$this->_insert->receiver->getSelectionStart(),
+			$this->_insert->receiver->getSelectionEnd()
 		);
+		return $mem;
 	}
 }

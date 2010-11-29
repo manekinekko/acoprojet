@@ -98,6 +98,27 @@ class Insert implements Command
 		$this->_current_char = $char;
 		$this->_receiver->insert($char);
 	}
+	
+	/**
+	 * Get the current char
+	 * @return Char The current char
+	 * @access public
+	 */
+  public function getCurrentChar()
+  {
+  	return $this->_current_char;
+  }
+  
+  /**
+   * Get the current receiver
+   * @return Buffer The current receiver of the Insert command
+   * @access public
+   */
+  public function getReceiver() {
+  	return $this->_receiver;
+  }
+	
+	
 }
 
 ?>

@@ -16,6 +16,7 @@
 
 require_once (BINPATH . "Command.php");
 require_once (BINPATH . "Insert.php");
+require_once (BINPATH . "ConcreteMementoInsert.php");
 
 /**
  *
@@ -46,11 +47,12 @@ class InsertSave implements Command
 
 	public function &getMemento()
 	{
-		return new ConcreteMementoInsert(
-			$this->_insert->current_char,
-			$this->_insert->receiver->getSelectionStart(),
-			$this->_insert->receiver->getSelectionEnd()
-		);
+		$mem = new ConcreteMementoInsert(
+      $this->_insert->getCurrentChar(),
+      $this->_insert->getReceiver()->getSelectionStart(),
+      $this->_insert->getReceiver()->getSelectionEnd()
+    );
+		return $mem;
 	}
 
 }

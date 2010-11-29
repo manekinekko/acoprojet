@@ -14,7 +14,7 @@
  *
  */
 
-require_once (BINPATH . "Memento");
+require_once (BINPATH . "Memento.php");
 
 /**
  * 

@@ -16,6 +16,7 @@
 
 require_once (BINPATH . "Command.php" );
 require_once (BINPATH . "Paste.php");
+require_once (BINPATH . "ConcreteMementoPaste.php");
 
 /**
  *
@@ -46,11 +47,12 @@ class PasteSave implements Command
 
 	public function &getMemento()
 	{
-		return new ConcreteMementoInsert(
-			$this->_insert->receiver->getTextFromClipBoard(),
-			$this->_insert->receiver->getSelectionStart(),
-			$this->_insert->receiver->getSelectionEnd()
-		);
+		$mem = new ConcreteMementoPaste(
+      $this->_insert->receiver->getTextFromClipBoard(),
+      $this->_insert->receiver->getSelectionStart(),
+      $this->_insert->receiver->getSelectionEnd()
+    );
+		return $mem;
 	}
 
 }

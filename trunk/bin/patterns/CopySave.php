@@ -16,6 +16,7 @@
 
 require_once (BINPATH . "Command.php" );
 require_once (BINPATH . "Copy.php");
+require_once (BINPATH . "ConcreteMementoCopy.php");
 
 /**
  *
@@ -46,9 +47,10 @@ class CopySave implements Command
 	
 	public function &getMemento()
 	{
-		return new ConcreteMementoInsert(
-			$this->_insert->receiver->getTextFromClipBoard()
-		);
+		$mem = new ConcreteMementoCopy(
+      $this->_insert->receiver->getTextFromClipBoard()
+    );
+		return $mem;
 	}
 
 }
