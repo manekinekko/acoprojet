@@ -15,7 +15,7 @@
  */
 
 require_once (BINPATH . "Command.php" );
-require_once (BINPATH . "Save.php");
+require_once (BINPATH . "Paste.php");
 
 /**
  *
