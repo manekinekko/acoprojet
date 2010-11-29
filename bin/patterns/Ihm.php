@@ -225,7 +225,7 @@ class Ihm implements Observer, Subject
 	 */
 	public function insert()
 	{
-		$this->_commands['insert']->execute();
+		$this->_commands['insertSave']->execute();
 	}
 
 	/**
@@ -235,7 +235,7 @@ class Ihm implements Observer, Subject
 	 */
 	public function copy()
 	{
-		$this->_commands['copy']->execute();
+		$this->_commands['copySave']->execute();
 	}
 
 	/**
@@ -245,7 +245,7 @@ class Ihm implements Observer, Subject
 	 */
 	public function cut()
 	{
-		$this->_commands['cut']->execute();
+		$this->_commands['cutSave']->execute();
 	}
 
 	/**
@@ -255,7 +255,7 @@ class Ihm implements Observer, Subject
 	 */
 	public function paste()
 	{
-		$this->_commands['paste']->execute();
+		$this->_commands['pasteSave']->execute();
 	}
 
 	/**
