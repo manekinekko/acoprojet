@@ -32,7 +32,7 @@ class InsertSave implements Command
 	 */
 	private $_insert, $_caretaker;
 
-	public function __construct(& $insert, & $caretaker)
+	public function __construct(&$insert, &$caretaker)
 	{
 		$this->_insert = $insert;
 		$this->_caretaker = $caretaker;

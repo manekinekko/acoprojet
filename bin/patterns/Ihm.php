@@ -16,10 +16,12 @@
 
 require_once ('Observer.php');
 require_once ('Subject.php');
-require_once ('Insert.php');
-require_once ('Copy.php');
-require_once ('Cut.php');
-require_once ('Paste.php');
+require_once ('Caretaker.php');
+
+require_once ('InsertSave.php');
+require_once ('CopySave.php');
+require_once ('CutSave.php');
+require_once ('PasteSave.php');
 
 /**
  * The Ihm Observer
@@ -80,18 +82,18 @@ class Ihm implements Observer, Subject
 	 */
 	private $_current_char;
 
-  /**
-   * @var Command[] $_commands The arrau which contains all commands.
-   * @access private
-   */
+	/**
+	 * @var Command[] $_commands The arrau which contains all commands.
+	 * @access private
+	 */
 	private $_commands;
 
-  /**
-   * The constructor of the Ihm class
-   * 
-   * @param Buffer $buffer The reference of the buffer
-   */
-		public function __construct(&$buffer)
+	/**
+	 * The constructor of the Ihm class
+	 *
+	 * @param Buffer $buffer The reference of the buffer
+	 */
+	public function __construct(&$buffer)
 	{
 		$this->ihm_hash = spl_object_hash($this);
 		$this->_commands = array();
@@ -108,6 +110,13 @@ class Ihm implements Observer, Subject
 		$this->_commands['copy'] = new Copy($buffer);
 		$this->_commands['cut'] = new Cut($buffer);
 		$this->_commands['paste'] = new Paste($buffer);
+
+		$careTaker = new Caretaker();
+		$this->_commands['insertSave'] = new InsertSave($this->_commands['insert'], $careTaker);
+		$this->_commands['copySave'] = new CopySave($this->_commands['copy'], $careTaker);
+		$this->_commands['cutSave'] = new CutSave($this->_commands['cut'], $careTaker);
+		$this->_commands['pasteSave'] = new PasteSave($this->_commands['paste'], $careTaker);
+
 	}
 
 	/**
@@ -289,10 +298,10 @@ class Ihm implements Observer, Subject
 		}
 	}
 
-  /**
-   * Update the current IHM's state 
-   * @param Buffer $s The reference of the subject
-   */
+	/**
+	 * Update the current IHM's state
+	 * @param Buffer $s The reference of the subject
+	 */
 	public function update(&$s)
 	{
 		$this->_selectionStart = $s->getSelectionStart();
