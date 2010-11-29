@@ -10,7 +10,7 @@
       <script  type="text/javascript" src="/acoprojet/assets/js/jq.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="/acoprojet/assets/js/config.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="/acoprojet/assets/js/lib.js" language="JavaScript" ></script>
-      <script  type="text/javascript" src="/acoprojet/assets/js/ajax.js" language="JavaScript" ></script>
+      <script  type="text/javascript" src="/acoprojet/assets/js/listener.js" language="JavaScript" ></script>
    </head>
    <body>
       
@@ -23,6 +23,7 @@
                   <button name="cut" id="cut" value="1" type="button">Cut</button>
                   <button name="copy" id="copy" value="1" type="button">Copy</button>
                   <button name="paste" id="paste" value="1" type="button">Paste</button>
+                  <button name="replay" id="replay" value="1" type="button" disabled="disabled">Replay</button>
                </fieldset>
                <fieldset>
                   <legend><b>Text Editor</b></legend><textarea id="text" rows="10" cols="40"></textarea>
