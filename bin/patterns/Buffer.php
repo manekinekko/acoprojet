@@ -29,19 +29,19 @@ require_once (BINPATH . 'Ihm.php');
  */
 class Buffer implements Observer, Subject
 {
-  
-  /**
-   * @var Integer $crtime The current time (used for debugging).
-   * @access public
-   */
-  public $crtime;
 
-  /**
-   * @var String $ihm_hash The unique hash of this object (used for debugging).
-   * @access public
-   */
-  public $ihm_hash;
-	
+	/**
+	 * @var Integer $crtime The current time (used for debugging).
+	 * @access public
+	 */
+	public $crtime;
+
+	/**
+	 * @var String $ihm_hash The unique hash of this object (used for debugging).
+	 * @access public
+	 */
+	public $ihm_hash;
+
 	/**
 	 * @var String $_text The content of the current text.
 	 * @access private
@@ -162,21 +162,22 @@ class Buffer implements Observer, Subject
 
 		if ( !is_int($start) || !is_int($end) )
 		{
-			throw new Exception( 'Buffer->setSelection(int, int).', E_USER_ERROR );
+			//throw new Exception( 'Buffer->setSelection(int, int).', E_USER_ERROR );
+				
+			$start = intVal($start);
+			$end = intVal($end);
+				
 		}
-		else {
 
-			if( $start <= $end)
-			{
-				$this->_selectionStart = $start;
-				$this->_selectionEnd = $end;
-			}
-			else
-			{
-				$this->_selectionStart = $end;
-				$this->_selectionEnd = $start;
-			}
-
+		if( $start <= $end)
+		{
+			$this->_selectionStart = $start;
+			$this->_selectionEnd = $end;
+		}
+		else
+		{
+			$this->_selectionStart = $end;
+			$this->_selectionEnd = $start;
 		}
 
 	}
@@ -246,7 +247,7 @@ class Buffer implements Observer, Subject
 	 */
 	public function cutText()
 	{
-		
+
 		if( $this->_selectionStart !== $this->_selectionEnd)
 		{
 
@@ -255,7 +256,7 @@ class Buffer implements Observer, Subject
 
 			$tmp_str = Buffer::_substr($this->_text, 0, $this->_selectionStart);
 			$tmp_str .= Buffer::_substr($this->_text, $this->_selectionEnd);
-			
+				
 			// deselection
 			$this->_selectionEnd = $this->_selectionStart;
 
@@ -284,7 +285,7 @@ class Buffer implements Observer, Subject
 			$tmp_res .= $paste;
 			$tmp_res .= Buffer::_substr($this->_text, $this->_selectionEnd);
 
-      $this->_selectionStart += strlen($paste);
+			$this->_selectionStart += strlen($paste);
 			if( $this->_selectionStart !== $this->_selectionEnd )
 			{
 
@@ -341,10 +342,10 @@ class Buffer implements Observer, Subject
 		}
 	}
 
-  /**
-   * Update the current state of the buffer
-   * @param Ihm $s The reference of the observer of the subject
-   */
+	/**
+	 * Update the current state of the buffer
+	 * @param Ihm $s The reference of the observer of the subject
+	 */
 	public function update(&$s)
 	{
 
@@ -352,10 +353,10 @@ class Buffer implements Observer, Subject
 		$this->_selectionEnd = $s->getSelectionEnd();
 		$this->_text = $s->getText();;
 	}
-	
+
 	/**
 	 * Get a sub string from another string
-	 * @param String $str The string where from where the sub string should be got 
+	 * @param String $str The string where from where the sub string should be got
 	 * @param Integer $selStart The index where to start
 	 * @param Integer $selEnd The index where to end
 	 * @return String The sub string
@@ -371,7 +372,8 @@ class Buffer implements Observer, Subject
 		else {
 			$selEnd -= $selStart;
 		}
-		return substr( $str, $selStart, $selEnd ); 
+		return substr( $str, $selStart, $selEnd );
+
 	}
 }
 

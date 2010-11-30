@@ -1,4 +1,6 @@
-/*!
+<?php
+
+/*
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -12,35 +14,39 @@
  *
  */
 
-var config = {};
-config.debug = {};
-config.ajax = {};
-config.html = {};
-config.replay = {};
+require_once ('Command.php');
 
-config.ajax.target = "index.php?ajax";
-config.ajax.type = "POST";
-config.ajax.dataType = "json";
-
-config.debug.all = false;
-config.debug.selection = true;
-config.debug.char = true;
-config.debug.paste = true;
-config.debug.copy = true;
-config.debug.cut = true;
-
-config.html.textareaId = 'text';
-config.html.logId = 'log';
-
-config.replay.duration = 800; // ms
-config.replay.timer = null;
-
-// console.log() hack
-if ( console )
+/**
+ * The Reset command
+ *
+ * @author wassim Chegham & hugo Marchadour
+ * @package Command
+ * @version 0.1
+ */
+class Reset implements Command
 {
-	// nothing
+	
+	private $_receiver;
+	
+	private $_replay;
+	
+	public function __construct(&$receiver, &$replay)
+	{
+		$this->_receiver = $receiver;
+		$this->_replay = $replay;
+	}
+	
+	public function execute()
+	{
+		$this->_replay->resetIndex();
+		$this->_receiver->setText("");
+		$this->_receiver->setTextIntoClipboard("");
+		$this->_receiver->setSelection(0, 0);
+
+		$this->_receiver->notify();
+		
+	}
+	
 }
-else {
-	var console = {};
-	console.log = function(str){ return str; };
-}
+
+?>

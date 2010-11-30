@@ -23,6 +23,9 @@ require_once ('CopySave.php');
 require_once ('CutSave.php');
 require_once ('PasteSave.php');
 
+require_once ('Reset.php');
+require_once ('Replay.php');
+
 /**
  * The Ihm Observer
  *
@@ -117,6 +120,10 @@ class Ihm implements Observer, Subject
 		$this->_commands['cutSave'] = new CutSave($this->_commands['cut'], $careTaker);
 		$this->_commands['pasteSave'] = new PasteSave($this->_commands['paste'], $careTaker);
 
+		$replay = new Replay($careTaker);
+		
+		$this->_commands['replay'] = $replay;
+		$this->_commands['reset'] = new Reset($buffer, $replay);
 	}
 
 	/**
@@ -256,6 +263,36 @@ class Ihm implements Observer, Subject
 	public function paste()
 	{
 		$this->_commands['pasteSave']->execute();
+	}
+
+	/**
+	 * Replay all saved commands
+	 * @return void
+	 * @access public
+	 */
+	public function replay()
+	{
+		$this->_commands['replay']->execute();
+	}
+
+	/**
+	 * Is there an other commands to play
+	 * @return Boolean True if there is another command to play
+	 * @access public
+	 */
+	public function canReplay()
+	{
+		return ! $this->_commands['replay']->isDone();
+	}
+	
+	/**
+	 * Reset all states of Ihm and Buffer
+	 * @return void
+	 * @access public
+	 */
+	public function reset()
+	{
+		$this->_commands['reset']->execute();
 	}
 
 	/**

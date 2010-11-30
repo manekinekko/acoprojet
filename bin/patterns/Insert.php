@@ -88,7 +88,7 @@ class Insert implements Command
 	}
 
 	/**
-	 * Perfome the copy action
+	 * Perfome the insert action
 	 * @return void
 	 * @access public
 	 */
@@ -98,27 +98,47 @@ class Insert implements Command
 		$this->_current_char = $char;
 		$this->_receiver->insert($char);
 	}
-	
+
 	/**
 	 * Get the current char
 	 * @return Char The current char
 	 * @access public
 	 */
-  public function getCurrentChar()
-  {
-  	return $this->_current_char;
-  }
-  
-  /**
-   * Get the current receiver
-   * @return Buffer The current receiver of the Insert command
-   * @access public
-   */
-  public function getReceiver() {
-  	return $this->_receiver;
-  }
+	public function getCurrentChar()
+	{
+		return $this->_current_char;
+	}
+
+	/**
+	 * 
+	 * @param $c
+	 * @return unknown_type
+	 */
+	public function setCurrentChar($c)
+	{
+		$this->_current_char = $c;
+	}
+
+
+	/**
+	 * Get the current receiver
+	 * @return Buffer The current receiver of the Insert command
+	 * @access public
+	 */
+	public function &getReceiver() {
+		return $this->_receiver;
+	}
+
+	/**
+	 * Get the current sender
+	 * @return Ihm The current sender of the Insert command
+	 * @access public
+	 */
+	public function &getSender() {
+		return $this->_sender;
+	}
 	
-	
+
 }
 
 ?>

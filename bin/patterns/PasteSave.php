@@ -16,7 +16,7 @@
 
 require_once (BINPATH . "Command.php" );
 require_once (BINPATH . "Paste.php");
-require_once (BINPATH . "ConcreteMementoPaste.php");
+require_once (BINPATH . "ConcreteMementoCutCopyPaste.php");
 
 /**
  *
@@ -33,6 +33,8 @@ class PasteSave implements Command
 	 */
 	private $_paste, $_caretaker;
 	
+	private $_memento;
+	
 	public function __construct(& $insert, & $caretaker)
 	{
 		$this->_paste = $insert;
@@ -41,18 +43,31 @@ class PasteSave implements Command
 
 	public function execute()
 	{
-		$this->_paste->execute();
 		$this->_caretaker->save($this);
+		$this->_paste->execute();
 	}
 
+	public function &getCommand()
+	{
+		return $this->_paste;
+	}
+	
 	public function &getMemento()
 	{
-		$mem = new ConcreteMementoPaste(
-      $this->_insert->receiver->getTextFromClipBoard(),
-      $this->_insert->receiver->getSelectionStart(),
-      $this->_insert->receiver->getSelectionEnd()
-    );
+		$attrs = array();
+      	$attrs['selStart'] = $this->_paste->getReceiver()->getSelectionStart();
+      	$attrs['selEnd'] = $this->_paste->getReceiver()->getSelectionEnd();
+
+      	$mem = new ConcreteMementoCutCopyPaste($this, $attrs);
 		return $mem;
+	}
+	
+	public function setMemento(&$mem)
+	{
+		$buffer =& $this->_paste->getReceiver();
+		
+		// update the current state of the buffer
+		$buffer->setSelection($mem->getSelectionStart(), $mem->getSelectionEnd());
 	}
 
 }

@@ -17,21 +17,51 @@
 require_once (BINPATH . "Memento.php");
 
 /**
- * 
- * 
+ *
+ *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
  * @version 0.1
  */
- 
-class ConcreteMementoCopy implements Memento
+
+class ConcreteMementoCutCopyPaste implements Memento
 {
-  
-  private $_clipboardText;
-  
-  public function __construct($clipboardText)
-  {
-      $this->_clipboardText = $clipboardText;
-  }
-  
+	private $_selectionStart;
+	private $_selectionEnd;
+
+	private $_saveCommand;
+
+	public function __construct(&$command, $attrs)
+	{
+		$this->_saveCommand = $command;
+		$this->_selectionStart = $attrs['selStart'];
+		$this->_selectionEnd = $attrs['selEnd'];
+	}
+
+	public function getSelectionStart()
+	{
+		return $this->_selectionStart;
+	}
+	
+	public function getSelectionEnd()
+	{
+		return $this->_selectionEnd;
+	}
+
+	public function redo()
+	{
+		$this->_saveCommand->setMemento($this);
+		$this->_saveCommand->getCommand()->execute();
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see bin/patterns/Memento#undo()
+	 */
+	public function undo()
+	{
+	}
+
 }
+
+?>

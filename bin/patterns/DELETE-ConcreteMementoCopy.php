@@ -14,23 +14,57 @@
  *
  */
 
+require_once (BINPATH . "Memento.php");
+
 /**
- * This interface is primarily here for type safety,
- * specifically to avoid that someone passes to Caretaker's
- * methods strings, instead of Memento instances.
+ *
  *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
  * @version 0.1
  */
 
-interface Memento
+class ConcreteMementoCopy implements Memento
 {
 
-	public function redo();
+	private $_clipboardText;
 
-	public function undo();
+	private $_saveCommand;
 
+	public function __construct(&$command, $attrs)
+	{
+		$this->_saveCommand = $command;
+		$this->_selectionStart = $attrs['selStart'];
+		$this->_selectionEnd = $attrs['selEnd'];
+	}
+
+	public function getSelectionStart()
+	{
+		return $this->_selectionStart;
+	}
+
+	public function getSelectionEnd()
+	{
+		return $this->_selectionEnd;
+	}
+
+	public function &getCommand()
+	{
+		return $this->_saveCommand;
+	}
+
+	public function redo()
+	{
+		$this->_saveCommand->setMemento($this);
+		$this->_saveCommand->getCommand()->execute();
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see bin/patterns/Memento#undo()
+	 */
+	public function undo()
+	{
+
+	}
 }
-
-?>

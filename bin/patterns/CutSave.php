@@ -16,7 +16,7 @@
 
 require_once (BINPATH . "Command.php" );
 require_once (BINPATH . "Cut.php");
-require_once (BINPATH . "ConcreteMementoCut.php");
+require_once (BINPATH . "ConcreteMementoCutCopyPaste.php");
 
 /**
  *
@@ -33,9 +33,9 @@ class CutSave implements Command
 	 */
 	private $_cut, $_caretaker;
 
-	public function __construct(& $insert, & $caretaker)
+	public function __construct(&$cut, &$caretaker)
 	{
-		$this->_cut = $insert;
+		$this->_cut = $cut;
 		$this->_caretaker = $caretaker;
 	}
 
@@ -45,13 +45,30 @@ class CutSave implements Command
 		$this->_caretaker->save($this);
 	}
 
+	public function &getCommand()
+	{
+		return $this->_cut;
+	}
+	
 	public function &getMemento()
 	{
-		$mem = new ConcreteMementoCut(
-			$this->_insert->receiver->getTextFromClipBoard(),
-			$this->_insert->receiver->getSelectionStart(),
-			$this->_insert->receiver->getSelectionEnd()
-		);
+		$attrs = array();
+		$attrs['selStart'] = $this->_cut->getReceiver()->getSelectionStart();
+		$attrs['selEnd'] = $this->_cut->getReceiver()->getSelectionEnd();
+		
+//		var_dump($this->_cut->getReceiver()->getSelectionStart(), $this->_cut->getReceiver()->getSelectionEnd());
+//		exit;
+				
+		$mem = new ConcreteMementoCutCopyPaste($this, $attrs);
 		return $mem;
 	}
+
+	public function setMemento(&$mem)
+	{
+		$buffer =& $this->_cut->getReceiver();
+		
+		// update the current state of the buffer
+		$buffer->setSelection($mem->getSelectionStart(), $mem->getSelectionEnd());
+	}
+
 }

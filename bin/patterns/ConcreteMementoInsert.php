@@ -17,22 +17,58 @@
 require_once (BINPATH . "Memento.php");
 
 /**
- * 
- * 
+ *
+ *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
  * @version 0.1
  */
- 
+
 class ConcreteMementoInsert implements Memento
 {
-  private $_char;
-  private $_selectionStart;
-  private $_selectionEnd;
-  public function __construct($char, $selStart, $selEnd)
-  {
-      $this->_char = $char;
-      $this->_selectionStart = $selStart;
-      $this->_selectionEnd = $selEnd;
-  }
+	private $_char;
+	private $_selectionStart;
+	private $_selectionEnd;
+
+	private $_saveCommand;
+
+	public function __construct(&$command, $attrs)
+	{
+		$this->_saveCommand = $command;
+		$this->_char = $attrs['char'];
+		$this->_selectionStart = $attrs['selStart'];
+		$this->_selectionEnd = $attrs['selEnd'];
+	}
+
+	public function getSelectionStart()
+	{
+		return $this->_selectionStart;
+	}
+	
+	public function getSelectionEnd()
+	{
+		return $this->_selectionEnd;
+	}
+
+	public function getChar()
+	{
+		return $this->_char;
+	}
+	
+	public function redo()
+	{
+		$this->_saveCommand->setMemento($this);
+		$this->_saveCommand->getCommand()->execute();
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see bin/patterns/Memento#undo()
+	 */
+	public function undo()
+	{
+	}
+
 }
+
+?>
