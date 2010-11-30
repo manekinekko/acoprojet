@@ -28,6 +28,8 @@ $(function(){
 		var char = o.char;
 		e.preventDefault();
 
+		$('#replay').attr('disabled', false);
+		
 		// allow ascii chars only:
 		// [!] => 33
 		// ["] => 34
@@ -165,4 +167,22 @@ $(function(){
 			}
 	);
 
+	$('#replay').click(function(e){
+		
+		e.preventDefault();
+		
+		// start replaying if timer is not set
+		if ( config.replay.timer === null )
+		{
+			runReplay();
+		}
+		
+		// on stop
+		else {
+			stopReplay();
+		}
+		
+	})
+	
+	
 });

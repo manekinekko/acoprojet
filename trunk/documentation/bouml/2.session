@@ -1,13 +1,14 @@
-window_sizes 1280 746 266 1008 608 64
+window_sizes 1280 727 266 1008 589 64
 diagrams
-  active  classdiagram_ref 136194 // v2 Command & save & memento
+  classdiagram_ref 136194 // v2 Command & save & memento
     1008 608 94 4 0 0
   sequencediagram_ref 142722 // SaveSequenceInsert
     806 486 100 3 0 0
+  active  sequencediagram_ref 149250 // Replay
+    1008 589 105 3 0 0
 end
 show_stereotypes
-selected 
-  package_ref 128002 // patterns
+selected sequencediagram_ref 149250 // Replay
 open
   classview_ref 128002 // patterns
 end

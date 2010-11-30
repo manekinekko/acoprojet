@@ -14,28 +14,52 @@
  *
  */
 
-require_once (BINPATH . "Memento.php");
+require_once (BINPATH . "Command.php");
 
 /**
- * 
- * 
+ * The replay command
+ *
  * @author wassim Chegham & hugo Marchadour
- * @package Memento
+ * @package Command
  * @version 0.1
  */
- 
-class ConcreteMementoPaste implements Memento
-{
-  
-  private $_clipboardText;
-  private $_selectionStart;
-  private $_selectionEnd;
-  
-  public function __construct($clipboardText, $selStart, $selEnd)
-  {
-      $this->_clipboardText = $clipboardText;
-      $this->_selectionStart = $selStart;
-      $this->_selectionEnd = $selEnd;
-  }
-  
-}
+ class Replay
+ {
+
+ 	private $_index;
+ 	
+ 	private $_careTaker;
+ 	
+ 	public function __construct(&$careTaker)
+ 	{
+ 		$this->_index = 0;
+ 		$this->_careTaker = $careTaker;
+ 	}
+  	
+ 	public function isDone()
+ 	{
+ 		return $this->_index >= $this->_careTaker->size();
+ 	}
+ 	
+ 	public function setIndex($i)
+ 	{
+ 		$this->_index = $i;
+ 	}
+ 	
+ 	public function resetIndex()
+ 	{
+ 		$this->_index = 0;
+ 	}
+ 	
+ 	public function execute()
+ 	{
+ 		$mem =& $this->_careTaker->getMemento($this->_index);
+ 		
+ 		if ( $mem != null )
+ 		{
+	 		$mem->redo();
+ 			$this->_index++;
+ 		}
+ 	}
+ 	
+ }

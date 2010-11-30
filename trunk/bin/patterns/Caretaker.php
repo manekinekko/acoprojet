@@ -15,8 +15,8 @@
  */
 
 /**
- * 
- * 
+ *
+ *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
  * @version 0.1
@@ -24,21 +24,41 @@
 class Caretaker
 {
 
-  /**
-   * @var unknown_type
-   */
-  private $_mementos;
+	/**
+	 * @var unknown_type
+	 */
+	private $_mementos;
 
-  
-  public function __construct()
-  {
-      $this->_mementos = array();
-  }
-   
-  public function save(&$commandSave){
-      $this->_mementos[] =& $commandSave->getMemento();
-  }
+	private $_index;
 
+	public function __construct()
+	{
+		$this->_index = 0;
+		$this->_mementos = array();
+	}
+	 
+	public function size()
+	{
+		return count( $this->_mementos);
+	}
+	
+	public function save(&$commandSave){
+		$this->_mementos[$this->_index++] =& $commandSave->getMemento();
+	}
+
+	public function &getMemento($index)
+	{
+		if ( $index <= $this->_index )
+		{
+			// this will allow us to oversave new mementos over old ones
+			// Uncomment for version 3
+			//$this->_index = $index;
+			
+			return $this->_mementos[$index];
+		}
+		
+		return null;
+	}
 
 }
 

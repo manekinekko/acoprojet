@@ -41,18 +41,36 @@ class InsertSave implements Command
 
 	public function execute()
 	{
-		$this->_insert->execute();
 		$this->_caretaker->save($this);
+		$this->_insert->execute();
 	}
 
 	public function &getMemento()
 	{
-		$mem = new ConcreteMementoInsert(
-      $this->_insert->getCurrentChar(),
-      $this->_insert->getReceiver()->getSelectionStart(),
-      $this->_insert->getReceiver()->getSelectionEnd()
-    );
+		$attrs = array();
+		$attrs['char'] = $this->_insert->getCurrentChar();
+		$attrs['selStart'] = $this->_insert->getReceiver()->getSelectionStart();
+		$attrs['selEnd'] = $this->_insert->getReceiver()->getSelectionEnd();
+
+		$mem = new ConcreteMementoInsert($this, $attrs);
 		return $mem;
 	}
 
+	public function &getCommand()
+	{
+		return $this->_insert;
+	}
+	
+	public function setMemento(&$mem)
+	{
+		$buffer =& $this->_insert->getReceiver();
+		$ihm =& $this->_insert->getSender();
+		
+		// update the current state of the buffer
+		$this->_insert->setCurrentChar($mem->getChar());
+		$ihm->setChar($mem->getChar());
+		//$buffer->setSelection($mem->getSelectionStart(), $mem->getSelectionEnd());
+		
+	}
+	
 }

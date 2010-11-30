@@ -20,7 +20,7 @@ function ajax_handle(){
 	$debug = true;
 	global $session;
 
-	$function_name_allowed = array('init', 'updateSelection', 'insert' ,'paste', 'copy', 'cut');
+	$function_name_allowed = array('reset', 'init', 'replay', 'updateSelection', 'insert' ,'paste', 'copy', 'cut');
 	$function_name = 'default'; // function name
 	$function_valid = false; // status of function validation
 	$params_valid = false; // status of params validation
@@ -34,10 +34,42 @@ function ajax_handle(){
 
 		switch($function_name){
 
-			case 'init':
+			case 'reset':
+				
+				$params_valid = true;
+				$session->ihm->reset();
+				
 				// output define
 				$output_type = 'json';
 				$output['Ihm'] = getIhmAttributes();
+				
+				break;
+					
+					
+			case 'init':
+				
+				$params_valid = true;
+				// output define
+				$output_type = 'json';
+				$output['Ihm'] = getIhmAttributes();
+				break;
+
+
+			case 'replay':
+
+				$params_valid = true;
+				// output define
+				$output_type = 'json';
+				
+				if ( $session->ihm->canReplay() )
+				{
+					$session->ihm->replay();
+					$output['Ihm'] = array_merge( getIhmAttributes(), array('replay_done' => false) );
+				}
+				else  {
+					$output['Ihm'] = array('replay_done' => true);	
+				}
+				
 				break;
 
 				// the end of the selection
@@ -126,7 +158,7 @@ function ajax_handle(){
 				break;
 		}
 
-		if($function_name == 'init' || $params_valid){
+		if($params_valid){
 			switch($output_type){
 				case 'json':
 					outputJson($output);
