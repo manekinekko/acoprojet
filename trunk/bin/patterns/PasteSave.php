@@ -43,8 +43,8 @@ class PasteSave implements Command
 
 	public function execute()
 	{
-		$this->_caretaker->save($this);
 		$this->_paste->execute();
+		$this->_caretaker->save($this);
 	}
 
 	public function &getCommand()
