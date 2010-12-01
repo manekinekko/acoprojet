@@ -4,72 +4,30 @@ classinstance 128258 class_ref 129154 // Ihm
   name ""   xyz 70.8312 4 2005 life_line_z 2010
 classinstance 128386 class_ref 150146 // Replay
   name ""   xyz 641.228 4 2005 life_line_z 2010
-classinstance 139138 class_ref 156802 // Undo
+classinstance 139138 class_ref 156930 // ReDo
   name ""   xyz 311 4 2000 life_line_z 2000
-classinstance 140034 class_ref 136578 // Caretaker
-  name ""   xyz 826 4 2000 life_line_z 2000
-note 141058 "nbStep = (pointer-1%10)
-
-while(nbStep>0)
-
-
-nbStep--"
-  color lightmediumgreen  xyzwh 172.65 254.6 0 723 141
 durationcanvas 128770 classinstance_ref 128258 // :Ihm
-  xyzwh 89 58 2015 11 609
+  xyzwh 89 56 2015 11 123
 end
 durationcanvas 128898 classinstance_ref 128386 // :Replay
-  xyzwh 662 80 2015 11 576
-  overlappingdurationcanvas 139522
-    xyzwh 668 293 2025 11 45
-  end
-  overlappingdurationcanvas 139778
-    xyzwh 668 180 2025 11 25
-  end
+  xyzwh 662 77 2015 11 96
   overlappingdurationcanvas 141186
-    xyzwh 668 221 2025 11 25
+    xyzwh 668 140 2025 11 26
   end
 end
-durationcanvas 139266 classinstance_ref 139138 // :Undo
-  xyzwh 330 70 2010 11 268
-end
-durationcanvas 140418 classinstance_ref 140034 // :Caretaker
-  xyzwh 855 99 2010 11 36
+durationcanvas 139266 classinstance_ref 139138 // :ReDo
+  xyzwh 330 67 2010 11 101
 end
 msg 139394 synchronous
   from durationcanvas_ref 128770
   to durationcanvas_ref 139266
-  yz 70 2020 msg operation_ref 152578 // "execute()"
+  yz 67 2020 msg operation_ref 152578 // "execute()"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 135 54
-msg 139650 synchronous
-  from durationcanvas_ref 139266
-  to durationcanvas_ref 139522
-  yz 327 3005 msg operation_ref 153730 // "execute()"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 372 311
-msg 139906 synchronous
-  from durationcanvas_ref 139266
-  to durationcanvas_ref 139778
-  yz 180 2030 explicitmsg "setIndex(pointer - (pointer%10))"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 424 164
-msg 140546 synchronous
-  from durationcanvas_ref 139266
-  to durationcanvas_ref 140418
-  yz 99 2020 explicitmsg "getPointer()"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 569 83
-msg 140930 return
-  from durationcanvas_ref 140418
-  to durationcanvas_ref 139266
-  yz 123 2020 explicitmsg "pointer"
-  show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 362 114
+  label_xy 135 51
 msg 141314 synchronous
   from durationcanvas_ref 139266
   to durationcanvas_ref 141186
-  yz 221 2030 msg operation_ref 153730 // "execute()"
+  yz 140 2030 msg operation_ref 153730 // "execute()"
   show_full_operations_definition default drawing_language default show_context_mode default
-  label_xy 477 205
+  label_xy 477 124
 end
