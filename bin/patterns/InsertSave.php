@@ -47,8 +47,9 @@ class InsertSave implements Command
 
 	public function &getMemento()
 	{
+		$ihm =& $this->_insert->getSender();
 		$attrs = array();
-		$attrs['char'] = $this->_insert->getCurrentChar();
+		$attrs['char'] = $ihm->getChar();
 		$attrs['selStart'] = $this->_insert->getReceiver()->getSelectionStart();
 		$attrs['selEnd'] = $this->_insert->getReceiver()->getSelectionEnd();
 
@@ -63,13 +64,13 @@ class InsertSave implements Command
 	
 	public function setMemento(&$mem)
 	{
-		$buffer =& $this->_insert->getReceiver();
 		$ihm =& $this->_insert->getSender();
+		$buffer =& $this->_insert->getReceiver();
 		
 		// update the current state of the buffer
-		$this->_insert->setCurrentChar($mem->getChar());
+		//$this->_insert->setCurrentChar($mem->getChar());
 		$ihm->setChar($mem->getChar());
-		//$buffer->setSelection($mem->getSelectionStart(), $mem->getSelectionEnd());
+		$buffer->setSelection($mem->getSelectionStart(), $mem->getSelectionEnd());
 		
 	}
 	

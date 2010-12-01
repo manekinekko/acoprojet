@@ -41,8 +41,8 @@ class CopySave implements Command
 
 	public function execute()
 	{
-		$this->_caretaker->save($this);
 		$this->_copy->execute();
+		$this->_caretaker->save($this);
 	}
 	
 	public function &getCommand()

@@ -66,7 +66,7 @@ class Insert implements Command
 	 * @var Character $_current_char The current character to be inserted
 	 * @access private
 	 */
-	protected $_current_char;
+	//protected $_current_char;
 
 	/**
 	 * The constructor of the Insert command
@@ -78,7 +78,7 @@ class Insert implements Command
 		$this->_receiver = $receiver;
 		$this->_sender = $sender;
 
-		$this->_current_char = '#';
+		//$this->_current_char = '';
 		$this->crtime = strftime("%T", time());
 		$this->insert_hash = spl_object_hash ($this);
 
@@ -103,21 +103,21 @@ class Insert implements Command
 	 * Get the current char
 	 * @return Char The current char
 	 * @access public
-	 */
+	 
 	public function getCurrentChar()
 	{
 		return $this->_current_char;
-	}
+	}*/
 
 	/**
 	 * 
 	 * @param $c
 	 * @return unknown_type
 	 */
-	public function setCurrentChar($c)
+	/*public function setCurrentChar()
 	{
 		$this->_current_char = $c;
-	}
+	}*/
 
 
 	/**
