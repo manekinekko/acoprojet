@@ -351,7 +351,7 @@ class Buffer implements Observer, Subject
 
 		$this->_selectionStart = $s->getSelectionStart();
 		$this->_selectionEnd = $s->getSelectionEnd();
-		$this->_text = $s->getText();;
+		$this->_text = $s->getText();
 	}
 
 	/**
