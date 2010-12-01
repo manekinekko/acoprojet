@@ -46,6 +46,10 @@ require_once (BINPATH . "Command.php");
  		$this->_index = $i;
  	}
  	
+ 	public function getIndex($i){
+ 		return $this->index;
+ 	}
+ 	
  	public function resetIndex()
  	{
  		$this->_index = 0;
