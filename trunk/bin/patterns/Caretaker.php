@@ -29,35 +29,40 @@ class Caretaker
 	 */
 	private $_mementos;
 
-	private $_index;
+	private $_end;
+	
+	private $_current;
 
 	public function __construct()
 	{
-		$this->_index = 0;
+		$this->_end = 0;
+		$this->_current = 0;
 		$this->_mementos = array();
 	}
 	 
-	public function size()
-	{
-		return count( $this->_mementos);
-	}
 	
 	public function save(&$commandSave){
-		$this->_mementos[$this->_index++] =& $commandSave->getMemento();
+		
+		$this->_mementos[$this->_current] =& $commandSave->getMemento();
+		$this->_current++;
+		$this->_end = $this->_current;
+	}
+	
+	public function resetCurrent($current){
+		$this->_current = $current;
 	}
 
-	public function &getMemento($index)
+	public function atTheEnd(){
+		return !($this->_current < $this->_end);
+	}
+	
+	public function &getNextMemento()
 	{
-		if ( $index <= $this->_index )
-		{
-			// this will allow us to oversave new mementos over old ones
-			// Uncomment for version 3
-			//$this->_index = $index;
-			
-			return $this->_mementos[$index];
+		if( !$this->atTheEnd() ){
+			return $this->_mementos[$this->_current++];
 		}
-		
-		return null;
+		else
+			return null;
 	}
 
 }

@@ -25,45 +25,28 @@ require_once (BINPATH . "Command.php");
  */
  class Replay
  {
-
- 	private $_index;
- 	
  	private $_careTaker;
  	
  	public function __construct(&$careTaker)
  	{
- 		$this->_index = 0;
  		$this->_careTaker = $careTaker;
  	}
   	
  	public function isDone()
  	{
- 		return $this->_index >= $this->_careTaker->size();
+ 		return $this->_careTaker->atTheEnd();
  	}
  	
- 	public function setIndex($i)
+ 	public function initStep($step=0)
  	{
- 		$this->_index = $i;
- 	}
- 	
- 	public function getIndex($i){
- 		return $this->index;
- 	}
- 	
- 	public function resetIndex()
- 	{
- 		$this->_index = 0;
+ 		$this->_careTaker->resetCurrent($step);
  	}
  	
  	public function execute()
  	{
- 		$mem =& $this->_careTaker->getMemento($this->_index);
- 		
- 		if ( $mem != null )
- 		{
-	 		$mem->redo();
- 			$this->_index++;
+ 		if(!$this->isDone()){
+ 			$mem =& $this->_careTaker->getNextMemento();
+ 			$mem->redo();
  		}
  	}
- 	
  }

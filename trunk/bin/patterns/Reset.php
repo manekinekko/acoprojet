@@ -38,7 +38,7 @@ class Reset implements Command
 	
 	public function execute()
 	{
-		$this->_replay->resetIndex();
+		$this->_replay->initStep();
 		$this->_receiver->setText("");
 		$this->_receiver->setTextIntoClipboard("");
 		$this->_receiver->setSelection(0, 0);
