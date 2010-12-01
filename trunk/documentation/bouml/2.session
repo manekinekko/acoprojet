@@ -1,15 +1,26 @@
-window_sizes 1280 727 266 1008 589 64
+window_sizes 1440 819 266 1168 745 0
 diagrams
-  classdiagram_ref 136194 // v2 Command & save & memento
-    1008 608 94 4 0 0
   sequencediagram_ref 142722 // SaveSequenceInsert
     806 486 100 3 0 0
-  active  sequencediagram_ref 149250 // Replay
-    1008 589 105 3 0 0
+  sequencediagram_ref 156034 // V3 undo
+    934 596 100 3 0 40
+  classdiagram_ref 155906 // v2
+    934 596 100 4 119 0
+  classdiagram_ref 136194 // v3
+    934 596 100 4 0 0
+  sequencediagram_ref 149250 // Replay
+    934 596 100 3 0 0
+  active  sequencediagram_ref 156418 // V3 ReDo
+    934 596 100 3 0 0
 end
 show_stereotypes
-selected sequencediagram_ref 149250 // Replay
+selected sequencediagram_ref 156418 // V3 ReDo
 open
-  classview_ref 128002 // patterns
+  class_ref 128002 // Buffer
+  class_ref 136578 // Caretaker
+  classdiagram_ref 155906 // v2
+  class_ref 150146 // Replay
+  class_ref 156674 // ConcreteMementoBuffer
+  class_ref 157058 // SuperCaretaker
 end
 end
