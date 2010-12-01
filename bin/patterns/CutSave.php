@@ -42,7 +42,7 @@ class CutSave implements Command
 	public function execute()
 	{
 		$this->_caretaker->save($this);
-		$this->_cut->execute();
+		$this->_cut->execute(); 
 	}
 
 	public function &getCommand()
