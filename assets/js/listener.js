@@ -17,7 +17,12 @@ $(function(){
 	// triggered on load
 	init();
 	
-	$('#'+config.html.textareaId).bind("select, click", function(e){
+	$('#'+config.html.textareaId).bind("select", function(e){
+		
+		updateSelection(e);
+		debug();
+		
+	}).bind("click", function(e){
 
 		updateSelection(e);		
 		debug();
@@ -132,8 +137,6 @@ $(function(){
 			debug();
 		}
 	
-		console.log('char:'+o.char+'; char code:'+o.code);
-
 	});
 
 	$('#cut').click(

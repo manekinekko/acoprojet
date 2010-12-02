@@ -28,7 +28,7 @@
                   <button name="replay" id="replay" value="1" type="button" disabled="disabled">Replay</button>
                </fieldset>
                <fieldset>
-                  <legend><b>Text Editor</b></legend><textarea id="text" rows="10" cols="40"></textarea>
+                  <legend><b>Text Editor</b></legend><textarea id="text" rows="10" cols="40" ></textarea>
                </fieldset>
             </form>
             <a href="bin/tests/PHPUnitTest-coverage/" >Unit Tests</a> | 
