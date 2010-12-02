@@ -1,26 +1,25 @@
-window_sizes 1440 819 266 1168 745 0
+window_sizes 1438 814 244 1188 740 0
 diagrams
-  sequencediagram_ref 142722 // SaveSequenceInsert
-    806 486 100 3 0 0
-  sequencediagram_ref 156034 // V3 undo
-    934 596 100 3 0 40
-  classdiagram_ref 155906 // v2
-    934 596 100 4 119 0
+  sequencediagram_ref 163586 // v2 Replay sequence
+    1190 745 100 3 0 18
+  sequencediagram_ref 142722 // v2 Save Sequence Insert
+    952 596 100 3 0 0
   classdiagram_ref 136194 // v3
-    934 596 100 4 0 0
-  sequencediagram_ref 149250 // Replay
-    934 596 100 3 0 0
-  active  sequencediagram_ref 156418 // V3 ReDo
-    934 596 100 3 0 0
+    950 592 68 4 0 0
+  sequencediagram_ref 156290 // v3 SaveSequenceInsert
+    950 592 100 3 0 0
+  active  sequencediagram_ref 156034 // V3 undo
+    1188 740 100 3 0 0
+  sequencediagram_ref 156418 // V3 Redo
+    950 592 100 3 0 0
 end
 show_stereotypes
-selected sequencediagram_ref 156418 // V3 ReDo
+selected sequencediagram_ref 156034 // V3 undo
 open
-  class_ref 128002 // Buffer
+  class_ref 129282 // Insert
   class_ref 136578 // Caretaker
-  classdiagram_ref 155906 // v2
+  class_ref 128770 // Memento
   class_ref 150146 // Replay
-  class_ref 156674 // ConcreteMementoBuffer
-  class_ref 157058 // SuperCaretaker
+  class_ref 143618 // d
 end
 end
