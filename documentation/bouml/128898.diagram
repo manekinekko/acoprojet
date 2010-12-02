@@ -9,7 +9,7 @@ classinstance 128258 class_ref 129282 // Insert
 note 130434 "Observer"
   xyzwh 54 188 2000 619 61
 note 130562 "Command"
-  color yellow  xyzwh 35 46 0 643 229
+  color yellow  xyzwh 35 43 0 809 227
 classinstance 130690 class_ref 128386 // Clipboard
   name ""   xyz 772 4 2000 life_line_z 2000
 durationcanvas 128386 classinstance_ref 128002 // :Ihm

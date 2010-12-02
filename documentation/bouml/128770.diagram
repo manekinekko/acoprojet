@@ -43,7 +43,7 @@ msg 128642 synchronous
 msg 128898 synchronous
   from durationcanvas_ref 128514
   to durationcanvas_ref 128770
-  yz 95 2025 msg operation_ref 132610 // "getChar()"
+  yz 95 2025 msg operation_ref 132610 // "getChar() : char"
   show_full_operations_definition default drawing_language default show_context_mode default
   label_xy 218 79
 msg 129026 return
