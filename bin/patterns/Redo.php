@@ -14,19 +14,36 @@
  *
  */
 
+require_once (BINPATH . "Command.php" );
+
 /**
- * This interface is primarily here for type safety,
- * specifically to avoid that someone passes to Caretaker's
- * methods strings, instead of Memento instances.
+ *
  *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
  * @version 0.1
  */
 
-interface Memento
+class Redo implements Command
 {
+	/**
+	 * @var unknown_type
+	 */
+	private $_replay;
+	private $_caretaker;
 
+	public function __construct(& $replay, &$caretaker)
+	{
+		$this->_replay = $replay;
+		$this->_caretaker = $caretaker;
+	}
+
+	public function execute()
+	{
+		$pointer = $this->_caretaker->getCurrent();
+		if(($pointer%10)==0){
+			$this->_replay->execute();
+		}
+		$this->_replay->execute();
+	}
 }
-
-?>

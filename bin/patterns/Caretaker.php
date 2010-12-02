@@ -30,24 +30,34 @@ class Caretaker
 	private $_mementos;
 
 	private $_end;
-	
-	private $_current;
 
-	public function __construct()
+	private $_current;
+	
+	private $_buffer;
+
+	public function __construct(&$buffer)
 	{
 		$this->_end = 0;
 		$this->_current = 0;
 		$this->_mementos = array();
+		$this->_buffer = $buffer;
 	}
-	 
-	
+
+
 	public function save(&$commandSave){
-		
-		$this->_mementos[$this->_current] =& $commandSave->getMemento();
+		if( $this->_current%10 == 0 ){
+			$this->_mementos[$this->_current] = & $this->_buffer->getMemento();
+			$this->_current++;
+		}
+		$this->_mementos[$this->_current] = & $commandSave->getMemento();
 		$this->_current++;
+		// reset the end
 		$this->_end = $this->_current;
 	}
-	
+
+	public function getCurrent()
+	{ return $this->_current; }
+
 	public function resetCurrent($current){
 		$this->_current = $current;
 	}
@@ -55,7 +65,7 @@ class Caretaker
 	public function atTheEnd(){
 		return !($this->_current < $this->_end);
 	}
-	
+
 	public function &getNextMemento()
 	{
 		if( !$this->atTheEnd() ){
@@ -63,6 +73,12 @@ class Caretaker
 		}
 		else
 			return null;
+	}
+
+	public function decCurrent(){
+		if($this->_current > 0){
+			$this->_current--;
+		}
 	}
 
 }
