@@ -23,6 +23,8 @@
                   <button name="cut" id="cut" value="1" type="button">Cut</button>
                   <button name="copy" id="copy" value="1" type="button">Copy</button>
                   <button name="paste" id="paste" value="1" type="button">Paste</button>
+                  <button name="undo" id="undo" value="1" type="button" disabled="disabled">Undo</button>
+                  <button name="redo" id="redo" value="1" type="button" disabled="disabled">Redo</button>
                   <button name="replay" id="replay" value="1" type="button" disabled="disabled">Replay</button>
                </fieldset>
                <fieldset>

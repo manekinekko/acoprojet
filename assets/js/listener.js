@@ -167,6 +167,22 @@ $(function(){
 			}
 	);
 
+    $('#redo').click(
+			function(e){
+				e.preventDefault();
+				redo();
+				debug();
+			}
+	);
+
+    $('#undo').click(
+			function(e){
+				e.preventDefault();
+				undo();
+				debug();
+			}
+	);
+
 	$('#replay').click(function(e){
 		
 		e.preventDefault();
