@@ -20,7 +20,7 @@ function ajax_handle(){
 	$debug = true;
 	global $session;
 
-	$function_name_allowed = array('reset', 'init', 'replay', 'updateSelection', 'insert' ,'paste', 'copy', 'cut');
+	$function_name_allowed = array('redo', 'undo', 'reset', 'init', 'replay', 'updateSelection', 'insert' ,'paste', 'copy', 'cut');
 	$function_name = 'default'; // function name
 	$function_valid = false; // status of function validation
 	$params_valid = false; // status of params validation
@@ -35,19 +35,52 @@ function ajax_handle(){
 		switch($function_name){
 
 			case 'reset':
-				
+
 				$params_valid = true;
 				$session->ihm->reset();
-				
+
 				// output define
 				$output_type = 'json';
 				$output['Ihm'] = getIhmAttributes();
-				
+
+				break;
+
+			case 'redo':
+
+				$params_valid = true;
+				$session->ihm->redo();
+				// output define
+				$output_type = 'json';
+				$output['Ihm'] = getIhmAttributes();
+				if ( $session->ihm->canReplay() )
+				{
+					
+					$output['Ihm'] = array_merge($output['Ihm'], array('redo_last' => false) );
+				}
+				else  {
+					$output['Ihm'] = array_merge($output['Ihm'], array('redo_last' => true) );
+				}
+				break;
+
+			case 'undo':
+
+				$params_valid = true;
+				$session->ihm->undo();
+				// output define
+				$output_type = 'json';
+				$output['Ihm'] = getIhmAttributes();
+				if ( $session->ihm->canUndo() )
+				{
+					$output['Ihm'] = array_merge($output['Ihm'], array('undo_last' => false) );
+				}
+				else  {
+					$output['Ihm'] = array_merge($output['Ihm'], array('undo_last' => true) );
+				}
 				break;
 					
 					
 			case 'init':
-				
+
 				$params_valid = true;
 				// output define
 				$output_type = 'json';
@@ -60,16 +93,16 @@ function ajax_handle(){
 				$params_valid = true;
 				// output define
 				$output_type = 'json';
-				
+
 				if ( $session->ihm->canReplay() )
 				{
 					$session->ihm->replay();
 					$output['Ihm'] = array_merge( getIhmAttributes(), array('replay_done' => false) );
 				}
 				else  {
-					$output['Ihm'] = array('replay_done' => true);	
+					$output['Ihm'] = array('replay_done' => true);
 				}
-				
+
 				break;
 
 				// the end of the selection

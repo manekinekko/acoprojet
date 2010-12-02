@@ -18,6 +18,8 @@ require_once (BINPATH . 'Observer.php');
 require_once (BINPATH . 'Subject.php');
 require_once (BINPATH . 'Clipboard.php');
 require_once (BINPATH . 'Ihm.php');
+require_once (BINPATH . "Memento.php" );
+require_once (BINPATH . "ConcreteMementoBuffer.php" );
 
 /**
  * This class represents a buffer, which contains a temporary text content;
@@ -27,7 +29,7 @@ require_once (BINPATH . 'Ihm.php');
  * @package Command
  * @version 0.1
  */
-class Buffer implements Observer, Subject
+class Buffer implements Observer, Subject, Memento
 {
 
 	/**
@@ -300,6 +302,26 @@ class Buffer implements Observer, Subject
 
 		}
 
+	}
+	
+	public function &getMemento()
+	{
+		$attrs = array();
+		$attrs['selStart'] = $this->_selectionStart;
+		$attrs['selEnd'] = $this->_selectionEnd;
+		$attrs['clipboard'] = $this->getTextFromClipBoard();
+		$attrs['text'] = $this->_text;
+		$mem = new ConcreteMementoBuffer($this, $attrs);
+		return $mem;
+	}
+
+	public function setMemento(&$mem)
+	{
+		$this->_text = $mem->getText();
+		$this->setTextIntoClipBoard($mem->getClipboard());
+		// update the current state of the buffer
+		$this->setSelection($mem->getSelectionStart(), $mem->getSelectionEnd());
+		$this->notify();
 	}
 
 	/**

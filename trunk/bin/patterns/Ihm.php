@@ -26,6 +26,9 @@ require_once ('PasteSave.php');
 require_once ('Reset.php');
 require_once ('Replay.php');
 
+require_once ('Undo.php');
+require_once ('Redo.php');
+
 /**
  * The Ihm Observer
  *
@@ -90,6 +93,8 @@ class Ihm implements Observer, Subject
 	 * @access private
 	 */
 	private $_commands;
+	
+	private $_caretaker;
 
 	/**
 	 * The constructor of the Ihm class
@@ -114,16 +119,20 @@ class Ihm implements Observer, Subject
 		$this->_commands['cut'] = new Cut($buffer);
 		$this->_commands['paste'] = new Paste($buffer);
 
-		$careTaker = new Caretaker();
+		$careTaker = new Caretaker($buffer);
 		$this->_commands['insertSave'] = new InsertSave($this->_commands['insert'], $careTaker);
 		$this->_commands['copySave'] = new CopySave($this->_commands['copy'], $careTaker);
 		$this->_commands['cutSave'] = new CutSave($this->_commands['cut'], $careTaker);
 		$this->_commands['pasteSave'] = new PasteSave($this->_commands['paste'], $careTaker);
 
 		$replay = new Replay($careTaker);
-		
+
 		$this->_commands['replay'] = $replay;
 		$this->_commands['reset'] = new Reset($buffer, $replay);
+
+		$this->_commands['undo'] = new Undo($replay, $careTaker);
+		$this->_commands['redo'] = new Redo($replay, $careTaker);
+		$this->_caretaker = $careTaker;
 	}
 
 	/**
@@ -275,6 +284,16 @@ class Ihm implements Observer, Subject
 		$this->_commands['replay']->execute();
 	}
 
+	public function undo()
+	{
+		$this->_commands['undo']->execute();
+	}
+
+	public function redo()
+	{
+		$this->_commands['redo']->execute();
+	}
+
 	/**
 	 * Is there an other commands to play
 	 * @return Boolean True if there is another command to play
@@ -284,7 +303,12 @@ class Ihm implements Observer, Subject
 	{
 		return ! $this->_commands['replay']->isDone();
 	}
-	
+
+	public function canUndo()
+	{
+		return $this->_caretaker->getCurrent()>1;
+	}
+
 	/**
 	 * Reset all states of Ihm and Buffer
 	 * @return void
