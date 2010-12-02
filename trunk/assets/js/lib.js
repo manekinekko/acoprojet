@@ -18,9 +18,25 @@
  * @return
  */
 function getChar(evt) {
+	
 	var char = '#';
-	var charCode = (evt.which) ? evt.which : event.keyCode
-	char = String.fromCharCode(charCode);
+	
+	var char, charCode;
+	if (evt.which == null)
+	{
+		charCode = evt.keyCode;
+		char = String.fromCharCode(charCode);    // IE
+	}
+	else if (evt.which != 0 && evt.charCode != 0)
+	{
+		charCode = evt.which;
+		char = String.fromCharCode(charCode);	  // All others
+	}
+	// special keys
+	else {
+		
+	}
+
 	return {
 		char : char,
 		code : charCode
@@ -32,7 +48,7 @@ function getChar(evt) {
  * @return
  */
 function debug() {
-	$('#pre').load('index.php?debug');
+	//$('#pre').load('index.php?debug');
 }
 
 /**
