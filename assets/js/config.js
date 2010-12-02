@@ -17,6 +17,7 @@ config.debug = {};
 config.ajax = {};
 config.html = {};
 config.replay = {};
+config.copycut = {};
 
 config.ajax.target = "index.php?ajax";
 config.ajax.type = "POST";
@@ -28,12 +29,15 @@ config.debug.char = true;
 config.debug.paste = true;
 config.debug.copy = true;
 config.debug.cut = true;
+config.debug.dump = false;
 
 config.html.textareaId = 'text';
 config.html.logId = 'log';
 
 config.replay.duration = 800; // ms
 config.replay.timer = null;
+
+config.copycut.active = false;
 
 // console.log() hack
 if ( console )
