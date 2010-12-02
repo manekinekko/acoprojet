@@ -67,14 +67,6 @@ class ConcreteMementoBuffer implements Memento
 		$this->_buffer->setMemento($this);
 	}
 
-	/**
-	 * (non-PHPdoc)
-	 * @see bin/patterns/Memento#undo()
-	 */
-	public function undo()
-	{
-	}
-
 }
 
 ?>

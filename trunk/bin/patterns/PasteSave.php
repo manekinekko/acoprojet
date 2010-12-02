@@ -33,8 +33,6 @@ class PasteSave implements Command
 	 */
 	private $_paste, $_caretaker;
 	
-	private $_memento;
-	
 	public function __construct(& $insert, & $caretaker)
 	{
 		$this->_paste = $insert;

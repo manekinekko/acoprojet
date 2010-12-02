@@ -36,7 +36,7 @@ function getChar(evt) {
 	else {
 		
 	}
-
+	
 	return {
 		char : char,
 		code : charCode
@@ -48,7 +48,7 @@ function getChar(evt) {
  * @return
  */
 function debug() {
-	//$('#pre').load('index.php?debug');
+	if ( config.debug.dump ) $('#pre').load('index.php?debug');
 }
 
 /**
@@ -101,7 +101,7 @@ function disableButtons() {
  * @return
  */
 function enableRedo(){
-	$('button:#redo').attr('disabled', false);
+	$('button#redo').attr('disabled', false);
 }
 
 /**
@@ -109,7 +109,7 @@ function enableRedo(){
  * @return
  */
 function disableRedo(){
-	$('button:#redo').attr('disabled', true);
+	$('button#redo').attr('disabled', true);
 } 
 
 /**
@@ -117,7 +117,7 @@ function disableRedo(){
  * @return
  */
 function enableUndo(){
-	$('button:#undo').attr('disabled', false);
+	$('button#undo').attr('disabled', false);
 }
 
 /**
@@ -125,8 +125,25 @@ function enableUndo(){
  * @return
  */
 function disableUndo(){
-	$('button:#undo').attr('disabled', true);
+	$('button#undo').attr('disabled', true);
 }
+
+/**
+ * 
+ * @return
+ */
+function enablePaste(){
+	$('#paste').attr('disabled', false);
+}
+
+/**
+ * 
+ * @return
+ */
+function disablePaste(){
+	$('#paste').attr('disabled', false);
+}
+
 
 /**
  * 
@@ -237,7 +254,7 @@ function replay() {
 function runReplay() {
 	reset();
 	disableButtons();
-	$('#replay').text('Stop');
+	$('#replay').text('Stop').addClass('playing');
 	config.replay.timer = setInterval(function() {
 
 		replay();
@@ -253,7 +270,7 @@ function stopReplay() {
 	clearInterval(config.replay.timer);
 	config.replay.timer = null; // important to start an other replay 
 	enableButtons();
-	$('#replay').text('Play');
+	$('#replay').text('Replay').removeClass('playing');
 }
 
 /**
@@ -272,11 +289,19 @@ function init() {
 		},
 		success : function(response) {
 			update(config.html.textareaId, response.Ihm);
+			
 			if (response.Ihm.text === "") {
-				$('#replay').attr('disabled', true);
+				$('#replay, #paste, #undo, #redo').attr('disabled', true);
+				
 			} else {
-				$('#replay').attr('disabled', false);
+				$('#replay, #paste, #undo, #redo').attr('disabled', false);
+				
+				if ( response.Ihm.selStart != response.Ihm.selEnd )
+				{
+					$('#copy, #cut').attr('disabled', false);
+				}
 			}
+
 		},
 		error : function(e) {
 		},
@@ -294,8 +319,7 @@ function copy() {
 
 	var prev_selection = {};
 
-	$
-			.ajax( {
+	$.ajax( {
 				url : config.ajax.target,
 				type : config.ajax.type,
 				data : {
@@ -318,7 +342,10 @@ function copy() {
 
 				},
 				success : function(response) {
-					disableRedo(); enableUndo();
+					disableRedo(); 
+					enableUndo(); 
+					enablePaste();
+					
 					if (response != undefined && response.ErrorMsg) {
 						console.log(response.ErrorMsg);
 						console.log(response.ErrorData);
@@ -376,7 +403,9 @@ function paste() {
 			}
 		},
 		success : function(response) {
-			disableRedo(); enableUndo();
+			disableRedo(); 
+			enableUndo();
+
 			if (response != undefined && response.ErrorMsg) {
 				console.log(response.ErrorMsg);
 				console.log(response.ErrorData);
@@ -434,7 +463,9 @@ function insert(char) {
 			}
 		},
 		success : function(response) {
-			disableRedo(); enableUndo();
+			disableRedo(); 
+			enableUndo();
+			
 			if (response != undefined && response.ErrorMsg) {
 				console.log(response.ErrorMsg);
 				console.log(response.ErrorData);
@@ -487,7 +518,10 @@ function cut() {
 			}
 		},
 		success : function(response) {
-			disableRedo(); enableUndo();
+			disableRedo(); 
+			enableUndo();
+			enablePaste();
+			
 			if (response != undefined && response.ErrorMsg) {
 				console.log(response.ErrorMsg);
 				console.log(response.ErrorData);

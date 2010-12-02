@@ -6,36 +6,39 @@
 <html>
    <head>
       <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link rel="stylesheet" type="text/css" media="screen" href="/acoprojet/assets/css/cupertino/jquery-ui.css" />
       <link rel="stylesheet" type="text/css" media="screen" href="/acoprojet/assets/css/styles.css" />
       <script  type="text/javascript" src="/acoprojet/assets/js/jq.js" language="JavaScript" ></script>
+      <script  type="text/javascript" src="/acoprojet/assets/js/jqui.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="/acoprojet/assets/js/config.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="/acoprojet/assets/js/lib.js" language="JavaScript" ></script>
       <script  type="text/javascript" src="/acoprojet/assets/js/listener.js" language="JavaScript" ></script>
    </head>
    <body>
       
-      <div id="content">
-         <div class="col_left">
-            <h1>ACO : Project M1</h1>
+      <div id="content" class="ui-widget-content ui-corner-all">
+         <div>
+            <h1 class="ui-dialog-titlebar ui-widget-header ui-corner-all">ACO Editor v1Beta</h1>
             <form id="formulaire" method="post" action="">
                <fieldset>
                   <legend><b>Menu</b></legend>
-                  <button name="cut" id="cut" value="1" type="button">Cut</button>
-                  <button name="copy" id="copy" value="1" type="button">Copy</button>
-                  <button name="paste" id="paste" value="1" type="button">Paste</button>
+                  <button name="new" id="new" value="1" type="button">New</button>
+                  <button name="cut" id="cut" value="1" type="button" disabled="disabled">Cut</button>
+                  <button name="copy" id="copy" value="1" type="button" disabled="disabled">Copy</button>
+                  <button name="paste" id="paste" value="1" type="button" disabled="disabled">Paste</button>
                   <button name="undo" id="undo" value="1" type="button" disabled="disabled">Undo</button>
                   <button name="redo" id="redo" value="1" type="button" disabled="disabled">Redo</button>
                   <button name="replay" id="replay" value="1" type="button" disabled="disabled">Replay</button>
+                  <button name="dump" id="dump" value="1" type="button">Memory dump</button>
                </fieldset>
                <fieldset>
-                  <legend><b>Text Editor</b></legend><textarea id="text" rows="10" cols="40" ></textarea>
+                  <textarea id="text" rows="10" cols="40" ></textarea>
                </fieldset>
             </form>
             <a href="bin/tests/PHPUnitTest-coverage/" >Unit Tests</a> | 
-            <a href="documentation/phpdoc/" >API Documentation</a> | 
-            <a href="?clear" >Clear Session</a>
+            <a href="documentation/phpdoc/" >API Documentation</a>
          </div>
-         <div class="col_right">
+         <div>
             <div id="console">
                <pre id='pre'></pre>
             </div>

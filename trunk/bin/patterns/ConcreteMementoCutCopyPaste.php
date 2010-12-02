@@ -54,14 +54,6 @@ class ConcreteMementoCutCopyPaste implements Memento
 		$this->_saveCommand->getCommand()->execute();
 	}
 
-	/**
-	 * (non-PHPdoc)
-	 * @see bin/patterns/Memento#undo()
-	 */
-	public function undo()
-	{
-	}
-
 }
 
 ?>
