@@ -79,6 +79,108 @@ function disableButtons() {
 	$('#' + config.html.textareaId).attr('disabled', true);
 }
 
+
+/**
+ * 
+ * @return
+ */
+function enableRedo(){
+	$('button:#redo').attr('disabled', false);
+}
+
+/**
+ * 
+ * @return
+ */
+function disableRedo(){
+	$('button:#redo').attr('disabled', true);
+} 
+
+/**
+ * 
+ * @return
+ */
+function enableUndo(){
+	$('button:#undo').attr('disabled', false);
+}
+
+/**
+ * 
+ * @return
+ */
+function disableUndo(){
+	$('button:#undo').attr('disabled', true);
+}
+
+/**
+ * 
+ * @return
+ */
+function redo() {
+
+	$.ajax( {
+		url : config.ajax.target,
+		type : config.ajax.type,
+		data : {
+			function_name : 'redo'
+		},
+		dataType : config.ajax.dataType,
+		beforeSend : function() {
+		},
+		success : function(response) {
+			enableUndo();
+			update(config.html.textareaId, response.Ihm);
+			if (response != null && response.Ihm.redo_last) {
+				disableRedo();
+			} else {
+				debug();
+
+			}
+
+		},
+		error : function(e) {
+		},
+		complete : function() {
+		}
+
+	});
+}
+
+/**
+ * 
+ * @return
+ */
+function undo() {
+
+	$.ajax( {
+		url : config.ajax.target,
+		type : config.ajax.type,
+		data : {
+			function_name : 'undo'
+		},
+		dataType : config.ajax.dataType,
+		beforeSend : function() {
+		},
+		success : function(response) {
+			enableRedo();
+			update(config.html.textareaId, response.Ihm);
+			if (response != null && response.Ihm.undo_last) {
+				disableUndo();
+			} else {
+				debug();
+
+			}
+
+		},
+		error : function(e) {
+		},
+		complete : function() {
+		}
+
+	});
+}
+
+
 /**
  * 
  * @return
@@ -155,7 +257,7 @@ function init() {
 		success : function(response) {
 			update(config.html.textareaId, response.Ihm);
 			if (response.Ihm.text === "") {
-				$('#replay').attr('disbled', true);
+				$('#replay').attr('disabled', true);
 			} else {
 				$('#replay').attr('disabled', false);
 			}
@@ -200,7 +302,7 @@ function copy() {
 
 				},
 				success : function(response) {
-
+					disableRedo(); enableUndo();
 					if (response != undefined && response.ErrorMsg) {
 						console.log(response.ErrorMsg);
 						console.log(response.ErrorData);
@@ -258,6 +360,7 @@ function paste() {
 			}
 		},
 		success : function(response) {
+			disableRedo(); enableUndo();
 			if (response != undefined && response.ErrorMsg) {
 				console.log(response.ErrorMsg);
 				console.log(response.ErrorData);
@@ -315,6 +418,7 @@ function insert(char) {
 			}
 		},
 		success : function(response) {
+			disableRedo(); enableUndo();
 			if (response != undefined && response.ErrorMsg) {
 				console.log(response.ErrorMsg);
 				console.log(response.ErrorData);
@@ -367,6 +471,7 @@ function cut() {
 			}
 		},
 		success : function(response) {
+			disableRedo(); enableUndo();
 			if (response != undefined && response.ErrorMsg) {
 				console.log(response.ErrorMsg);
 				console.log(response.ErrorData);
