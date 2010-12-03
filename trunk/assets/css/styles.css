@@ -1,5 +1,5 @@
 body{
-   background-color:#7c6ae7;
+   background-color:#80bde9;
 }
 
 #content {
@@ -10,6 +10,10 @@ body{
 	-moz-border-radius:5px;
 	-webkit-borrder-radius: 5px;
 	padding:10px;
+	-moz-box-shadow:0 0 19px #000000;
+	-webkit-box-shadow:0 0 19px #000000;
+	position:absolute;
+	top:-500px;
 }
 
 h1 {
@@ -27,7 +31,7 @@ h1 {
 
 textarea, textarea:disabled {
   border:1px solid #aaa;
-  height:300px;
+  height:100%;
   width:100%;
   padding:5px;
 	color:#000;
