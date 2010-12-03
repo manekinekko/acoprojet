@@ -18,8 +18,17 @@
       
       <div id="content" class="ui-widget-content ui-corner-all">
          <div>
-            <h1 class="ui-dialog-titlebar ui-widget-header ui-corner-all">ACO Editor v1Beta</h1>
+            <h1 id="title" class="ui-dialog-titlebar ui-widget-header ui-corner-all">ACO Editor v<span>1</span><i>Beta</i></h1>
             <form id="formulaire" method="post" action="">
+               <fieldset>
+               	<legend>Versions</legend>
+               	<select id="select-versions" name="select-versions">
+               		<option value="1">1</option>
+               		<option value="2">2</option>
+               		<option value="3">3</option>
+               	</select>
+               </fieldset>
+               
                <fieldset>
                   <legend><b>Menu</b></legend>
                   <button name="new" id="new" value="1" type="button">New</button>
@@ -31,6 +40,7 @@
                   <button name="replay" id="replay" value="1" type="button" disabled="disabled">Replay</button>
                   <button name="dump" id="dump" value="1" type="button">Memory dump</button>
                </fieldset>
+
                <fieldset>
                   <textarea id="text" rows="10" cols="40" ></textarea>
                </fieldset>

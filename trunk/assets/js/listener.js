@@ -17,6 +17,8 @@ $(function(){
 	// triggered on load
 	init();
 	
+	set_versions();
+	
 	$('#'+config.html.textareaId).bind("select", function(e){
 		
 		config.copycut.active = true;
@@ -49,8 +51,15 @@ $(function(){
 	$('#new').click(
 			function(e){
 				e.preventDefault();
-				if ( confirm("Warning! All unsaved changes will be lost! Do you want to continue ?") ) window.location = "?clear";
-			}
+				var is_empty = $('#'+config.html.textareaId).val() == "";
+				
+				if ( !is_empty )
+				{
+					var c = confirm("Warning! All unsaved changes will be lost! Do you want to continue ?");
+					if ( c )
+						window.location = "?clear"
+				}
+			} 
 	);
 	
 	$('#cut').click(
@@ -127,6 +136,7 @@ $(function(){
 		autoOpen:false,
 		title:"ACO Editor v1Beta - Object Memory Dump",
 		width:800,
+		position: 'center',
 		close: function(event, ui){
 			config.debug.dump = false;	
 		}
