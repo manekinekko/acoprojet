@@ -134,12 +134,17 @@ $(function(){
 	
 	$('#console').dialog({
 		autoOpen:false,
-		title:"ACO Editor v1Beta - Object Memory Dump",
+		title: $('#content h1').html() + " - Object Memory Dump",
 		width:800,
 		position: 'center',
 		close: function(event, ui){
 			config.debug.dump = false;	
 		}
 	});
+	
+	
+	$('#content').draggable().resizable();
+	setTimeout(function(){ $('#content').fadeIn().animate({top:10}); }, 1000);
+	
 	
 });

@@ -6,13 +6,13 @@
 <html>
    <head>
       <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<link rel="stylesheet" type="text/css" media="screen" href="/acoprojet/assets/css/cupertino/jquery-ui.css" />
-      <link rel="stylesheet" type="text/css" media="screen" href="/acoprojet/assets/css/styles.css" />
-      <script  type="text/javascript" src="/acoprojet/assets/js/jq.js" language="JavaScript" ></script>
-      <script  type="text/javascript" src="/acoprojet/assets/js/jqui.js" language="JavaScript" ></script>
-      <script  type="text/javascript" src="/acoprojet/assets/js/config.js" language="JavaScript" ></script>
-      <script  type="text/javascript" src="/acoprojet/assets/js/lib.js" language="JavaScript" ></script>
-      <script  type="text/javascript" src="/acoprojet/assets/js/listener.js" language="JavaScript" ></script>
+<link rel="stylesheet" type="text/css" media="screen" href="assets/css/cupertino/jquery-ui.css" />
+      <link rel="stylesheet" type="text/css" media="screen" href="assets/css/styles.css" />
+      <script  type="text/javascript" src="assets/js/jq.js" language="JavaScript" ></script>
+      <script  type="text/javascript" src="assets/js/jqui.js" language="JavaScript" ></script>
+      <script  type="text/javascript" src="assets/js/config.js" language="JavaScript" ></script>
+      <script  type="text/javascript" src="assets/js/lib.js" language="JavaScript" ></script>
+      <script  type="text/javascript" src="assets/js/listener.js" language="JavaScript" ></script>
    </head>
    <body>
       
@@ -46,7 +46,9 @@
                </fieldset>
             </form>
             <a href="bin/tests/PHPUnitTest-coverage/" >Unit Tests</a> | 
-            <a href="documentation/phpdoc/" >API Documentation</a>
+            <a href="documentation/phpdoc/" >API Documentation</a> |
+            <a href="documentation/bouml/" >UML Documentation</a> |
+            <a href="acoeditor_v3.zip" >Download</a>
          </div>
          <div>
             <div id="console">
