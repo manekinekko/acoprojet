@@ -22,6 +22,8 @@
   define("ASSETSPATH", APPPATH . "assets/");
   define("HELPERPATH", APPPATH . "bin/helpers/");
   
+  define("BUFFER_SAVE_STEP", 10);
+  
   // a hack for the PHPUnit framework!
   ini_set('include_path', ini_get('include_path').':'.TESTPATH);
   
