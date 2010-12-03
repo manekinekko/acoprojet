@@ -17,7 +17,7 @@
 require_once (BINPATH . "Memento.php");
 
 /**
- *
+ * The concrete Memento of the Buffer
  *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
@@ -26,12 +26,42 @@ require_once (BINPATH . "Memento.php");
 
 class ConcreteMementoBuffer implements Memento
 {
+	/**
+	 * @var String $_text The current text
+	 * @access private
+	 */
 	private $_text;
+
+	/**
+	 * @var Clipboard $_clipboard The current clipboard object
+	 * @access private
+	 */
 	private $_clipboard;
+
+	/**
+	 * @var Integer $_selectionStart The value of the beginning of the selection
+	 * @access private
+	 */
 	private $_selectionStart;
+
+	/**
+	 * @var Integer $_selectionEnd The value of the end of the selection
+	 * @access private
+	 */
 	private $_selectionEnd;
+
+	/**
+	 * @var Buffer $_buffer The current buffer object
+	 * @access private
+	 */
 	private $_buffer;
 
+	/**
+	 * The constructor of the ConcreteMementoBuffer
+	 * @param Buffer &$buffer The reference of the used Buffer
+	 * @param Mixed[] $attrs An array containing the current text, the used clipboard, the beginning and the end of the selection
+	 * @return void
+	 */
 	public function __construct(&$buffer, $attrs)
 	{
 		$this->_text = $attrs['text'];
@@ -41,27 +71,46 @@ class ConcreteMementoBuffer implements Memento
 		$this->_buffer = $buffer;
 	}
 
+	/**
+	 * Get the beginning of the selection
+	 * @return Integer The value of the beginning of the selection
+	 */
 	public function getSelectionStart()
 	{
 		return $this->_selectionStart;
 	}
 
+	/**
+	 * Get the end of the selection
+	 * @return Integer The value of the end of the selection
+	 */
 	public function getSelectionEnd()
 	{
 		return $this->_selectionEnd;
 	}
 
+	/**
+	 * Get the current text
+	 * @return String The value of the current text
+	 */
 	public function getText()
 	{
 		return $this->_text;
 	}
 
-	
+	/**
+	 * Get the used clipboard
+	 * @return Clipboard The the used clipboard
+	 */
 	public function getClipboard()
 	{
 		return $this->_clipboard;
 	}
 
+	/**
+	 * Redo the previous state of the Buffer
+	 * @return void
+	 */
 	public function redo()
 	{
 		$this->_buffer->setMemento($this);

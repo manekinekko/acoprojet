@@ -42,17 +42,21 @@ class Undo implements Command
 	{
 		$this->_caretaker->decCurrent();
 		$pointer = $this->_caretaker->getCurrent();
-		$lastBufferPointer = $pointer-($pointer%10);
-		$nbStep = ($pointer%10);
-		if($lastBufferPointer>0 && $nbStep==0){
+		$lastBufferPointer = $pointer-($pointer%BUFFER_SAVE_STEP);
+		$nbStep = ($pointer%BUFFER_SAVE_STEP);
+		
+		if($lastBufferPointer>0 && $nbStep==0)
+		{
 			$this->_caretaker->decCurrent();
 		}
+		
 		$pointer = $this->_caretaker->getCurrent();
 		$lastBufferPointer = $pointer-($pointer%10);
 		$this->_caretaker->resetCurrent($lastBufferPointer);
-		$nbStep = ($pointer%10);
+		$nbStep = ($pointer%BUFFER_SAVE_STEP);
 		
-		while($nbStep>0){
+		while($nbStep>0)
+		{
 			$this->_replay->execute();
 			$nbStep--;
 		}

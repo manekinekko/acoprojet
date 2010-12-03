@@ -27,16 +27,15 @@ class Copy implements Command
 {
 
 	/**
-	 * @var Buffer The receiver object of the Copy command (the Buffer)
+	 * @var Buffer $_receiver The receiver object of the Copy command (the Buffer)
 	 * @access protected
 	 */
 	protected $_receiver;
 
 	/**
 	 * The constructor of the Copy command
+	 * @param Buffer &$receiver The reference of the receiver object
 	 * @return void
-	 * @param Buffer $receiver The reference of the receiver object
-	 * @access public
 	 */
 	public function __construct(&$receiver)
 	{
@@ -44,17 +43,14 @@ class Copy implements Command
 	}
 	
 	/**
-	 * Perfome the copy action
+	 * Execute the copy action
 	 * @return void
-	 * @access public
 	 */
 	public function execute()
 	{
 		$this->_receiver->copyText();
 	}
 	
-
-
 	/**
 	 * Get the current receiver
 	 * @return Buffer The current receiver of the Insert command

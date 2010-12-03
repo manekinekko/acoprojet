@@ -26,7 +26,8 @@ require_once (BINPATH . "ConcreteMementoBuffer.php" );
  * This is also the concrete subject of the Obsever Design Pattern
  *
  * @author wassim Chegham & hugo Marchadour
- * @package Command
+ * @package Observer
+ * @category ConcreteSubject
  * @version 0.1
  */
 class Buffer implements Observer, Subject, Memento
@@ -77,6 +78,7 @@ class Buffer implements Observer, Subject, Memento
 	/**
 	 * The constructor of the Buffer
 	 * @return void
+	 * @access public
 	 */
 	public function __construct()
 	{
@@ -304,6 +306,11 @@ class Buffer implements Observer, Subject, Memento
 
 	}
 	
+	/**
+	 * Create a new memento with the correct values
+	 * @return ConcreteMementoBuffer A new ConcreteMementoBuffer
+	 * @access pubic
+	 */
 	public function &getMemento()
 	{
 		$attrs = array();
@@ -315,6 +322,11 @@ class Buffer implements Observer, Subject, Memento
 		return $mem;
 	}
 
+	/**
+	 * Update the current state of the Buffer
+	 * @param $mem The ConcreteMementoBuffer that contains the necessary values
+	 * @access public 
+	 */
 	public function setMemento(&$mem)
 	{
 		$this->_text = $mem->getText();
@@ -367,10 +379,10 @@ class Buffer implements Observer, Subject, Memento
 	/**
 	 * Update the current state of the buffer
 	 * @param Ihm $s The reference of the observer of the subject
+	 * @access public
 	 */
 	public function update(&$s)
 	{
-
 		$this->_selectionStart = $s->getSelectionStart();
 		$this->_selectionEnd = $s->getSelectionEnd();
 		$this->_text = $s->getText();

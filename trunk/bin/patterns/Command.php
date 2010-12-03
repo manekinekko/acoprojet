@@ -21,12 +21,11 @@
  * @package Command
  * @version 0.1
  */
-
 interface Command
 {
 	
   /**
-   * Execute the command
+   * Execute the command of the current command
    * @access public
    */
 	public function execute();

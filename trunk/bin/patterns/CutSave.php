@@ -19,54 +19,86 @@ require_once (BINPATH . "Cut.php");
 require_once (BINPATH . "ConcreteMementoCutCopyPaste.php");
 
 /**
- *
+ * Execute and save the cut command
  *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
+ * @category Originator
  * @version 0.1
  */
 
 class CutSave implements Command
 {
 	/**
-	 * @var unknown_type
+	 * @var Cut $_cut The cut command to be executed
+	 * @access private
 	 */
-	private $_cut, $_caretaker;
+	private $_cut;
 
+	/**
+	 * @var Caretaker $_caretaker The caretaker
+	 * @access private
+	 */
+	private $_caretaker;
+
+	/**
+	 * The constructor of the CopySave
+	 * 
+	 * @param Insert &$cut The refrence of the insert command
+	 * @param Caretaker &$caretaker The reference of the caretaker 
+	 * @return void
+	 */
 	public function __construct(&$cut, &$caretaker)
 	{
 		$this->_cut = $cut;
 		$this->_caretaker = $caretaker;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see bin/patterns/Command#execute()
+	 */
 	public function execute()
 	{
 		$this->_caretaker->save($this);
-		$this->_cut->execute(); 
+		$this->_cut->execute();
 	}
 
+	/**
+	 * Get the reference of the current cut command
+	 * @return Cut The cut command
+	 */
 	public function &getCommand()
 	{
 		return $this->_cut;
 	}
-	
+
+	/**
+	 * Get the reference of the current memento
+	 * @return Memento The current memento
+	 */	
 	public function &getMemento()
 	{
 		$attrs = array();
 		$attrs['selStart'] = $this->_cut->getReceiver()->getSelectionStart();
 		$attrs['selEnd'] = $this->_cut->getReceiver()->getSelectionEnd();
-		
-//		var_dump($this->_cut->getReceiver()->getSelectionStart(), $this->_cut->getReceiver()->getSelectionEnd());
-//		exit;
-				
+
+		//		var_dump($this->_cut->getReceiver()->getSelectionStart(), $this->_cut->getReceiver()->getSelectionEnd());
+		//		exit;
+
 		$mem = new ConcreteMementoCutCopyPaste($this, $attrs);
 		return $mem;
 	}
-
+	
+	/**
+	 * Set the new state of the cut command
+	 * @param ConcreteMementoCutCopyPaste &$mem The reference of the memento
+	 * @return void
+	 */
 	public function setMemento(&$mem)
 	{
 		$buffer =& $this->_cut->getReceiver();
-		
+
 		// update the current state of the buffer
 		$buffer->setSelection($mem->getSelectionStart(), $mem->getSelectionEnd());
 	}

@@ -41,7 +41,7 @@ class Redo implements Command
 	public function execute()
 	{
 		$pointer = $this->_caretaker->getCurrent();
-		if(($pointer%10)==0){
+		if(($pointer%BUFFER_SAVE_STEP)==0){
 			$this->_replay->execute();
 		}
 		$this->_replay->execute();
