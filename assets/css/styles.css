@@ -12,14 +12,8 @@ body{
 	padding:10px;
 }
 
-.col_left{
-   float:left;
-   width:35%;
-}
-
-.col_right{
-   float:left;
-   width:65%;
+h1 {
+	padding:3px;
 }
 
 #pre {
@@ -27,7 +21,7 @@ body{
    color:#fff; 
    font-size:10px;
    overflow:auto;
-   max-height:550px;
+   max-height:400px;
    padding:10px;
 }
 
@@ -88,4 +82,14 @@ button:hover:not(:disabled) {
 fieldset {
 	margin:2px;
 	border:1px solid #aaa;
+}
+
+fieldset:first-child {
+	float:right;
+	width:100px;
+	padding:9px;
+}
+
+fieldset:last-child {
+	clear:both;
 }

@@ -18,6 +18,7 @@ config.ajax = {};
 config.html = {};
 config.replay = {};
 config.copycut = {};
+config.version = 2;
 
 config.ajax.target = "index.php?ajax";
 config.ajax.type = "POST";

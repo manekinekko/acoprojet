@@ -12,6 +12,38 @@
  *
  */
 
+function set_versions(){
+	
+	var val = config.version;
+	var buttons = $('button:not(#new):not(#dump)');
+	var el = $('#select-versions');
+	change_version(el);
+	
+	el.change(function(){
+		change_version();
+	});
+
+	function change_version()
+	{
+		buttons.hide();
+		$("#title span").text(el.val());
+		switch(el.val())
+		{
+		case "1":
+			buttons.filter("#copy, #cut, #paste").show();
+			break;
+		
+		case "2":
+			buttons.filter("#copy, #cut, #paste, #undo, #redo").show();			
+			break;
+		case "3":
+			buttons.filter("#copy, #cut, #paste, #undo, #redo, #replay").show();			
+			break;
+		}
+	};
+	
+}
+
 /**
  * 
  * @param evt
