@@ -11,14 +11,14 @@
  * GNU General Public License for more details
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 require_once ('Command.php');
 
 /**
  * The cut command
- * 
+ *
  * @author wassim Chegham & hugo Marchadour
  * @package Command
  * @version 0.1
@@ -35,18 +35,16 @@ class Cut implements Command
 	/**
 	 * The constructor of the Cut command
 	 * @return void
-	 * @param Buffer $receiver The reference of the receiver object of the Cut command
-	 * @access public
+	 * @param Buffer &$receiver The reference of the receiver object of the Cut command
 	 */
 	public function __construct(&$receiver)
 	{
 		$this->_receiver = $receiver;
 	}
-	
+
 	/**
-	 * Perfome the cut action
-	 * @return void
-	 * @access public
+	 * (non-PHPdoc)
+	 * @see bin/patterns/Command#execute()
 	 */
 	public function execute()
 	{
@@ -55,10 +53,10 @@ class Cut implements Command
 
 	/**
 	 * Get the current receiver
-	 * @return Buffer The current receiver of the Insert command
-	 * @access public
+	 * @return Buffer The current receiver of the Cut command
 	 */
-	public function &getReceiver() {
+	public function &getReceiver() 
+	{
 		return $this->_receiver;
 	}
 }

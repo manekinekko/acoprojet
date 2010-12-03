@@ -17,7 +17,7 @@
 require_once (BINPATH . "Memento.php");
 
 /**
- *
+ * The concrete Memento of the Insert command
  *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
@@ -26,12 +26,36 @@ require_once (BINPATH . "Memento.php");
 
 class ConcreteMementoInsert implements Memento
 {
+	/**
+	 * @var Character $_char The current character
+	 * @access private
+	 */
 	private $_char;
+
+	/**
+	 * @var Integer $_selectionStart The value of the beginning of the selection
+	 * @access private
+	 */
 	private $_selectionStart;
+
+	/**
+	 * @var Integer $_selectionEnd The value of the end of the selection
+	 * @access private
+	 */
 	private $_selectionEnd;
 
+	/**
+	 * @var Command $_saveCommand The command we want to save
+	 * @access private
+	 */
 	private $_saveCommand;
 
+	/**
+	 * The constructor of the ConcreteMementoInsert Memento
+	 * @param Command &$command The reference of the command
+	 * @param Mixed[] $attrs An array containing the current character, the beginning and the end of the selection
+	 * @return void
+	 */
 	public function __construct(&$command, $attrs)
 	{
 		$this->_saveCommand = $command;
@@ -40,27 +64,42 @@ class ConcreteMementoInsert implements Memento
 		$this->_selectionEnd = $attrs['selEnd'];
 	}
 
+	/**
+	 * Get the beginning of the selection
+	 * @return Integer The value of the beginning of the selection
+	 */
 	public function getSelectionStart()
 	{
 		return $this->_selectionStart;
 	}
 	
+	/**
+	 * Get the end of the selection
+	 * @return Integer The value of the end of the selection
+	 */
 	public function getSelectionEnd()
 	{
 		return $this->_selectionEnd;
 	}
-
+	
+	/**
+	 * Get the current character
+	 * @return Character The value of the current charcater
+	 */
 	public function getChar()
 	{
 		return $this->_char;
 	}
 	
+	/**
+	 * Re-execute the previous saved Command
+	 * @return void
+	 */
 	public function redo()
 	{
 		$this->_saveCommand->setMemento($this);
 		$this->_saveCommand->getCommand()->execute();
 	}
-
 
 }
 

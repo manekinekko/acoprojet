@@ -17,7 +17,7 @@
 require_once (BINPATH . "Memento.php");
 
 /**
- *
+ * The concrete Memento of the Copy, Cut and Paste commands
  *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
@@ -26,11 +26,30 @@ require_once (BINPATH . "Memento.php");
 
 class ConcreteMementoCutCopyPaste implements Memento
 {
+	/**
+	 * @var Integer $_selectionStart The value of the beginning of the selection
+	 * @access private
+	 */
 	private $_selectionStart;
+
+	/**
+	 * @var Integer $_selectionEnd The value of the end of the selection
+	 * @access private
+	 */
 	private $_selectionEnd;
 
+	/**
+	 * @var Command $_saveCommand The command we want to save
+	 * @access private
+	 */
 	private $_saveCommand;
 
+	/**
+	 * The constructor of the ConcreteMementoCutCopyPaste Memento 
+	 * @param Command &$command The reference of the command
+	 * @param Mixed[] $attrs An array containing the beginning and the end of the selection
+	 * @return void
+	 */
 	public function __construct(&$command, $attrs)
 	{
 		$this->_saveCommand = $command;
@@ -38,16 +57,28 @@ class ConcreteMementoCutCopyPaste implements Memento
 		$this->_selectionEnd = $attrs['selEnd'];
 	}
 
+	/**
+	 * Get the beginning of the selection
+	 * @return Integer The value of the beginning of the selection
+	 */
 	public function getSelectionStart()
 	{
 		return $this->_selectionStart;
 	}
-	
+
+	/**
+	 * Get the end of the selection
+	 * @return Integer The value of the end of the selection
+	 */
 	public function getSelectionEnd()
 	{
 		return $this->_selectionEnd;
 	}
 
+	/**
+	 * Re-execute the previous saved Command
+	 * @return void
+	 */
 	public function redo()
 	{
 		$this->_saveCommand->setMemento($this);

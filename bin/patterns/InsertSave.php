@@ -23,6 +23,7 @@ require_once (BINPATH . "ConcreteMementoInsert.php");
  *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
+ * @category Originator
  * @version 0.1
  */
 

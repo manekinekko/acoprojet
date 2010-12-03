@@ -34,6 +34,7 @@ require_once ('Redo.php');
  *
  * @author wassim Chegham & hugo Marchadour
  * @package Observer
+ * @category ConcreteObserver
  * @version 0.1
  */
 class Ihm implements Observer, Subject

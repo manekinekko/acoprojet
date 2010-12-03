@@ -31,8 +31,8 @@ class Clipboard
 	
 	/**
 	 * The constructor of the Clipboard
+	 * @param String $str The value of the new string to be set
 	 * @return void
-	 * @access public
 	 */
 	public function __construct($str="")
 	{
@@ -43,7 +43,6 @@ class Clipboard
 	 * Set the current text
 	 * @return void
 	 * @param String $str the new text content
-	 * @access public
 	 */
 	public function setText($str)
 	{ 
@@ -52,8 +51,7 @@ class Clipboard
 	
 	/**
 	 * Get the current text content
-	 * @return the current text
-	 * @access public
+	 * @return String the current text
 	 */
 	public function getText()
 	{ 

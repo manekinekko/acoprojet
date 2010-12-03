@@ -19,37 +19,64 @@ require_once (BINPATH . "Copy.php");
 require_once (BINPATH . "ConcreteMementoCutCopyPaste.php");
 
 /**
- *
+ * Execute and save the copy command
  *
  * @author wassim Chegham & hugo Marchadour
  * @package Memento
+ * @category Originator
  * @version 0.1
  */
 
 class CopySave implements Command
 {
 	/**
-	 * @var unknown_type
+	 * @var Copy $_copy The copy command to be executed
+	 * @access private
 	 */
-	private $_copy, $_caretaker;
+	private $_copy;
 
-	public function __construct(& $insert, & $caretaker)
+	/**
+	 * @var Caretaker $_caretaker The caretaker
+	 * @access private
+	 */
+	private $_caretaker;
+
+	/**
+	 * The constructor of the CopySave
+	 * 
+	 * @param Insert &$insert The refrence of the insert command
+	 * @param Caretaker &$caretaker The reference of the caretaker 
+	 * @return void
+	 */
+	public function __construct(&$insert, &$caretaker)
 	{
 		$this->_copy = $insert;
 		$this->_caretaker = $caretaker;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see bin/patterns/Command#execute()
+	 */
 	public function execute()
 	{
 		$this->_copy->execute();
 		$this->_caretaker->save($this);
 	}
-	
+
+	/**
+	 * Get the reference of the current copy command
+	 * @return Copy The copy command
+	 */
 	public function &getCommand()
 	{
 		return $this->_copy;
 	}
-	
+
+	/**
+	 * Get the reference of the current memento
+	 * @return Memento The current memento
+	 */
 	public function &getMemento()
 	{
 		$attrs = array();
@@ -59,12 +86,17 @@ class CopySave implements Command
 		return $mem;
 	}
 
+	/**
+	 * Set the new state of the copy command
+	 * @param ConcreteMementoCutCopyPaste &$mem The reference of the memento
+	 * @return void
+	 */
 	public function setMemento(&$mem)
 	{
 		$buffer =& $this->_copy->getReceiver();
-		
+
 		// update the current state of the buffer
 		$buffer->setSelection($mem->getSelectionStart(), $mem->getSelectionEnd());
 	}
-	
+
 }
